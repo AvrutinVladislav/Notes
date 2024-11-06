@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		57F639102CDB7020000CACE8 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6390F2CDB7020000CACE8 /* BaseViewController.swift */; };
 		57F639122CDB71EA000CACE8 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F639112CDB71EA000CACE8 /* BaseView.swift */; };
+		57F639652CDBA9BD000CACE8 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F639642CDBA9BD000CACE8 /* CustomTextField.swift */; };
 		8617FB7628F44D9800E36AF6 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8617FB7528F44D9800E36AF6 /* NotesViewController.swift */; };
 		8617FB7828F44DAE00E36AF6 /* NotesViewInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8617FB7728F44DAE00E36AF6 /* NotesViewInput.swift */; };
 		8617FB7A28F44DC000E36AF6 /* NotesViewOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8617FB7928F44DC000E36AF6 /* NotesViewOutput.swift */; };
@@ -36,7 +37,6 @@
 		86ABA83228EC0E2500EC96D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ABA83128EC0E2500EC96D8 /* AppDelegate.swift */; };
 		86ABA83428EC0E2500EC96D8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ABA83328EC0E2500EC96D8 /* SceneDelegate.swift */; };
 		86ABA83628EC0E2500EC96D8 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ABA83528EC0E2500EC96D8 /* SignInViewController.swift */; };
-		86ABA83928EC0E2500EC96D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86ABA83728EC0E2500EC96D8 /* Main.storyboard */; };
 		86ABA83C28EC0E2500EC96D8 /* NotesApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86ABA83A28EC0E2500EC96D8 /* NotesApp.xcdatamodeld */; };
 		86ABA83E28EC0E2600EC96D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86ABA83D28EC0E2600EC96D8 /* Assets.xcassets */; };
 		86ABA84128EC0E2600EC96D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86ABA83F28EC0E2600EC96D8 /* LaunchScreen.storyboard */; };
@@ -50,6 +50,7 @@
 /* Begin PBXFileReference section */
 		57F6390F2CDB7020000CACE8 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		57F639112CDB71EA000CACE8 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		57F639642CDBA9BD000CACE8 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		7EEDC22DD646856165E20AF9 /* Pods-NotesApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotesApp.release.xcconfig"; path = "Target Support Files/Pods-NotesApp/Pods-NotesApp.release.xcconfig"; sourceTree = "<group>"; };
 		8617FB7528F44D9800E36AF6 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		8617FB7728F44DAE00E36AF6 /* NotesViewInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewInput.swift; sourceTree = "<group>"; };
@@ -79,7 +80,6 @@
 		86ABA83128EC0E2500EC96D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86ABA83328EC0E2500EC96D8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		86ABA83528EC0E2500EC96D8 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
-		86ABA83828EC0E2500EC96D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		86ABA83B28EC0E2500EC96D8 /* NotesApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NotesApp.xcdatamodel; sourceTree = "<group>"; };
 		86ABA83D28EC0E2600EC96D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86ABA84028EC0E2600EC96D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -235,7 +235,6 @@
 				8697C7F428FD6A06006266E0 /* CreateOrEditNote */,
 				8617FB7428F44D7100E36AF6 /* Notes */,
 				86ABA84E28EC123500EC96D8 /* Login */,
-				86ABA83728EC0E2500EC96D8 /* Main.storyboard */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -258,6 +257,7 @@
 				86ABA85828EC444000EC96D8 /* String+Extension.swift */,
 				8697C7FF28FD7033006266E0 /* UIView+Extention.swift */,
 				867D459628FE87A20030EE4E /* Date+Extantion.swift */,
+				57F639642CDBA9BD000CACE8 /* CustomTextField.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -352,7 +352,6 @@
 				86ABA84128EC0E2600EC96D8 /* LaunchScreen.storyboard in Resources */,
 				8690A94829195150005C2DF7 /* CreateOrEditNote.xib in Resources */,
 				86ABA83E28EC0E2600EC96D8 /* Assets.xcassets in Resources */,
-				86ABA83928EC0E2500EC96D8 /* Main.storyboard in Resources */,
 				868D0E19292B4C1200A66711 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,6 +428,7 @@
 				86ABA85028EC126100EC96D8 /* Login.swift in Sources */,
 				86ABA83228EC0E2500EC96D8 /* AppDelegate.swift in Sources */,
 				867D459728FE87A20030EE4E /* Date+Extantion.swift in Sources */,
+				57F639652CDBA9BD000CACE8 /* CustomTextField.swift in Sources */,
 				8697C80028FD7033006266E0 /* UIView+Extention.swift in Sources */,
 				8638372C28EED85000DB0407 /* SignInViewOutput.swift in Sources */,
 				864495B72902B11E009E63E0 /* NotesTableViewCell.swift in Sources */,
@@ -444,14 +444,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		86ABA83728EC0E2500EC96D8 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				86ABA83828EC0E2500EC96D8 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		86ABA83F28EC0E2600EC96D8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -591,7 +583,6 @@
 				INFOPLIST_FILE = NotesApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
@@ -620,7 +611,6 @@
 				INFOPLIST_FILE = NotesApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;

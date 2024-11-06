@@ -154,9 +154,6 @@
                                                 <rect key="frame" x="0.0" y="30.333333333333343" width="337" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
-                                                <connections>
-                                                    <action selector="textFieldDidChange:" destination="oRt-TQ-2bh" eventType="editingChanged" id="h5O-Q0-tQw"/>
-                                                </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uUF-On-gPw">
                                                 <rect key="frame" x="0.0" y="74.333333333333343" width="337" height="17"/>
@@ -179,9 +176,6 @@
                                                 <rect key="frame" x="0.0" y="30.333333333333343" width="337" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                                                <connections>
-                                                    <action selector="textFieldDidChange:" destination="oRt-TQ-2bh" eventType="editingChanged" id="l1Q-7g-jPv"/>
-                                                </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HrX-xw-EXb">
                                                 <rect key="frame" x="0.0" y="74.333333333333343" width="337" height="17"/>
@@ -196,9 +190,6 @@
                                         <color key="tintColor" systemColor="tintColor"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Sign Up"/>
-                                        <connections>
-                                            <action selector="signUpButtonDidTap:" destination="oRt-TQ-2bh" eventType="touchUpInside" id="v9c-hj-Lsz"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -224,17 +215,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="tUi-fH-f8h"/>
-                    <connections>
-                        <outlet property="emailLabel" destination="Kdi-28-eea" id="G8M-rb-aWO"/>
-                        <outlet property="emailTextField" destination="Nkc-MW-JsH" id="kIa-B4-VSW"/>
-                        <outlet property="errorEmailLabel" destination="uUF-On-gPw" id="w81-Rn-0xG"/>
-                        <outlet property="errorPasswordLabel" destination="HrX-xw-EXb" id="vuA-Rh-hWR"/>
-                        <outlet property="passwordLabel" destination="Bxa-N9-OeG" id="oYR-Lx-ntL"/>
-                        <outlet property="passwordTextField" destination="xUL-di-YMA" id="3lh-tL-bUJ"/>
-                        <outlet property="signUpButton" destination="30N-n6-bQP" id="Deh-qe-8ve"/>
-                        <outlet property="signUpLabel" destination="afr-vC-nWS" id="g1O-fw-hit"/>
-                        <outlet property="spinner" destination="6wT-P8-ycf" id="e70-YP-xDV"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gvg-cX-AKP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

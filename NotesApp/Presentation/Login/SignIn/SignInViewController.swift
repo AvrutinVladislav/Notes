@@ -16,25 +16,23 @@ class SignInViewController: BaseViewController {
     }()
     
     private let spinner = UIActivityIndicatorView()
-    private let emailTextField = UITextField()
+    private let emailTextField = CustomTextField()
     private let errorEmailLabel = UILabel()
-    private let passwordTextField = UITextField()
-    private let errorPasswordLabel = UITextView()
+    private let passwordTextField = CustomTextField()
+    private let errorPasswordLabel = UILabel()
     private let signInButton = UIButton()
     private let emailLabel = UILabel()
     private let passwordLabel = UILabel()
     private let signUpButton = UIButton()
     private let laterButton = UIButton()
     private let signInLabel = UILabel()
-    private lazy var stackViewContainer = UIStackView()
-    private lazy var emailStackViewContainer = UIStackView()
-    private lazy var passwordStackViewContainer = UIStackView()
-    private lazy var buttonsStackViewContainer = UIStackView()
+    private let stackViewContainer = UIStackView()
+    private let emailStackViewContainer = UIStackView()
+    private let passwordStackViewContainer = UIStackView()
+    private let buttonsStackViewContainer = UIStackView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupUI()
         output?.viewDidLoad()
     }
 }
@@ -50,6 +48,7 @@ extension SignInViewController: SignInViewInput {
     
     func enableButtonSignIn(_ isEnabled: Bool) {
         signInButton.isEnabled = isEnabled
+        signInButton.backgroundColor = isEnabled ? .systemBlue : .lightGray
     }
     
     func pushNotesViewController() {
@@ -74,6 +73,76 @@ extension SignInViewController: SignInViewInput {
 }
 
 extension SignInViewController {
+    override func setupUI() {
+        signInLabel.font = .systemFont(ofSize: 25, weight: .medium)
+        signInLabel.text = "Sign In".localized()
+        signInLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        stackViewContainer.axis = .vertical
+        stackViewContainer.spacing = 20
+        stackViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        
+        for stack in [emailStackViewContainer, passwordStackViewContainer, buttonsStackViewContainer] {
+            stack.axis = .vertical
+            stack.spacing = 10
+            stack.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        for label in [emailLabel, passwordLabel] {
+            label.font = .systemFont(ofSize: 17)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            
+        }
+        
+        for tf in [emailTextField, passwordTextField] {
+            tf.font = .systemFont(ofSize: 14)
+            tf.textColor = .black
+            tf.layer.cornerRadius = 5
+            tf.layer.borderColor = UIColor.black.cgColor
+            tf.layer.borderWidth = 1
+            tf.translatesAutoresizingMaskIntoConstraints = false
+            tf.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        }
+        emailTextField.placeholder = "Enter your email".localized()
+        passwordTextField.placeholder = "Enter your password".localized()
+        passwordTextField.isSecureTextEntry = true
+        passwordTextField.autocorrectionType = .no
+        
+        for label in [errorEmailLabel, errorPasswordLabel] {
+            label.font = .systemFont(ofSize: 14)
+            label.textColor = .red
+            label.isHidden = true
+        }
+
+        errorEmailLabel.text = "Enter a valid email, example: mike@gmail.com".localized()
+        errorPasswordLabel.text = "Password: 8 characters, 1 capital letter, 1 number".localized()
+        
+        emailLabel.text = "Email".localized()
+        passwordLabel.text = "Password".localized()
+        
+        for button in [signUpButton, signInButton, laterButton] {
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.titleLabel?.font = .systemFont(ofSize: 14)
+        }
+        
+        signUpButton.setTitleColor(.black, for: .normal)
+        signUpButton.contentHorizontalAlignment = .leading
+        signUpButton.setTitle("Don't have account? Sing Up".localized(), for: .normal)
+        signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
+        
+        signInButton.setTitle("Sign In".localized(), for: .normal)
+        signInButton.setTitleColor(.white, for: .normal)
+        signInButton.layer.cornerRadius = 5
+        var config = UIButton.Configuration.filled()
+        config.titlePadding = 5
+        signInButton.configuration = config
+        signInButton.addTarget(self, action: #selector(signInButtonDidTap), for: .touchUpInside)
+        
+        laterButton.setTitle("Later".localized(), for: .normal)
+        laterButton.setTitleColor(.black, for: .normal)
+        laterButton.addTarget(self, action: #selector(laterButtonDidTap), for: .touchUpInside)
+    }
+    
     override func addSubview() {
         view.addSubview(signInLabel)
         view.addSubview(stackViewContainer)
@@ -93,63 +162,19 @@ extension SignInViewController {
     }
     
     override func addConstraints() {
-        signInLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                           leading: view.safeAreaLayoutGuide.leadingAnchor,
-                           bottom: stackViewContainer.topAnchor,
-                           trailing: view.safeAreaLayoutGuide.trailingAnchor,
-                           padding: .init(top: 20, left: 28, bottom: 40, right: 28))
-        stackViewContainer.anchor(top: nil,
-                                  leading: view.safeAreaLayoutGuide.leadingAnchor,
-                                  bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                                  trailing: view.safeAreaLayoutGuide.trailingAnchor,
-                                  padding: .init(top: 0, left: 28, bottom: 0, right: 28))
-        spinner.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                       leading: view.safeAreaLayoutGuide.leadingAnchor,
-                       bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                       trailing: view.safeAreaLayoutGuide.trailingAnchor)
-    }
-    
-    override func setupUI() {
-        signInLabel.font = .systemFont(ofSize: 25, weight: .medium)
-        signInLabel.text = "Sign In".localized()
+        NSLayoutConstraint.activate([
+            signInLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            signInLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            signInLabel.heightAnchor.constraint(equalToConstant: 30),
+            
+            stackViewContainer.topAnchor.constraint(equalTo: signInLabel.bottomAnchor, constant: 40),
+            stackViewContainer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 28),
+            stackViewContainer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -28),
+            
+            spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
         
-        stackViewContainer.axis = .vertical
-        stackViewContainer.spacing = 20
-        
-        for stack in [emailStackViewContainer, passwordStackViewContainer, buttonsStackViewContainer] {
-            stack.axis = .vertical
-            stack.spacing = 10
-        }
-        
-        for label in [emailLabel, passwordLabel] {
-            label.font = .systemFont(ofSize: 17)
-        }
-        
-        for label in [emailTextField, passwordTextField] {
-            label.font = .systemFont(ofSize: 14)
-        }
-        passwordTextField.isSecureTextEntry = true
-        passwordTextField.autocorrectionType = .no
-        
-        errorEmailLabel.font = .systemFont(ofSize: 14)
-        errorEmailLabel.textColor = .red
-        errorEmailLabel.isHidden = true
-        
-        errorPasswordLabel.font = .systemFont(ofSize: 14)
-        errorPasswordLabel.textColor = .red
-        errorPasswordLabel.isHidden = true
-
-        errorEmailLabel.text = "Enter a valid email, example: mike@gmail.com".localized()
-        errorPasswordLabel.text = "Password must contain 8 characters, 1 capital letter and 1 number".localized()
-        
-        emailLabel.text = "Email".localized()
-        passwordLabel.text = "password".localized()
-        signUpButton.setTitle("Don't have account? Sing Up".localized(), for: .normal)
-        signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
-        signInButton.setTitle("Sign In".localized(), for: .normal)
-        signInButton.addTarget(self, action: #selector(signInButtonDidTap), for: .touchUpInside)
-        laterButton.setTitle("Later".localized(), for: .normal)
-        laterButton.addTarget(self, action: #selector(laterButtonDidTap), for: .touchUpInside)
     }
     
     @objc func signUpButtonDidTap(_ sender: UIButton) {
@@ -164,10 +189,7 @@ extension SignInViewController {
         output?.laterButtonDidTap()
     }
     
-}
-
-extension SignInViewController: UITextFieldDelegate {
-    func textFieldDidChange(_ sender: UITextField) {
+    @objc func textFieldDidChange(_ sender: UITextField) {
         switch sender {
         case emailTextField:
             output?.emailTextFieldDidChange(emailTextField.text ?? "")
@@ -177,4 +199,5 @@ extension SignInViewController: UITextFieldDelegate {
             break
         }
     }
+    
 }
