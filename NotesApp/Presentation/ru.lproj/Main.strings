@@ -1,0 +1,66 @@
+
+/* Class = "UIButton"; configuration.title = "Don't have account? Sing Up"; ObjectID = "0EW-YD-bhk"; */
+"0EW-YD-bhk.configuration.title" = "Don't have account? Sing Up";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "0EW-YD-bhk"; */
+"0EW-YD-bhk.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Sign Up"; ObjectID = "30N-n6-bQP"; */
+"30N-n6-bQP.configuration.title" = "Sign Up";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "30N-n6-bQP"; */
+"30N-n6-bQP.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "password"; ObjectID = "3Us-qG-MVj"; */
+"3Us-qG-MVj.text" = "password";
+
+/* Class = "UILabel"; text = "error"; ObjectID = "94n-qI-haV"; */
+"94n-qI-haV.text" = "error";
+
+/* Class = "UILabel"; text = "Password"; ObjectID = "Bxa-N9-OeG"; */
+"Bxa-N9-OeG.text" = "Password";
+
+/* Class = "UILabel"; text = "error"; ObjectID = "HrX-xw-EXb"; */
+"HrX-xw-EXb.text" = "error";
+
+/* Class = "UILabel"; text = "Email"; ObjectID = "Kdi-28-eea"; */
+"Kdi-28-eea.text" = "Email";
+
+/* Class = "UITextField"; placeholder = "Type your Email"; ObjectID = "Nkc-MW-JsH"; */
+"Nkc-MW-JsH.placeholder" = "Type your Email";
+
+/* Class = "UILabel"; text = "Sign In"; ObjectID = "OJZ-rO-uir"; */
+"OJZ-rO-uir.text" = "Sign In";
+
+/* Class = "UITextField"; placeholder = "Type your password"; ObjectID = "SnN-Tc-kap"; */
+"SnN-Tc-kap.placeholder" = "Type your password";
+
+/* Class = "UIButton"; configuration.title = "Sign In"; ObjectID = "TgT-qD-Xst"; */
+"TgT-qD-Xst.configuration.title" = "Sign In";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "TgT-qD-Xst"; */
+"TgT-qD-Xst.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Sign Up"; ObjectID = "afr-vC-nWS"; */
+"afr-vC-nWS.text" = "Sign Up";
+
+/* Class = "UIButton"; configuration.title = "Later"; ObjectID = "gZ0-Ds-bkf"; */
+"gZ0-Ds-bkf.configuration.title" = "Later";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "gZ0-Ds-bkf"; */
+"gZ0-Ds-bkf.normalTitle" = "Button";
+
+/* Class = "UITextField"; placeholder = "Type your Email"; ObjectID = "lin-87-paS"; */
+"lin-87-paS.placeholder" = "Type your Email";
+
+/* Class = "UILabel"; text = "Email"; ObjectID = "pNk-cu-e4L"; */
+"pNk-cu-e4L.text" = "Email";
+
+/* Class = "UILabel"; text = "error"; ObjectID = "uUF-On-gPw"; */
+"uUF-On-gPw.text" = "error";
+
+/* Class = "UILabel"; text = "error"; ObjectID = "wbi-gs-jm4"; */
+"wbi-gs-jm4.text" = "error";
+
+/* Class = "UITextField"; placeholder = "Type your password"; ObjectID = "xUL-di-YMA"; */
+"xUL-di-YMA.placeholder" = "Type your password";

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateOrEditeNoteViewController" customModule="NotesApp" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="sPm-uL-gc3" id="Xrh-tj-eDm"/>
+                <outlet property="noteTextView" destination="QTZ-gK-3hF" id="v2G-xT-qPT"/>
+                <outlet property="view" destination="iN0-l3-epB" id="hhT-8J-RcB"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="se7-WL-mLF" userLabel="separator">
+                    <rect key="frame" x="5" y="0.0" width="404" height="2"/>
+                    <color key="backgroundColor" systemColor="labelColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="2" id="BNh-A9-5S0"/>
+                    </constraints>
+                </view>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QTZ-gK-3hF">
+                    <rect key="frame" x="5" y="2" width="404" height="734"/>
+                    <color key="textColor" systemColor="labelColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="sPm-uL-gc3">
+                    <rect key="frame" x="197" y="358" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </activityIndicatorView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="se7-WL-mLF" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="BJ1-Bk-fCw"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="QTZ-gK-3hF" secondAttribute="trailing" constant="5" id="K5c-Fv-3CW"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="se7-WL-mLF" secondAttribute="trailing" constant="5" id="Ttd-Pb-ugV"/>
+                <constraint firstItem="se7-WL-mLF" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="cbG-W6-VMh"/>
+                <constraint firstItem="QTZ-gK-3hF" firstAttribute="top" secondItem="se7-WL-mLF" secondAttribute="bottom" id="k0e-Z6-Ie3"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="QTZ-gK-3hF" secondAttribute="bottom" id="mXU-sr-OqY"/>
+                <constraint firstItem="QTZ-gK-3hF" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="mfa-6X-83X"/>
+            </constraints>
+            <point key="canvasLocation" x="40" y="21"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
