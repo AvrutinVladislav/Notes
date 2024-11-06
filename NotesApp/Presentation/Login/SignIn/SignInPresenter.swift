@@ -17,35 +17,28 @@ class SignInPresenter {
 }
 
 extension SignInPresenter: SignInViewOutput {
-    
     func viewDidLoad() {
-        
         setupInitialState()
     }
     
     func emailTextFieldDidChange(_ text: String) {
-        
         email = text
         validate()
     }
     
     func passwordTextFieldDidChange(_ text: String) {
-        
         password = text
         validate()
     }
     
     func laterButtonDidTap() {
-        
         view?.pushNotesViewController()
     }
     
     func signInButtonDidTap() {
-        
         guard validate() else { return }
         view?.showIndicator(true)
         FirebaseManager().autorization(email: email, password: password) { [weak self] result in
-            
             guard let self = self else { return }
             self.view?.showIndicator(false)
             switch result {
@@ -60,24 +53,19 @@ extension SignInPresenter: SignInViewOutput {
 }
 
 private extension SignInPresenter {
-    
     func setupInitialState() {
-        
         checkAuthUser()
         validate()
     }
     
     func checkAuthUser() {
-        
         if FirebaseManager.isSignIn() {
-            
             view?.pushNotesViewController()
         }
     }
     
     @discardableResult
-    func validate() -> Bool {
-        
+    func validate() -> Bool {        
         let validate = email.isEmail && password.isPassword
         view?.setErrorEmail(email.isEmail || email.isEmpty)
         view?.setErrorPassword(password.isPassword || password.isEmpty)
