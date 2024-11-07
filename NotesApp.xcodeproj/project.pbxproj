@@ -24,7 +24,6 @@
 		864495B72902B11E009E63E0 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864495B62902B11E009E63E0 /* NotesTableViewCell.swift */; };
 		867D459728FE87A20030EE4E /* Date+Extantion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D459628FE87A20030EE4E /* Date+Extantion.swift */; };
 		868D0E19292B4C1200A66711 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 868D0E18292B4C1200A66711 /* GoogleService-Info.plist */; };
-		8690A94829195150005C2DF7 /* CreateOrEditNote.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8690A94729195150005C2DF7 /* CreateOrEditNote.xib */; };
 		8697C7F228FD46CB006266E0 /* NotesList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697C7F028FD46CB006266E0 /* NotesList+CoreDataProperties.swift */; };
 		8697C7F328FD46CB006266E0 /* NotesList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697C7F128FD46CB006266E0 /* NotesList+CoreDataClass.swift */; };
 		8697C7F728FD6A6D006266E0 /* CreateOrEditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697C7F528FD6A6D006266E0 /* CreateOrEditNoteViewController.swift */; };
@@ -66,7 +65,6 @@
 		864495B62902B11E009E63E0 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
 		867D459628FE87A20030EE4E /* Date+Extantion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extantion.swift"; sourceTree = "<group>"; };
 		868D0E18292B4C1200A66711 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
-		8690A94729195150005C2DF7 /* CreateOrEditNote.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateOrEditNote.xib; sourceTree = "<group>"; };
 		8697C7F028FD46CB006266E0 /* NotesList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotesList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8697C7F128FD46CB006266E0 /* NotesList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotesList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		8697C7F528FD6A6D006266E0 /* CreateOrEditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditNoteViewController.swift; sourceTree = "<group>"; };
@@ -180,7 +178,6 @@
 				8697C7F928FD6A84006266E0 /* CreateOrEditNotePresentor.swift */,
 				8697C7FB28FD6A96006266E0 /* CreateOrEditNoteViewInput.swift */,
 				8697C7FD28FD6AA6006266E0 /* CreateOrEditNoteViewOutput.swift */,
-				8690A94729195150005C2DF7 /* CreateOrEditNote.xib */,
 			);
 			path = CreateOrEditNote;
 			sourceTree = "<group>";
@@ -350,7 +347,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				86ABA84128EC0E2600EC96D8 /* LaunchScreen.storyboard in Resources */,
-				8690A94829195150005C2DF7 /* CreateOrEditNote.xib in Resources */,
 				86ABA83E28EC0E2600EC96D8 /* Assets.xcassets in Resources */,
 				868D0E19292B4C1200A66711 /* GoogleService-Info.plist in Resources */,
 			);

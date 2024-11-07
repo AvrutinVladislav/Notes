@@ -10,8 +10,7 @@ import CoreData
 
 class NotesViewController: UIViewController {
     
-    private lazy var output: NotesViewOutput? = {
-        
+    private lazy var output: NotesViewOutput? = {        
         let presenter = NotesPresentor()
         presenter.view = self
         return presenter
@@ -35,37 +34,31 @@ class NotesViewController: UIViewController {
 extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return self.sections[section].cells.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NotesTableViewCell.identifier, for: indexPath) as? NotesTableViewCell else { return UITableViewCell() }
         cell.configure(model: sections[indexPath.section].cells[indexPath.row], cellsCount: sections[indexPath.section].cells.count)
         return cell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        
         sections.count
     }
     
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
         let sectionHeader = sections[section].sectionType.localaizeHeader
         return sectionHeader
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
         output?.deleteNote(sections[indexPath.section].cells[indexPath.row])
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         output?.didSelectCell(sections[indexPath.section].cells[indexPath.row])
     }
     
@@ -73,44 +66,36 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
 
 //MARK: NotesViewInput
 extension NotesViewController: NotesViewInput {
-    
     func reloadTableView(sections: [NotesSectionsData]) {
-     
         self.sections = sections
         tableView.reloadData()
     }
     
-    func pushCreateOrEditeViewController(noteID: String?, sectionType: NotesSectionsData.SectionsType) {
-        
+    func pushCreateOrEditeViewController(noteID: String?,
+                                         sectionType: NotesSectionsData.SectionsType) {
         let vc = CreateOrEditNoteViewController()
         vc.state = noteID == nil ? .create : .edit
         vc.noteID = noteID
         vc.sectionType = sectionType
         vc.onFinish = { [weak self] noteID, sectionType in
-            
             guard let self else { return }
             self.output?.didAddCell(noteID , sectionType)
         }
-        
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func popViewController() {
-        
         self.navigationController?.popViewController(animated: true)
     }
 
     func showAlert(_ title: String, _ message: String) {
-        
         let alert = UIAlertController(title: "\(title)", message: "\(message)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel))
         self.present(alert, animated: true)
     }
     
     func showIndicator(_ isActive: Bool) {
-        
         let indicator = UIActivityIndicatorView()
-        
         indicator.center = view.center
         indicator.color = .black
         indicator.hidesWhenStopped = true
@@ -130,7 +115,6 @@ extension NotesViewController: NotesViewInput {
 private extension NotesViewController {
     
     func setupUI() {
-        
         view.backgroundColor = .white
         navigationController?.navigationBar.backgroundColor = .white
         navigationItem.title = "Notes".localized()
@@ -144,7 +128,6 @@ private extension NotesViewController {
                                                            target: self,
                                                            action: #selector(signOutButtonDidTap))
         if #available(iOS 16.0, *) {
-            
             navigationController?.navigationBar.setNeedsLayout()
         }
         configureTableView()
@@ -152,7 +135,6 @@ private extension NotesViewController {
     }
     
     func configureTableView() {
-
         view.addSubview(tableView)
         view.addSubview(separator)
         tableView.addSubview(refreshControl)
@@ -178,17 +160,14 @@ private extension NotesViewController {
     }
     
     @objc func addNoteButtonDidTap() {
-        
         output?.addNoteButtonDidTap()
     }
     
     @objc func signOutButtonDidTap() {
-        
         output?.singOutButtonDidTap()
     }
     
     @objc func refreshTableView(_ sender: AnyObject) {
-        
         output?.refreshTableView()
     }
 }

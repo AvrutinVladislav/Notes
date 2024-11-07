@@ -8,24 +8,20 @@
 import UIKit
 import FirebaseDatabase
 
-class CreateOrEditNoteViewController: UIViewController {
+class CreateOrEditNoteViewController: BaseViewController {
     
     //MARK: Public properties
-    
     var state = CreateOrEditNotePresentor.CreateOrEditeNoteState.edit
     var noteID: String?
     var sectionType: NotesSectionsData.SectionsType = .today
     var onFinish: ((_ id: String, _ sectionType: NotesSectionsData.SectionsType) -> Void)?
     
-    //MARK: Outlets
-    
-    @IBOutlet weak var noteTextView: UITextView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
     //MARK: UI
+    private let separator = UIView()
+    private let noteTextView = UITextView()
+    private let activityIndicator = UIActivityIndicatorView()
     
     private lazy var output: CreateOrEditNoteViewOutput? = {
-        
         var presenter = CreateOrEditNotePresentor()
         presenter.state = state
         presenter.noteID = noteID
@@ -33,18 +29,8 @@ class CreateOrEditNoteViewController: UIViewController {
         return presenter
     }()
     
-    init() {
-        super.init(nibName: "CreateOrEditNote", bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupUI()
         output?.viewDidLoad()
     }
     
@@ -54,17 +40,14 @@ class CreateOrEditNoteViewController: UIViewController {
 extension CreateOrEditNoteViewController: CreateOrEditNoteViewInput {
 
     func popNotesViewController() {
-        
         self.navigationController?.popViewController(animated: true)
     }
     
     func setNoteTextView(_ text: String) {
-        
         noteTextView.text = text
     }
     
     func updateID(_ id: String) {
-        
         noteID = id
     }
     
@@ -75,7 +58,6 @@ extension CreateOrEditNoteViewController: CreateOrEditNoteViewInput {
     }
     
     func showAlert(_ title: String, _ message: String) {
-        
         let alert = UIAlertController(title: "\(title)", message: "\(message)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK".localized(), style: .cancel, handler: { [weak self] (action: UIAlertAction) in
             self?.popNotesViewController()
@@ -84,24 +66,30 @@ extension CreateOrEditNoteViewController: CreateOrEditNoteViewInput {
     }
     
     func showIndicator(_ isActive: Bool) {
-        
         if isActive {
             activityIndicator.startAnimating()
         } else {
             activityIndicator.stopAnimating()
         }
     }
-    
     func setSaveButton(_ isActive: Bool) {
-        
         self.navigationItem.rightBarButtonItem?.isEnabled = isActive
     }
 }
 
 //MARK: Private CreateOrEditeNoteViewController
-private extension CreateOrEditNoteViewController {
-    
-    func setupUI() {
+extension CreateOrEditNoteViewController {
+    override func setupUI() {
+        separator.backgroundColor = .black
+        
+        noteTextView.font = .systemFont(ofSize: 18)
+        noteTextView.textAlignment = .left
+        noteTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        noteTextView.layer.cornerRadius = 10
+        noteTextView.layer.borderWidth = 1
+        noteTextView.layer.borderColor = UIColor.black.cgColor
+        noteTextView.textColor = .black
+        noteTextView.backgroundColor = .white
         
         title = state == .create ? "Create a note".localized() : "Edit note".localized()
         navigationItem.rightBarButtonItem = UIBarButtonItem (title: "Save".localized(),
@@ -114,7 +102,28 @@ private extension CreateOrEditNoteViewController {
                                                            target: nil,
                                                            action: nil)
         noteTextView.textContainer.maximumNumberOfLines = 0
-        
+    }
+    
+    override func addSubview() {
+        view.addSubview(separator)
+        view.addSubview(noteTextView)
+        view.addSubview(activityIndicator)
+    }
+    
+    override func addConstraints() {
+        separator.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                         leading: view.leadingAnchor,
+                         bottom: nil,
+                         trailing: view.trailingAnchor,
+                         padding: .init(top: 10, left: 0, bottom: 10, right: 0),
+                         size: .init(width: view.frame.width, height: 2))
+        noteTextView.anchor(top: separator.bottomAnchor,
+                            leading: view.leadingAnchor,
+                            bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                            trailing: view.trailingAnchor,
+                            padding: .init(top: 10, left: 28, bottom: 10, right: -28))
+        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     @objc func saveNoteButtonDidTap() {

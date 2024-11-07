@@ -13,14 +13,11 @@ class NotesPresentor {
     
     private var sections: [NotesSectionsData] = []
     private var deleteNotes: [NotesCellData] = []
-    
 }
 
 //MARK: NotesViewOutput
 extension NotesPresentor: NotesViewOutput {
-    
     func viewDidLoad() {
-        
         setupInitialState()
     }
     
@@ -47,8 +44,7 @@ extension NotesPresentor: NotesViewOutput {
         case .failure:
             view?.showIndicator(false)
             view?.showAlert("Error", Errors.deleteCoredata.errorDescription)
-        }
-        
+        }        
     }
     
     func didSelectCell(_ model: NotesCellData) {
@@ -59,14 +55,11 @@ extension NotesPresentor: NotesViewOutput {
     }
     
     func addNoteButtonDidTap() {
-        
         view?.pushCreateOrEditeViewController(noteID: nil, sectionType: .today)
     }
     
     func singOutButtonDidTap() {
-        
         switch FirebaseManager().signOut() {
-            
         case .success():
             CoredataManager().deleteAllNotes("NotesList")
             view?.popViewController()
@@ -76,16 +69,13 @@ extension NotesPresentor: NotesViewOutput {
     }
     
     func didAddCell(_ id: String, _ sectionType: NotesSectionsData.SectionsType) {
-        
         let result = CoredataManager().fetchData(predicate: NSPredicate(format: "id = %@", id))
         switch result {
         case .success(let note):
-            
             let cell = NotesCellData(id: note.id,
                                      noteText: note.noteText,
                                      date: note.date,
                                      sectionType: .today)
-            
             if let sectionIndex = sections.firstIndex(where: { $0.sectionType == sectionType }) {
                 if let index = sections[sectionIndex].cells.firstIndex(where: { $0.id == cell.id }) {
                     sections[sectionIndex].cells.remove(at: index)
@@ -105,21 +95,14 @@ extension NotesPresentor: NotesViewOutput {
     }
     
     func refreshTableView() {
-
         switch CoredataManager().fetchData() {
-            
         case .success(let cdFetchResult):
-            
             let data = cdFetchResult.map { buildCell(noteText: $0.noteText, date: $0.date, id: $0.id) }
-            
             switch FirebaseManager().updateNote(entities: data) {
-                
             case .success:
                 FirebaseManager().fetchDataFromFB { result in
                     switch result {
-                        
                     case .success(let fbFetchResult):
-                        
                         fbFetchResult.forEach { remoteNote in
                             if !data.contains(where: {$0.id == remoteNote.id}) {
                                 self.updateCoreData(remoteNote: remoteNote)
@@ -143,50 +126,38 @@ extension NotesPresentor: NotesViewOutput {
 
 //MARK: - Private
 private extension NotesPresentor {
-    
     func setupInitialState() {
-        
         deleteNotesFromFBIfNeeded()
         checkChanges()
     }
     
     func buildCell(noteText: String, date: Date, id: String) -> NotesCellData {
-        
         return NotesCellData(id: id, noteText: noteText, date: date)
     }
     
     func sortData() {
-        
         switch CoredataManager().fetchData() {
         case .success(let result):
             let cells = result.sorted(by: { $0.date > $1.date }).map { buildCell(noteText: $0.noteText, date: $0.date, id: $0.id) }
             sections = buildSections(cells: cells)
             view?.reloadTableView(sections: sections)
-            
         case .failure:
             print("Error fetch from firebase when sortData()")
             break
         }
         
         func buildSections(cells: [NotesCellData]) -> [NotesSectionsData] {
-            
             var buildSections: [NotesSectionsData] = []
-            
             func sortDataForSections(by key: NotesSectionsData.SectionsType, item: NotesCellData) {
-                
                 if let index = buildSections.firstIndex(where: { $0.sectionType == key }) {
-                    
                     buildSections[index].cells.append(item)
-                    
                 } else {
-                    
                     let section = NotesSectionsData(sectionType: key, cells: [item])
                     buildSections.append(section)
                 }
             }
             
             for var cell in cells {
-                
                 if cell.date.isToday {
                     cell.sectionType = .today
                     sortDataForSections(by: .today, item: cell)
@@ -211,20 +182,13 @@ private extension NotesPresentor {
     func checkChanges() {
         self.view?.showIndicator(true)
         switch CoredataManager().fetchData() {
-            
         case .success(let cdFetchResult):
-            
             let data = cdFetchResult.map { buildCell(noteText: $0.noteText, date: $0.date, id: $0.id) }
-            
             switch FirebaseManager().updateNote(entities: data) {
-                
             case .success:
                 FirebaseManager().fetchDataFromFB { result in
-                    
                     switch result {
-                        
                     case .success(let fbFetchResult):
-                        
                         fbFetchResult.forEach { remoteNote in
                             if data.contains(where: {$0.id == remoteNote.id}) {
                                 self.updateCoreData(remoteNote: remoteNote)
@@ -250,9 +214,7 @@ private extension NotesPresentor {
     }
     
     func updateCoreData(remoteNote: NotesCellData) {
-        
         switch CoredataManager().updateNote(id: remoteNote.id, note: remoteNote.noteText, date: remoteNote.date) {
-            
         case .success():
             break
         case .failure:
@@ -261,9 +223,7 @@ private extension NotesPresentor {
     }
     
     func addToFireBase(localNote: NotesCellData) {
-        
         switch FirebaseManager().addNote(entity: localNote, id: localNote.id) {
-            
         case .success():
             break
         case .failure:
@@ -272,9 +232,7 @@ private extension NotesPresentor {
     }
     
     func addToCoreDateFromFB(remoteNote: NotesCellData) {
-        
         switch CoredataManager().addNoteFromFB(id: remoteNote.id, note: remoteNote.noteText, date: remoteNote.date) {
-            
         case .success:
             break
         case .failure:
@@ -286,7 +244,6 @@ private extension NotesPresentor {
         //будет проведено удаление данных, которые не удалились из firebase при удалении их из coredata
         deleteNotes.forEach { note in
             switch FirebaseManager().deleteNote(id: note.id) {
-                
             case .success:
                 break
             case .failure:
@@ -298,9 +255,7 @@ private extension NotesPresentor {
   
 //MARK: Errors
 extension NotesPresentor {
-    
     enum Errors: LocalizedError {
-        
         case updateFirebase
         case updateCoredata
         case addFirebase
