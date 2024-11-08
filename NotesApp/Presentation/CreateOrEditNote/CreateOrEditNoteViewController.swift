@@ -19,7 +19,7 @@ class CreateOrEditNoteViewController: BaseViewController {
     //MARK: UI
     private let separator = UIView()
     private let noteTextView = UITextView()
-    private let activityIndicator = UIActivityIndicatorView()
+    private let spinner = UIActivityIndicatorView()
     
     private lazy var output: CreateOrEditNoteViewOutput? = {
         var presenter = CreateOrEditNotePresentor()
@@ -67,9 +67,9 @@ extension CreateOrEditNoteViewController: CreateOrEditNoteViewInput {
     
     func showIndicator(_ isActive: Bool) {
         if isActive {
-            activityIndicator.startAnimating()
+            spinner.startAnimating()
         } else {
-            activityIndicator.stopAnimating()
+            spinner.stopAnimating()
         }
     }
     func setSaveButton(_ isActive: Bool) {
@@ -91,6 +91,8 @@ extension CreateOrEditNoteViewController {
         noteTextView.textColor = .black
         noteTextView.backgroundColor = .white
         
+        spinner.color = .red
+        
         title = state == .create ? "Create a note".localized() : "Edit note".localized()
         navigationItem.rightBarButtonItem = UIBarButtonItem (title: "Save".localized(),
                                                             style: .done,
@@ -107,7 +109,7 @@ extension CreateOrEditNoteViewController {
     override func addSubview() {
         view.addSubview(separator)
         view.addSubview(noteTextView)
-        view.addSubview(activityIndicator)
+        view.addSubview(spinner)
     }
     
     override func addConstraints() {
@@ -122,8 +124,8 @@ extension CreateOrEditNoteViewController {
                             bottom: view.safeAreaLayoutGuide.bottomAnchor,
                             trailing: view.trailingAnchor,
                             padding: .init(top: 10, left: 28, bottom: 10, right: -28))
-        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     @objc func saveNoteButtonDidTap() {

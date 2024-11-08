@@ -27,7 +27,6 @@ class SignUpViewController: BaseViewController {
     private let stackViewContainer = UIStackView()
     private let emailStackViewContainer = UIStackView()
     private let passwordStackViewContainer = UIStackView()
-    private let buttonsStackViewContainer = UIStackView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,16 +75,19 @@ extension SignUpViewController {
         for view in [spinner, errorEmailLabel, emailTextField, passwordTextField,
                      errorPasswordLabel, signUpButton, emailLabel, passwordLabel,
                      signUpLabel, stackViewContainer, emailStackViewContainer,
-                     passwordStackViewContainer, buttonsStackViewContainer] {
+                     passwordStackViewContainer] {
             view.translatesAutoresizingMaskIntoConstraints = false
         }
+        
+        spinner.color = .red
+        
         signUpLabel.font = .systemFont(ofSize: 25, weight: .medium)
         signUpLabel.text = "Sign Up".localized()
         
         stackViewContainer.axis = .vertical
         stackViewContainer.spacing = 20
         
-        for stack in [emailStackViewContainer, passwordStackViewContainer, buttonsStackViewContainer] {
+        for stack in [emailStackViewContainer, passwordStackViewContainer] {
             stack.axis = .vertical
             stack.spacing = 10
         }

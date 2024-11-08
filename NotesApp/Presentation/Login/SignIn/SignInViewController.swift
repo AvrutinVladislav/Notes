@@ -15,7 +15,7 @@ class SignInViewController: BaseViewController {
         return presenter
     }()
     
-    private let spinner = UIActivityIndicatorView()
+    private let spinner = UIActivityIndicatorView(style: .large)
     private let emailTextField = CustomTextField()
     private let errorEmailLabel = UILabel()
     private let passwordTextField = CustomTextField()
@@ -74,24 +74,27 @@ extension SignInViewController: SignInViewInput {
 
 extension SignInViewController {
     override func setupUI() {
+        for view in [spinner, errorEmailLabel, emailTextField, passwordTextField,
+                     errorPasswordLabel, signUpButton, emailLabel, passwordLabel,
+                     signInLabel, stackViewContainer, emailStackViewContainer,
+                     passwordStackViewContainer, buttonsStackViewContainer] {
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+        spinner.color = .red
+        
         signInLabel.font = .systemFont(ofSize: 25, weight: .medium)
         signInLabel.text = "Sign In".localized()
-        signInLabel.translatesAutoresizingMaskIntoConstraints = false
         
         stackViewContainer.axis = .vertical
         stackViewContainer.spacing = 20
-        stackViewContainer.translatesAutoresizingMaskIntoConstraints = false
         
         for stack in [emailStackViewContainer, passwordStackViewContainer, buttonsStackViewContainer] {
             stack.axis = .vertical
             stack.spacing = 10
-            stack.translatesAutoresizingMaskIntoConstraints = false
         }
         
         for label in [emailLabel, passwordLabel] {
             label.font = .systemFont(ofSize: 17)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            
         }
         
         for tf in [emailTextField, passwordTextField] {
@@ -121,13 +124,15 @@ extension SignInViewController {
         passwordLabel.text = "Password".localized()
         
         for button in [signUpButton, signInButton, laterButton] {
-            button.translatesAutoresizingMaskIntoConstraints = false
             button.titleLabel?.font = .systemFont(ofSize: 14)
         }
         
         signUpButton.setTitleColor(.black, for: .normal)
         signUpButton.contentHorizontalAlignment = .leading
-        signUpButton.setTitle("Don't have account? Sing Up".localized(), for: .normal)
+        let text = NSMutableAttributedString(string: "Don't have account? ")
+        let signUp = NSAttributedString(string: "Sign Up", attributes: [.foregroundColor: UIColor.blue, .font: UIFont.systemFont(ofSize: 14, weight: .medium)])
+        text.append(signUp)
+        signUpButton.setAttributedTitle(text, for: .normal)
         signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
         
         signInButton.setTitle("Sign In".localized(), for: .normal)
@@ -172,9 +177,8 @@ extension SignInViewController {
             stackViewContainer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -28),
             
             spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-        
     }
     
     @objc func signUpButtonDidTap(_ sender: UIButton) {
