@@ -92,6 +92,7 @@ extension CreateOrEditNoteViewController {
         noteTextView.backgroundColor = .white
         
         spinner.color = .red
+        spinner.translatesAutoresizingMaskIntoConstraints = false
         
         title = state == .create ? "Create a note".localized() : "Edit note".localized()
         navigationItem.rightBarButtonItem = UIBarButtonItem (title: "Save".localized(),
