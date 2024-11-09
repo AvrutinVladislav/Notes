@@ -21,13 +21,7 @@ class CreateOrEditNoteViewController: BaseViewController {
     private let noteTextView = UITextView()
     private let spinner = UIActivityIndicatorView()
     
-    private lazy var output: CreateOrEditNoteViewOutput? = {
-        var presenter = CreateOrEditNotePresentor()
-        presenter.state = state
-        presenter.noteID = noteID
-        presenter.view = self
-        return presenter
-    }()
+    var output: CreateOrEditNoteViewOutput!
     
     override func viewDidLoad() {
         super.viewDidLoad()

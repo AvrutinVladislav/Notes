@@ -9,11 +9,7 @@ import UIKit
 
 class SignInViewController: BaseViewController {
     
-    private lazy var output: SignInViewOutput? = {
-        let presenter = SignInPresenter()
-        presenter.view = self
-        return presenter
-    }()
+    var output: SignInViewOutput!
     
     private let spinner = UIActivityIndicatorView(style: .large)
     private let emailTextField = CustomTextField()
@@ -52,8 +48,7 @@ extension SignInViewController: SignInViewInput {
     }
     
     func pushNotesViewController() {
-        let notesVC = NotesViewController()
-        self.navigationController?.pushViewController(notesVC, animated: true)
+        self.navigationController?.pushViewController(NotesBuilder.build(), animated: true)
     }
     
     func showAlert(_ title: String, _ message: String) {
@@ -182,7 +177,7 @@ extension SignInViewController {
     }
     
     @objc func signUpButtonDidTap(_ sender: UIButton) {
-        navigationController?.pushViewController(SignUpViewController(), animated: true)
+        navigationController?.pushViewController(SignUpBuilder.build(), animated: true)
     }
     
     @objc func signInButtonDidTap(_ sender: UIButton) {

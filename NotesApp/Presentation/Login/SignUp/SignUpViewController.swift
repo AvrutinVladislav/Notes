@@ -9,11 +9,7 @@ import UIKit
 
 class SignUpViewController: BaseViewController {
     
-    private lazy var output: SignUpViewOutput? = {
-        let presenter = SignUpPresenter()
-        presenter.view = self
-        return presenter
-    }()
+    var output: SignUpViewOutput!
     
     private let spinner = UIActivityIndicatorView()
     private let errorEmailLabel = UILabel()
@@ -50,7 +46,7 @@ extension SignUpViewController: SignUpViewInput {
     }
     
     func pushNotesViewController() {
-        self.navigationController?.pushViewController(NotesViewController(), animated: true)
+        self.navigationController?.pushViewController(NotesBuilder.build(), animated: true)
     }
     
     func showAlert(_ title: String, _ message: String) {

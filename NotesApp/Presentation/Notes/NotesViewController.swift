@@ -8,13 +8,9 @@
 import UIKit
 import CoreData
 
-class NotesViewController: UIViewController {
+class NotesViewController: BaseViewController {
     
-    private lazy var output: NotesViewOutput? = {        
-        let presenter = NotesPresentor()
-        presenter.view = self
-        return presenter
-    }()
+    var output: NotesViewOutput!
     
     private let tableView = UITableView()
     private let separator = UIView()
@@ -23,8 +19,6 @@ class NotesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupUI()
         output?.viewDidLoad()
     }
     
@@ -112,9 +106,9 @@ extension NotesViewController: NotesViewInput {
 }
 
 //MARK: NotesViewController
-private extension NotesViewController {
+extension NotesViewController {
     
-    func setupUI() {
+    override func setupUI() {
         view.backgroundColor = .white
         navigationController?.navigationBar.backgroundColor = .white
         navigationItem.title = "Notes".localized()
@@ -122,7 +116,6 @@ private extension NotesViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
                                                             action: #selector(addNoteButtonDidTap))
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign out".localized(),
                                                            style: .done,
                                                            target: self,
@@ -146,7 +139,6 @@ private extension NotesViewController {
                          size: .init(width: 0, height: 2))
         separator.backgroundColor = .black
 
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(NotesTableViewCell.self, forCellReuseIdentifier: NotesTableViewCell.identifier)
         tableView.separatorStyle = .none
         tableView.dataSource = self
