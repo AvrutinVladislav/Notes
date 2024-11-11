@@ -12,7 +12,6 @@ class NotesTableViewCell: UITableViewCell {
     private let dateLabel = UILabel()
     private let titleLabel = UILabel()
     private let separator = UIView()
-    private var formatter = DateFormatter()
     
     static let identifier = "noteCell"
     
@@ -48,11 +47,8 @@ extension NotesTableViewCell {
 private extension NotesTableViewCell {
     
     func setupUI() {
-        titleLabel.numberOfLines = 1
         titleLabel.font = .boldSystemFont(ofSize: 14)
-        
-        dateLabel.font = .italicSystemFont(ofSize: 12)
-        
+        dateLabel.font = .italicSystemFont(ofSize: 12)        
         separator.backgroundColor = .black
         separator.isHidden = true
     }

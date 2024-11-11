@@ -12,7 +12,7 @@ class CreateOrEditNoteViewController: BaseViewController {
     
     var output: CreateOrEditNoteViewOutput!
     
-    var state = CreateOrEditNotePresentor.CreateOrEditeNoteState.edit
+    var state = CreateOrEditeNoteState.edit
     var noteID: String?
     var sectionType: NotesSectionsData.SectionsType = .today
     var onFinish: ((_ id: String, _ sectionType: NotesSectionsData.SectionsType) -> Void)?

@@ -57,13 +57,15 @@ extension NotesPresentor: NotesViewOutput {
     func didSelectCell(_ model: NotesCellData) {
         if let sectionType = model.sectionType {
             view.pushCreateOrEditeViewController(noteID: model.id,
-                                                  sectionType: sectionType)
+                                                 sectionType: sectionType,
+                                                 state: .edit)
         }
     }
     
     func addNoteButtonDidTap() {
         view.pushCreateOrEditeViewController(noteID: nil,
-                                             sectionType: .today)
+                                             sectionType: .today,
+                                             state: .create)
     }
     
     func singOutButtonDidTap() {

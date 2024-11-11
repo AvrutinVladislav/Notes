@@ -19,10 +19,14 @@ class CreateOrEditNotePresentor {
     
     init(view: CreateOrEditNoteViewInput,
          coreDataManager: CoreDataManager,
-         fbManager: FirebaseManager) {
+         fbManager: FirebaseManager,
+         state: CreateOrEditeNoteState,
+         noteID: String?) {
         self.view = view
         self.coreDataManager = coreDataManager
         self.fbManager = fbManager
+        self.noteID = noteID
+        self.state = state
     }
     
 }
@@ -85,10 +89,7 @@ extension CreateOrEditNotePresentor: CreateOrEditNoteViewOutput {
 }
 
 extension CreateOrEditNotePresentor {
-    enum CreateOrEditeNoteState {
-        case create
-        case edit
-    }
+    
 }
 
 //MARK: Private CreateOrEditNoteViewOutput

@@ -10,9 +10,12 @@ import Foundation
 protocol NotesViewInput: AnyObject {
     
     func reloadTableView(sections: [NotesSectionsData])
-    func pushCreateOrEditeViewController(noteID: String?, sectionType: NotesSectionsData.SectionsType)
+    func pushCreateOrEditeViewController(noteID: String?,
+                                         sectionType: NotesSectionsData.SectionsType,
+                                         state: CreateOrEditeNoteState)
     func popViewController()
-    func showAlert(_ title: String, _ message: String)
+    func showAlert(_ title: String,
+                   _ message: String)
     func showIndicator(_ isActive: Bool)
     func endRefresh()
 }
