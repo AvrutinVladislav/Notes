@@ -9,10 +9,15 @@ import Foundation
 
 class SignInPresenter {
     
-    weak var view: SignInViewInput?
-    
     private var email = ""
     private var password = ""
+    private let fbManager: FirebaseManager
+    private let view: SignInViewInput
+    
+    init(fbManager: FirebaseManager, view: SignInViewInput) {
+        self.fbManager = fbManager
+        self.view = view
+    }
     
 }
 
@@ -32,20 +37,20 @@ extension SignInPresenter: SignInViewOutput {
     }
     
     func laterButtonDidTap() {
-        view?.pushNotesViewController()
+        view.pushNotesViewController()
     }
     
     func signInButtonDidTap() {
         guard validate() else { return }
-        view?.showIndicator(true)
-        FirebaseManager().autorization(email: email, password: password) { [weak self] result in
+        view.showIndicator(true)
+        fbManager.autorization(email: email, password: password) { [weak self] result in
             guard let self = self else { return }
-            self.view?.showIndicator(false)
+            self.view.showIndicator(false)
             switch result {
             case .success(_):
-                self.view?.pushNotesViewController()
+                self.view.pushNotesViewController()
             case .failure(let error):
-                self.view?.showAlert("Error", "\(error.localizedDescription)")
+                self.view.showAlert("Error", "\(error.localizedDescription)")
             }
         }
     }
@@ -59,17 +64,17 @@ private extension SignInPresenter {
     }
     
     func checkAuthUser() {
-        if FirebaseManager.isSignIn() {
-            view?.pushNotesViewController()
+        if fbManager.isSignIn() {
+            view.pushNotesViewController()
         }
     }
     
     @discardableResult
     func validate() -> Bool {        
         let validate = email.isEmail && password.isPassword
-        view?.setErrorEmail(email.isEmail || email.isEmpty)
-        view?.setErrorPassword(password.isPassword || password.isEmpty)
-        view?.enableButtonSignIn(validate)
+        view.setErrorEmail(email.isEmail || email.isEmpty)
+        view.setErrorPassword(password.isPassword || password.isEmpty)
+        view.enableButtonSignIn(validate)
         return validate
     }
     

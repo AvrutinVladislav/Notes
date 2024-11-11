@@ -8,13 +8,9 @@
 import UIKit
 import CoreData
 
-class NotesViewController: UIViewController {
+class NotesViewController: BaseViewController {
     
-    private lazy var output: NotesViewOutput? = {        
-        let presenter = NotesPresentor()
-        presenter.view = self
-        return presenter
-    }()
+    var output: NotesViewOutput!
     
     private let tableView = UITableView()
     private let separator = UIView()
@@ -23,8 +19,6 @@ class NotesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupUI()
         output?.viewDidLoad()
     }
     
@@ -72,11 +66,11 @@ extension NotesViewController: NotesViewInput {
     }
     
     func pushCreateOrEditeViewController(noteID: String?,
-                                         sectionType: NotesSectionsData.SectionsType) {
-        let vc = CreateOrEditNoteViewController()
-        vc.state = noteID == nil ? .create : .edit
-        vc.noteID = noteID
-        vc.sectionType = sectionType
+                                         sectionType: NotesSectionsData.SectionsType,
+                                         state: CreateOrEditeNoteState) {
+        let vc = CreateOrEditNoteBuilder.build(id: noteID,
+                                               sectionType: sectionType,
+                                               state: state)
         vc.onFinish = { [weak self] noteID, sectionType in
             guard let self else { return }
             self.output?.didAddCell(noteID , sectionType)
@@ -112,9 +106,9 @@ extension NotesViewController: NotesViewInput {
 }
 
 //MARK: NotesViewController
-private extension NotesViewController {
+extension NotesViewController {
     
-    func setupUI() {
+    override func setupUI() {
         view.backgroundColor = .white
         navigationController?.navigationBar.backgroundColor = .white
         navigationItem.title = "Notes".localized()
@@ -122,7 +116,6 @@ private extension NotesViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
                                                             action: #selector(addNoteButtonDidTap))
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign out".localized(),
                                                            style: .done,
                                                            target: self,
@@ -130,33 +123,38 @@ private extension NotesViewController {
         if #available(iOS 16.0, *) {
             navigationController?.navigationBar.setNeedsLayout()
         }
-        configureTableView()
+        separator.backgroundColor = .black
+
+        tableView.register(NotesTableViewCell.self, forCellReuseIdentifier: NotesTableViewCell.identifier)
+        tableView.separatorStyle = .none
+        tableView.dataSource = self
+        tableView.delegate = self
+
         refreshControl.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
     }
     
-    func configureTableView() {
+    override func addSubview() {
         view.addSubview(tableView)
         view.addSubview(separator)
         tableView.addSubview(refreshControl)
-
+    }
+    
+    override func addConstraints() {
         separator.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                          leading: view.safeAreaLayoutGuide.leadingAnchor,
                          bottom: tableView.topAnchor,
                          trailing: view.safeAreaLayoutGuide.trailingAnchor,
                          size: .init(width: 0, height: 2))
-        separator.backgroundColor = .black
-
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(NotesTableViewCell.self, forCellReuseIdentifier: NotesTableViewCell.identifier)
-        tableView.separatorStyle = .none
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.rowHeight = 40
+        
         tableView.anchor(top: nil,
                          leading: view.safeAreaLayoutGuide.leadingAnchor,
                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
                          trailing: view.safeAreaLayoutGuide.trailingAnchor)
         
+        tableView.anchor(top: nil,
+                         leading: view.safeAreaLayoutGuide.leadingAnchor,
+                         bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                         trailing: view.safeAreaLayoutGuide.trailingAnchor)
     }
     
     @objc func addNoteButtonDidTap() {

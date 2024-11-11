@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		572665272CDF361600AF2393 /* SignInBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572665262CDF361600AF2393 /* SignInBuilder.swift */; };
+		572665292CDF418800AF2393 /* SignUpBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572665282CDF418800AF2393 /* SignUpBuilder.swift */; };
+		5726652B2CDF45FC00AF2393 /* NotesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5726652A2CDF45FC00AF2393 /* NotesBuilder.swift */; };
+		5726652D2CDF54D400AF2393 /* CreateOrEditNoteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5726652C2CDF54D400AF2393 /* CreateOrEditNoteBuilder.swift */; };
+		5726652F2CDF6D4800AF2393 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5726652E2CDF6D4800AF2393 /* CustomLabel.swift */; };
+		572665322CE21AAF00AF2393 /* SwinjectAutoregistration in Frameworks */ = {isa = PBXBuildFile; productRef = 572665312CE21AAF00AF2393 /* SwinjectAutoregistration */; };
+		572665342CE21AC600AF2393 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572665332CE21AC600AF2393 /* AppContainer.swift */; };
 		57F639102CDB7020000CACE8 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6390F2CDB7020000CACE8 /* BaseViewController.swift */; };
 		57F639122CDB71EA000CACE8 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F639112CDB71EA000CACE8 /* BaseView.swift */; };
 		57F639652CDBA9BD000CACE8 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F639642CDBA9BD000CACE8 /* CustomTextField.swift */; };
@@ -20,7 +27,7 @@
 		8626481228EF1BE1005231EC /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8626481128EF1BE1005231EC /* FirebaseManager.swift */; };
 		8638372C28EED85000DB0407 /* SignInViewOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8638372B28EED85000DB0407 /* SignInViewOutput.swift */; };
 		8638372E28EED85E00DB0407 /* SignInViewInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8638372D28EED85E00DB0407 /* SignInViewInput.swift */; };
-		864495B4290280AB009E63E0 /* CoredataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864495B3290280AB009E63E0 /* CoredataManager.swift */; };
+		864495B4290280AB009E63E0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864495B3290280AB009E63E0 /* CoreDataManager.swift */; };
 		864495B72902B11E009E63E0 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864495B62902B11E009E63E0 /* NotesTableViewCell.swift */; };
 		867D459728FE87A20030EE4E /* Date+Extantion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D459628FE87A20030EE4E /* Date+Extantion.swift */; };
 		868D0E19292B4C1200A66711 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 868D0E18292B4C1200A66711 /* GoogleService-Info.plist */; };
@@ -47,6 +54,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		572665262CDF361600AF2393 /* SignInBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInBuilder.swift; sourceTree = "<group>"; };
+		572665282CDF418800AF2393 /* SignUpBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBuilder.swift; sourceTree = "<group>"; };
+		5726652A2CDF45FC00AF2393 /* NotesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesBuilder.swift; sourceTree = "<group>"; };
+		5726652C2CDF54D400AF2393 /* CreateOrEditNoteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditNoteBuilder.swift; sourceTree = "<group>"; };
+		5726652E2CDF6D4800AF2393 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		572665332CE21AC600AF2393 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		57F6390F2CDB7020000CACE8 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		57F639112CDB71EA000CACE8 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		57F639642CDBA9BD000CACE8 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -61,7 +74,7 @@
 		8626481128EF1BE1005231EC /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		8638372B28EED85000DB0407 /* SignInViewOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewOutput.swift; sourceTree = "<group>"; };
 		8638372D28EED85E00DB0407 /* SignInViewInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewInput.swift; sourceTree = "<group>"; };
-		864495B3290280AB009E63E0 /* CoredataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoredataManager.swift; sourceTree = "<group>"; };
+		864495B3290280AB009E63E0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		864495B62902B11E009E63E0 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
 		867D459628FE87A20030EE4E /* Date+Extantion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extantion.swift"; sourceTree = "<group>"; };
 		868D0E18292B4C1200A66711 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -96,6 +109,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD9E2B52B0FABBFA4F85C9D7 /* Pods_NotesApp.framework in Frameworks */,
+				572665322CE21AAF00AF2393 /* SwinjectAutoregistration in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,6 +141,7 @@
 				8617FB7928F44DC000E36AF6 /* NotesViewOutput.swift */,
 				8617FB7528F44D9800E36AF6 /* NotesViewController.swift */,
 				8617FB7B28F44DDF00E36AF6 /* NotesPresentor.swift */,
+				5726652A2CDF45FC00AF2393 /* NotesBuilder.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -138,6 +153,7 @@
 				8638372D28EED85E00DB0407 /* SignInViewInput.swift */,
 				8638372B28EED85000DB0407 /* SignInViewOutput.swift */,
 				86ABA85428EC12FB00EC96D8 /* SignInPresenter.swift */,
+				572665262CDF361600AF2393 /* SignInBuilder.swift */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -149,6 +165,7 @@
 				861F519E28F045A200A12D0D /* SignUpViewInput.swift */,
 				861F51A028F045D700A12D0D /* SignUpViewOutput.swift */,
 				861F519728F01FD700A12D0D /* SignUpPresenter.swift */,
+				572665282CDF418800AF2393 /* SignUpBuilder.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -178,6 +195,7 @@
 				8697C7F928FD6A84006266E0 /* CreateOrEditNotePresentor.swift */,
 				8697C7FB28FD6A96006266E0 /* CreateOrEditNoteViewInput.swift */,
 				8697C7FD28FD6AA6006266E0 /* CreateOrEditNoteViewOutput.swift */,
+				5726652C2CDF54D400AF2393 /* CreateOrEditNoteBuilder.swift */,
 			);
 			path = CreateOrEditNote;
 			sourceTree = "<group>";
@@ -205,6 +223,7 @@
 			children = (
 				86ABA83128EC0E2500EC96D8 /* AppDelegate.swift */,
 				86ABA83328EC0E2500EC96D8 /* SceneDelegate.swift */,
+				572665332CE21AC600AF2393 /* AppContainer.swift */,
 				86ABA84228EC0E2600EC96D8 /* Info.plist */,
 				86ABA84B28EC11A900EC96D8 /* Business Logic */,
 				86ABA84A28EC119D00EC96D8 /* Presentation */,
@@ -243,7 +262,7 @@
 				868D0E18292B4C1200A66711 /* GoogleService-Info.plist */,
 				86ABA83A28EC0E2500EC96D8 /* NotesApp.xcdatamodeld */,
 				8626481128EF1BE1005231EC /* FirebaseManager.swift */,
-				864495B3290280AB009E63E0 /* CoredataManager.swift */,
+				864495B3290280AB009E63E0 /* CoreDataManager.swift */,
 			);
 			path = "Business Logic";
 			sourceTree = "<group>";
@@ -255,6 +274,7 @@
 				8697C7FF28FD7033006266E0 /* UIView+Extention.swift */,
 				867D459628FE87A20030EE4E /* Date+Extantion.swift */,
 				57F639642CDBA9BD000CACE8 /* CustomTextField.swift */,
+				5726652E2CDF6D4800AF2393 /* CustomLabel.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -332,6 +352,9 @@
 				Base,
 			);
 			mainGroup = 86ABA82528EC0E2500EC96D8;
+			packageReferences = (
+				572665302CE21AAF00AF2393 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */,
+			);
 			productRefGroup = 86ABA82F28EC0E2500EC96D8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -407,6 +430,7 @@
 				8617FB7C28F44DDF00E36AF6 /* NotesPresentor.swift in Sources */,
 				57F639102CDB7020000CACE8 /* BaseViewController.swift in Sources */,
 				869AEE0628F8563F00A8F175 /* NotesSectionsData.swift in Sources */,
+				572665292CDF418800AF2393 /* SignUpBuilder.swift in Sources */,
 				861F519F28F045A200A12D0D /* SignUpViewInput.swift in Sources */,
 				8697C7F328FD46CB006266E0 /* NotesList+CoreDataClass.swift in Sources */,
 				86ABA85528EC12FB00EC96D8 /* SignInPresenter.swift in Sources */,
@@ -417,19 +441,24 @@
 				8638372E28EED85E00DB0407 /* SignInViewInput.swift in Sources */,
 				86ABA85728EC132C00EC96D8 /* SignUpViewController.swift in Sources */,
 				86ABA83628EC0E2500EC96D8 /* SignInViewController.swift in Sources */,
-				864495B4290280AB009E63E0 /* CoredataManager.swift in Sources */,
+				5726652B2CDF45FC00AF2393 /* NotesBuilder.swift in Sources */,
+				864495B4290280AB009E63E0 /* CoreDataManager.swift in Sources */,
 				8697C7F228FD46CB006266E0 /* NotesList+CoreDataProperties.swift in Sources */,
 				861F519828F01FD700A12D0D /* SignUpPresenter.swift in Sources */,
+				5726652F2CDF6D4800AF2393 /* CustomLabel.swift in Sources */,
 				869AEE0828F8567A00A8F175 /* NotesCellData.swift in Sources */,
 				86ABA85028EC126100EC96D8 /* Login.swift in Sources */,
 				86ABA83228EC0E2500EC96D8 /* AppDelegate.swift in Sources */,
 				867D459728FE87A20030EE4E /* Date+Extantion.swift in Sources */,
+				572665342CE21AC600AF2393 /* AppContainer.swift in Sources */,
 				57F639652CDBA9BD000CACE8 /* CustomTextField.swift in Sources */,
 				8697C80028FD7033006266E0 /* UIView+Extention.swift in Sources */,
+				572665272CDF361600AF2393 /* SignInBuilder.swift in Sources */,
 				8638372C28EED85000DB0407 /* SignInViewOutput.swift in Sources */,
 				864495B72902B11E009E63E0 /* NotesTableViewCell.swift in Sources */,
 				8617FB7628F44D9800E36AF6 /* NotesViewController.swift in Sources */,
 				86ABA83428EC0E2500EC96D8 /* SceneDelegate.swift in Sources */,
+				5726652D2CDF54D400AF2393 /* CreateOrEditNoteBuilder.swift in Sources */,
 				86ABA85928EC444000EC96D8 /* String+Extension.swift in Sources */,
 				86ABA83C28EC0E2500EC96D8 /* NotesApp.xcdatamodeld in Sources */,
 				8697C7FC28FD6A96006266E0 /* CreateOrEditNoteViewInput.swift in Sources */,
@@ -645,6 +674,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		572665302CE21AAF00AF2393 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/SwinjectAutoregistration";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		572665312CE21AAF00AF2393 /* SwinjectAutoregistration */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 572665302CE21AAF00AF2393 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */;
+			productName = SwinjectAutoregistration;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		86ABA83A28EC0E2500EC96D8 /* NotesApp.xcdatamodeld */ = {

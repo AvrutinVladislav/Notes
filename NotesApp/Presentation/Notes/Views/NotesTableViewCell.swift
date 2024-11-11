@@ -12,13 +12,14 @@ class NotesTableViewCell: UITableViewCell {
     private let dateLabel = UILabel()
     private let titleLabel = UILabel()
     private let separator = UIView()
-    private var formatter = DateFormatter()
     
     static let identifier = "noteCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
+        addSubview()
+        addConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -31,14 +32,10 @@ class NotesTableViewCell: UITableViewCell {
 extension NotesTableViewCell {
     
     func configure(model: NotesCellData, cellsCount: Int) {
-        
         titleLabel.text = model.noteText
-        
         if let sectionType = model.sectionType {
-            
             dateLabel.text = dateToString(date: model.date, type: sectionType)
         }
-        
         if cellsCount >= 2 {
             separator.isHidden = false
         }
@@ -50,19 +47,19 @@ extension NotesTableViewCell {
 private extension NotesTableViewCell {
     
     func setupUI() {
-        
-        titleLabel.numberOfLines = 1
         titleLabel.font = .boldSystemFont(ofSize: 14)
-        
-        dateLabel.font = .italicSystemFont(ofSize: 10)
-        
+        dateLabel.font = .italicSystemFont(ofSize: 12)        
         separator.backgroundColor = .black
         separator.isHidden = true
-        
+    }
+    
+    func addSubview() {
         contentView.addSubview(titleLabel)
         contentView.addSubview(dateLabel)
         contentView.addSubview(separator)
-        
+    }
+    
+    func addConstraints() {
         titleLabel.anchor(top: safeAreaLayoutGuide.topAnchor,
                           leading: safeAreaLayoutGuide.leadingAnchor,
                           bottom: nil,
@@ -84,12 +81,9 @@ private extension NotesTableViewCell {
     }
     
     func dateToString(date: Date, type: NotesSectionsData.SectionsType) -> String {
-        
         let dateString: String
         let formatter = DateFormatter()
-        
         switch type {
-            
         case .today:
             formatter.dateFormat = "HH:mm d MMM y"
             dateString = formatter.string(from: date)
@@ -99,7 +93,7 @@ private extension NotesTableViewCell {
             dateString = formatter.string(from: date)
             return dateString
         case .week:
-            formatter.dateFormat = "EEEE d M y HH:mm"
+            formatter.dateFormat = "EEEE d MMM y HH:mm"
             dateString = formatter.string(from: date)
             return dateString
         case .mounth:

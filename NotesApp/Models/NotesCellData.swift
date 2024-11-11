@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum CreateOrEditeNoteState {
+    case create
+    case edit
+}
+
 struct NotesCellData {
     
     var id: String

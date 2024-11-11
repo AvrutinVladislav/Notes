@@ -11,47 +11,28 @@ import FirebaseFirestore
 import FirebaseDatabase
 import Firebase
 
-final class FirebaseManager {
+protocol FirebaseManager {
+    func currentUser() -> String
+    func isSignIn() -> Bool
+    func registration(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> Void)
+    func autorization(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> Void)
+    func signOut() -> Result<Void,Error>
+    func addNote<T: Encodable>(entity: T, id: String) -> Result<Void, Error>
+    func deleteNote(id: String) -> Result<Void, Error>
+    func deleteAllNotes()
+    func updateNote<T: Encodable>(entity: T, id: String) -> Result<Void, Error>
+    func updateNotes<T: Encodable>(entities: [T]) -> Result<Void, Error>
+    func fetchDataFromFB(completion: @escaping (Result<[NotesCellData], Error>) -> Void)
+}
+
+final class FirebaseManagerImpl: FirebaseManager {
     
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
     
-    enum FBError: LocalizedError {
-        
-        case encodeError
-        case unauthorized
-        case deleteFromFB
-        case loadError
-        case decodeError
-        case createError
-        case autorization
-        case createAccount
-        
-        var errorDescription: String? {
-            switch self {
-            case .encodeError:
-                return "Failed to encode data".localized()
-            case .unauthorized:
-                return "User is not authorized".localized()
-            case .deleteFromFB:
-                return "Error removing from FireBase".localized()
-            case .loadError:
-                return "Error loading from FireBase".localized()
-            case .decodeError:
-                return "Failde to decode data".localized()
-            case .createError:
-                return "Failed to create data".localized()
-            case .autorization:
-                return "Failed to autorization user".localized()
-            case .createAccount:
-                return "Failed to create account"
-            }
-        }
-    }
-    
     private let ref = Database.database().reference()
     
-    static func currentUser() -> String {
+    func currentUser() -> String {
         
         if Auth.auth().currentUser != nil {
             return Auth.auth().currentUser?.email ?? ""
@@ -60,7 +41,7 @@ final class FirebaseManager {
         }
     }
     
-    static func isSignIn() -> Bool {
+    func isSignIn() -> Bool {
         
         if Auth.auth().currentUser != nil {
             return true
@@ -166,7 +147,7 @@ final class FirebaseManager {
         return .failure(FBError.unauthorized)
     }
     
-    func updateNote<T: Encodable>(entities: [T]) -> Result<Void, Error> {
+    func updateNotes<T: Encodable>(entities: [T]) -> Result<Void, Error> {
 
         if let userID = Auth.auth().currentUser?.uid {
             do {
@@ -227,3 +208,35 @@ final class FirebaseManager {
     
 }
 
+enum FBError: LocalizedError {
+    
+    case encodeError
+    case unauthorized
+    case deleteFromFB
+    case loadError
+    case decodeError
+    case createError
+    case autorization
+    case createAccount
+    
+    var errorDescription: String? {
+        switch self {
+        case .encodeError:
+            return "Failed to encode data".localized()
+        case .unauthorized:
+            return "User is not authorized".localized()
+        case .deleteFromFB:
+            return "Error removing from FireBase".localized()
+        case .loadError:
+            return "Error loading from FireBase".localized()
+        case .decodeError:
+            return "Failde to decode data".localized()
+        case .createError:
+            return "Failed to create data".localized()
+        case .autorization:
+            return "Failed to autorization user".localized()
+        case .createAccount:
+            return "Failed to create account"
+        }
+    }
+}

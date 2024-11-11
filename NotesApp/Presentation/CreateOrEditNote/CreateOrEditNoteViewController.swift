@@ -10,24 +10,16 @@ import FirebaseDatabase
 
 class CreateOrEditNoteViewController: BaseViewController {
     
-    //MARK: Public properties
-    var state = CreateOrEditNotePresentor.CreateOrEditeNoteState.edit
+    var output: CreateOrEditNoteViewOutput!
+    
+    var state = CreateOrEditeNoteState.edit
     var noteID: String?
     var sectionType: NotesSectionsData.SectionsType = .today
     var onFinish: ((_ id: String, _ sectionType: NotesSectionsData.SectionsType) -> Void)?
     
-    //MARK: UI
     private let separator = UIView()
     private let noteTextView = UITextView()
     private let spinner = UIActivityIndicatorView()
-    
-    private lazy var output: CreateOrEditNoteViewOutput? = {
-        var presenter = CreateOrEditNotePresentor()
-        presenter.state = state
-        presenter.noteID = noteID
-        presenter.view = self
-        return presenter
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,7 +123,7 @@ extension CreateOrEditNoteViewController {
     
     @objc func saveNoteButtonDidTap() {
         
-        output?.saveNoteButtonDidTap(noteTextView.text)
+        output.saveNoteButtonDidTap(noteTextView.text)
     }
     
 }
