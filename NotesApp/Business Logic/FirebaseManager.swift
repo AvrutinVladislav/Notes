@@ -51,9 +51,7 @@ final class FirebaseManagerImpl: FirebaseManager {
     }
     
     func registration(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
-
-         Auth.auth().createUser(withEmail: email, password: password) { [weak self] (result, error) in
-
+         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             let db = Firestore.firestore()
             if let result = result {
                 db.collection("Users").addDocument(data: [
@@ -63,29 +61,23 @@ final class FirebaseManagerImpl: FirebaseManager {
                 completion(.success(result))
             }
             else if let error = error {
-
                 completion(.failure(error))
             }
         }
     }
     
     func autorization(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
-        
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (result, error) in
-            
+        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if let result = result {
-                
                 completion(.success(result))
             }
             else if let error = error {
-                
                 completion(.failure(error))
             }
         }
     }
     
     func signOut() -> Result<Void,Error> {
-        
         do {
             try Auth.auth().signOut()
             return .success(())
@@ -95,9 +87,7 @@ final class FirebaseManagerImpl: FirebaseManager {
     }
     
     func addNote<T: Encodable>(entity: T, id: String) -> Result<Void, Error> {
-        
         if let userID = Auth.auth().currentUser?.uid {
-            
             do {
                 let data = try encoder.encode(entity)
                 guard let dict = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
@@ -113,9 +103,7 @@ final class FirebaseManagerImpl: FirebaseManager {
     }
     
     func deleteNote(id: String) -> Result<Void, Error> {
-        
        if let userID = Auth.auth().currentUser?.uid {
-            
             ref.child(userID).child(id).removeValue()
            return .success(())
         }
@@ -123,16 +111,13 @@ final class FirebaseManagerImpl: FirebaseManager {
     }
     
     func deleteAllNotes() {
-        
         if let userID = Auth.auth().currentUser?.uid {
             ref.child(userID).removeValue()
         }
     }
     
     func updateNote<T: Encodable>(entity: T, id: String) -> Result<Void, Error> {
-
         if let userID = Auth.auth().currentUser?.uid {
-            
             do {
                 let data = try encoder.encode(entity)
                 guard let dict = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
@@ -148,7 +133,6 @@ final class FirebaseManagerImpl: FirebaseManager {
     }
     
     func updateNotes<T: Encodable>(entities: [T]) -> Result<Void, Error> {
-
         if let userID = Auth.auth().currentUser?.uid {
             do {
                 let dataEncode = try encoder.encode(entities)
@@ -173,11 +157,8 @@ final class FirebaseManagerImpl: FirebaseManager {
     }
     
     func fetchDataFromFB(completion: @escaping (Result<[NotesCellData], Error>) -> Void) {
-        
         if let userID = Auth.auth().currentUser?.uid {
-            
-            ref.child(userID).getData { error, snapshot in
-                
+            ref.child(userID).getData { error, snapshot in                
                 if let error = error {
                     completion(.failure(error))
                 } else {
