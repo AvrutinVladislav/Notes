@@ -10,7 +10,7 @@ import Foundation
 final class SignInBuilder {
     class func build() -> SignInViewController {
         let view = SignInViewController()
-        let fbManager = FirebaseManagerImpl()
+        let fbManager: FirebaseManager = AppContainer.shared.inject()
         let presenter = SignInPresenter(fbManager: fbManager,
                                         view: view)
         view.output = presenter

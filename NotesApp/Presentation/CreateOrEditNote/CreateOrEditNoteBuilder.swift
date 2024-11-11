@@ -10,8 +10,8 @@ import Foundation
 final class CreateOrEditNoteBuilder {
     class func build() -> CreateOrEditNoteViewController {
         let view = CreateOrEditNoteViewController()
-        let fbManager = FirebaseManagerImpl()
-        let coreDataManager = CoreDataManagerImpl()
+        let fbManager: FirebaseManager = AppContainer.shared.inject()
+        let coreDataManager: CoreDataManager = AppContainer.shared.inject()
         let presenter = CreateOrEditNotePresentor(view: view,
                                                   coreDataManager: coreDataManager,
                                                   fbManager: fbManager)

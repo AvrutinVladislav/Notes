@@ -10,8 +10,8 @@ import Foundation
 final class NotesBuilder {
     class func build() -> NotesViewController {
         let view = NotesViewController()
-        let fbManager = FirebaseManagerImpl()
-        let coreDataManager = CoreDataManagerImpl()
+        let fbManager: FirebaseManager = AppContainer.shared.inject()
+        let coreDataManager: CoreDataManager = AppContainer.shared.inject()
         let presenter = NotesPresentor(view: view,
                                        coreDataManager: coreDataManager,
                                        fbManager: fbManager)

@@ -10,12 +10,12 @@ import CoreData
 
 class CreateOrEditNotePresentor {
     
-    var state = CreateOrEditeNoteState.create
-    var noteID: String?
-    
     private var view: CreateOrEditNoteViewInput
     private let coreDataManager: CoreDataManager
     private let fbManager: FirebaseManager
+    
+    var state = CreateOrEditeNoteState.create
+    var noteID: String?
     
     init(view: CreateOrEditNoteViewInput,
          coreDataManager: CoreDataManager,

@@ -67,7 +67,7 @@ extension NotesViewController: NotesViewInput {
     
     func pushCreateOrEditeViewController(noteID: String?,
                                          sectionType: NotesSectionsData.SectionsType) {
-        let vc = CreateOrEditNoteViewController()
+        let vc = CreateOrEditNoteBuilder.build()
         vc.state = noteID == nil ? .create : .edit
         vc.noteID = noteID
         vc.sectionType = sectionType
