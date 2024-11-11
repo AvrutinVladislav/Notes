@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		572665272CDF361600AF2393 /* SignInBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572665262CDF361600AF2393 /* SignInBuilder.swift */; };
+		572665292CDF418800AF2393 /* SignUpBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572665282CDF418800AF2393 /* SignUpBuilder.swift */; };
+		5726652B2CDF45FC00AF2393 /* NotesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5726652A2CDF45FC00AF2393 /* NotesBuilder.swift */; };
+		5726652D2CDF54D400AF2393 /* CreateOrEditNoteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5726652C2CDF54D400AF2393 /* CreateOrEditNoteBuilder.swift */; };
+		5726652F2CDF6D4800AF2393 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5726652E2CDF6D4800AF2393 /* CustomLabel.swift */; };
+		572665322CE21AAF00AF2393 /* SwinjectAutoregistration in Frameworks */ = {isa = PBXBuildFile; productRef = 572665312CE21AAF00AF2393 /* SwinjectAutoregistration */; };
+		572665342CE21AC600AF2393 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572665332CE21AC600AF2393 /* AppContainer.swift */; };
+		57F639102CDB7020000CACE8 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6390F2CDB7020000CACE8 /* BaseViewController.swift */; };
+		57F639122CDB71EA000CACE8 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F639112CDB71EA000CACE8 /* BaseView.swift */; };
+		57F639652CDBA9BD000CACE8 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F639642CDBA9BD000CACE8 /* CustomTextField.swift */; };
 		8617FB7628F44D9800E36AF6 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8617FB7528F44D9800E36AF6 /* NotesViewController.swift */; };
 		8617FB7828F44DAE00E36AF6 /* NotesViewInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8617FB7728F44DAE00E36AF6 /* NotesViewInput.swift */; };
 		8617FB7A28F44DC000E36AF6 /* NotesViewOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8617FB7928F44DC000E36AF6 /* NotesViewOutput.swift */; };
@@ -17,11 +27,10 @@
 		8626481228EF1BE1005231EC /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8626481128EF1BE1005231EC /* FirebaseManager.swift */; };
 		8638372C28EED85000DB0407 /* SignInViewOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8638372B28EED85000DB0407 /* SignInViewOutput.swift */; };
 		8638372E28EED85E00DB0407 /* SignInViewInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8638372D28EED85E00DB0407 /* SignInViewInput.swift */; };
-		864495B4290280AB009E63E0 /* CoredataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864495B3290280AB009E63E0 /* CoredataManager.swift */; };
+		864495B4290280AB009E63E0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864495B3290280AB009E63E0 /* CoreDataManager.swift */; };
 		864495B72902B11E009E63E0 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864495B62902B11E009E63E0 /* NotesTableViewCell.swift */; };
 		867D459728FE87A20030EE4E /* Date+Extantion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D459628FE87A20030EE4E /* Date+Extantion.swift */; };
 		868D0E19292B4C1200A66711 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 868D0E18292B4C1200A66711 /* GoogleService-Info.plist */; };
-		8690A94829195150005C2DF7 /* CreateOrEditNote.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8690A94729195150005C2DF7 /* CreateOrEditNote.xib */; };
 		8697C7F228FD46CB006266E0 /* NotesList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697C7F028FD46CB006266E0 /* NotesList+CoreDataProperties.swift */; };
 		8697C7F328FD46CB006266E0 /* NotesList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697C7F128FD46CB006266E0 /* NotesList+CoreDataClass.swift */; };
 		8697C7F728FD6A6D006266E0 /* CreateOrEditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697C7F528FD6A6D006266E0 /* CreateOrEditNoteViewController.swift */; };
@@ -34,7 +43,6 @@
 		86ABA83228EC0E2500EC96D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ABA83128EC0E2500EC96D8 /* AppDelegate.swift */; };
 		86ABA83428EC0E2500EC96D8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ABA83328EC0E2500EC96D8 /* SceneDelegate.swift */; };
 		86ABA83628EC0E2500EC96D8 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ABA83528EC0E2500EC96D8 /* SignInViewController.swift */; };
-		86ABA83928EC0E2500EC96D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86ABA83728EC0E2500EC96D8 /* Main.storyboard */; };
 		86ABA83C28EC0E2500EC96D8 /* NotesApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86ABA83A28EC0E2500EC96D8 /* NotesApp.xcdatamodeld */; };
 		86ABA83E28EC0E2600EC96D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86ABA83D28EC0E2600EC96D8 /* Assets.xcassets */; };
 		86ABA84128EC0E2600EC96D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86ABA83F28EC0E2600EC96D8 /* LaunchScreen.storyboard */; };
@@ -46,6 +54,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		572665262CDF361600AF2393 /* SignInBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInBuilder.swift; sourceTree = "<group>"; };
+		572665282CDF418800AF2393 /* SignUpBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBuilder.swift; sourceTree = "<group>"; };
+		5726652A2CDF45FC00AF2393 /* NotesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesBuilder.swift; sourceTree = "<group>"; };
+		5726652C2CDF54D400AF2393 /* CreateOrEditNoteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditNoteBuilder.swift; sourceTree = "<group>"; };
+		5726652E2CDF6D4800AF2393 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		572665332CE21AC600AF2393 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		57F6390F2CDB7020000CACE8 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		57F639112CDB71EA000CACE8 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		57F639642CDBA9BD000CACE8 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		7EEDC22DD646856165E20AF9 /* Pods-NotesApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotesApp.release.xcconfig"; path = "Target Support Files/Pods-NotesApp/Pods-NotesApp.release.xcconfig"; sourceTree = "<group>"; };
 		8617FB7528F44D9800E36AF6 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		8617FB7728F44DAE00E36AF6 /* NotesViewInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewInput.swift; sourceTree = "<group>"; };
@@ -57,11 +74,10 @@
 		8626481128EF1BE1005231EC /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		8638372B28EED85000DB0407 /* SignInViewOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewOutput.swift; sourceTree = "<group>"; };
 		8638372D28EED85E00DB0407 /* SignInViewInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewInput.swift; sourceTree = "<group>"; };
-		864495B3290280AB009E63E0 /* CoredataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoredataManager.swift; sourceTree = "<group>"; };
+		864495B3290280AB009E63E0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		864495B62902B11E009E63E0 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
 		867D459628FE87A20030EE4E /* Date+Extantion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extantion.swift"; sourceTree = "<group>"; };
 		868D0E18292B4C1200A66711 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
-		8690A94729195150005C2DF7 /* CreateOrEditNote.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateOrEditNote.xib; sourceTree = "<group>"; };
 		8697C7F028FD46CB006266E0 /* NotesList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotesList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8697C7F128FD46CB006266E0 /* NotesList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotesList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		8697C7F528FD6A6D006266E0 /* CreateOrEditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditNoteViewController.swift; sourceTree = "<group>"; };
@@ -75,7 +91,6 @@
 		86ABA83128EC0E2500EC96D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86ABA83328EC0E2500EC96D8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		86ABA83528EC0E2500EC96D8 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
-		86ABA83828EC0E2500EC96D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		86ABA83B28EC0E2500EC96D8 /* NotesApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NotesApp.xcdatamodel; sourceTree = "<group>"; };
 		86ABA83D28EC0E2600EC96D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86ABA84028EC0E2600EC96D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -94,6 +109,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD9E2B52B0FABBFA4F85C9D7 /* Pods_NotesApp.framework in Frameworks */,
+				572665322CE21AAF00AF2393 /* SwinjectAutoregistration in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +124,26 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		572665372CE2326800AF2393 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				86ABA83128EC0E2500EC96D8 /* AppDelegate.swift */,
+				86ABA83328EC0E2500EC96D8 /* SceneDelegate.swift */,
+				572665332CE21AC600AF2393 /* AppContainer.swift */,
+				86ABA84228EC0E2600EC96D8 /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		57F6390E2CDB7004000CACE8 /* BaseViews */ = {
+			isa = PBXGroup;
+			children = (
+				57F6390F2CDB7020000CACE8 /* BaseViewController.swift */,
+				57F639112CDB71EA000CACE8 /* BaseView.swift */,
+			);
+			path = BaseViews;
+			sourceTree = "<group>";
+		};
 		8617FB7428F44D7100E36AF6 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +152,7 @@
 				8617FB7928F44DC000E36AF6 /* NotesViewOutput.swift */,
 				8617FB7528F44D9800E36AF6 /* NotesViewController.swift */,
 				8617FB7B28F44DDF00E36AF6 /* NotesPresentor.swift */,
+				5726652A2CDF45FC00AF2393 /* NotesBuilder.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -127,6 +164,7 @@
 				8638372D28EED85E00DB0407 /* SignInViewInput.swift */,
 				8638372B28EED85000DB0407 /* SignInViewOutput.swift */,
 				86ABA85428EC12FB00EC96D8 /* SignInPresenter.swift */,
+				572665262CDF361600AF2393 /* SignInBuilder.swift */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -138,6 +176,7 @@
 				861F519E28F045A200A12D0D /* SignUpViewInput.swift */,
 				861F51A028F045D700A12D0D /* SignUpViewOutput.swift */,
 				861F519728F01FD700A12D0D /* SignUpPresenter.swift */,
+				572665282CDF418800AF2393 /* SignUpBuilder.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -167,7 +206,7 @@
 				8697C7F928FD6A84006266E0 /* CreateOrEditNotePresentor.swift */,
 				8697C7FB28FD6A96006266E0 /* CreateOrEditNoteViewInput.swift */,
 				8697C7FD28FD6AA6006266E0 /* CreateOrEditNoteViewOutput.swift */,
-				8690A94729195150005C2DF7 /* CreateOrEditNote.xib */,
+				5726652C2CDF54D400AF2393 /* CreateOrEditNoteBuilder.swift */,
 			);
 			path = CreateOrEditNote;
 			sourceTree = "<group>";
@@ -193,9 +232,7 @@
 		86ABA83028EC0E2500EC96D8 /* NotesApp */ = {
 			isa = PBXGroup;
 			children = (
-				86ABA83128EC0E2500EC96D8 /* AppDelegate.swift */,
-				86ABA83328EC0E2500EC96D8 /* SceneDelegate.swift */,
-				86ABA84228EC0E2600EC96D8 /* Info.plist */,
+				572665372CE2326800AF2393 /* App */,
 				86ABA84B28EC11A900EC96D8 /* Business Logic */,
 				86ABA84A28EC119D00EC96D8 /* Presentation */,
 				86ABA84928EC119200EC96D8 /* Models */,
@@ -218,10 +255,10 @@
 		86ABA84A28EC119D00EC96D8 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				57F6390E2CDB7004000CACE8 /* BaseViews */,
 				8697C7F428FD6A06006266E0 /* CreateOrEditNote */,
 				8617FB7428F44D7100E36AF6 /* Notes */,
 				86ABA84E28EC123500EC96D8 /* Login */,
-				86ABA83728EC0E2500EC96D8 /* Main.storyboard */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -233,7 +270,7 @@
 				868D0E18292B4C1200A66711 /* GoogleService-Info.plist */,
 				86ABA83A28EC0E2500EC96D8 /* NotesApp.xcdatamodeld */,
 				8626481128EF1BE1005231EC /* FirebaseManager.swift */,
-				864495B3290280AB009E63E0 /* CoredataManager.swift */,
+				864495B3290280AB009E63E0 /* CoreDataManager.swift */,
 			);
 			path = "Business Logic";
 			sourceTree = "<group>";
@@ -244,6 +281,8 @@
 				86ABA85828EC444000EC96D8 /* String+Extension.swift */,
 				8697C7FF28FD7033006266E0 /* UIView+Extention.swift */,
 				867D459628FE87A20030EE4E /* Date+Extantion.swift */,
+				57F639642CDBA9BD000CACE8 /* CustomTextField.swift */,
+				5726652E2CDF6D4800AF2393 /* CustomLabel.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -321,6 +360,9 @@
 				Base,
 			);
 			mainGroup = 86ABA82528EC0E2500EC96D8;
+			packageReferences = (
+				572665302CE21AAF00AF2393 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */,
+			);
 			productRefGroup = 86ABA82F28EC0E2500EC96D8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -336,9 +378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86ABA84128EC0E2600EC96D8 /* LaunchScreen.storyboard in Resources */,
-				8690A94829195150005C2DF7 /* CreateOrEditNote.xib in Resources */,
 				86ABA83E28EC0E2600EC96D8 /* Assets.xcassets in Resources */,
-				86ABA83928EC0E2500EC96D8 /* Main.storyboard in Resources */,
 				868D0E19292B4C1200A66711 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -396,7 +436,9 @@
 				8617FB7828F44DAE00E36AF6 /* NotesViewInput.swift in Sources */,
 				8697C7FE28FD6AA6006266E0 /* CreateOrEditNoteViewOutput.swift in Sources */,
 				8617FB7C28F44DDF00E36AF6 /* NotesPresentor.swift in Sources */,
+				57F639102CDB7020000CACE8 /* BaseViewController.swift in Sources */,
 				869AEE0628F8563F00A8F175 /* NotesSectionsData.swift in Sources */,
+				572665292CDF418800AF2393 /* SignUpBuilder.swift in Sources */,
 				861F519F28F045A200A12D0D /* SignUpViewInput.swift in Sources */,
 				8697C7F328FD46CB006266E0 /* NotesList+CoreDataClass.swift in Sources */,
 				86ABA85528EC12FB00EC96D8 /* SignInPresenter.swift in Sources */,
@@ -407,35 +449,34 @@
 				8638372E28EED85E00DB0407 /* SignInViewInput.swift in Sources */,
 				86ABA85728EC132C00EC96D8 /* SignUpViewController.swift in Sources */,
 				86ABA83628EC0E2500EC96D8 /* SignInViewController.swift in Sources */,
-				864495B4290280AB009E63E0 /* CoredataManager.swift in Sources */,
+				5726652B2CDF45FC00AF2393 /* NotesBuilder.swift in Sources */,
+				864495B4290280AB009E63E0 /* CoreDataManager.swift in Sources */,
 				8697C7F228FD46CB006266E0 /* NotesList+CoreDataProperties.swift in Sources */,
 				861F519828F01FD700A12D0D /* SignUpPresenter.swift in Sources */,
+				5726652F2CDF6D4800AF2393 /* CustomLabel.swift in Sources */,
 				869AEE0828F8567A00A8F175 /* NotesCellData.swift in Sources */,
 				86ABA85028EC126100EC96D8 /* Login.swift in Sources */,
 				86ABA83228EC0E2500EC96D8 /* AppDelegate.swift in Sources */,
 				867D459728FE87A20030EE4E /* Date+Extantion.swift in Sources */,
+				572665342CE21AC600AF2393 /* AppContainer.swift in Sources */,
+				57F639652CDBA9BD000CACE8 /* CustomTextField.swift in Sources */,
 				8697C80028FD7033006266E0 /* UIView+Extention.swift in Sources */,
+				572665272CDF361600AF2393 /* SignInBuilder.swift in Sources */,
 				8638372C28EED85000DB0407 /* SignInViewOutput.swift in Sources */,
 				864495B72902B11E009E63E0 /* NotesTableViewCell.swift in Sources */,
 				8617FB7628F44D9800E36AF6 /* NotesViewController.swift in Sources */,
 				86ABA83428EC0E2500EC96D8 /* SceneDelegate.swift in Sources */,
+				5726652D2CDF54D400AF2393 /* CreateOrEditNoteBuilder.swift in Sources */,
 				86ABA85928EC444000EC96D8 /* String+Extension.swift in Sources */,
 				86ABA83C28EC0E2500EC96D8 /* NotesApp.xcdatamodeld in Sources */,
 				8697C7FC28FD6A96006266E0 /* CreateOrEditNoteViewInput.swift in Sources */,
+				57F639122CDB71EA000CACE8 /* BaseView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		86ABA83728EC0E2500EC96D8 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				86ABA83828EC0E2500EC96D8 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		86ABA83F28EC0E2600EC96D8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -572,10 +613,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = NotesApp/Info.plist;
+				INFOPLIST_FILE = NotesApp/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
@@ -601,10 +641,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = NotesApp/Info.plist;
+				INFOPLIST_FILE = NotesApp/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
@@ -643,6 +682,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		572665302CE21AAF00AF2393 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/SwinjectAutoregistration";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		572665312CE21AAF00AF2393 /* SwinjectAutoregistration */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 572665302CE21AAF00AF2393 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */;
+			productName = SwinjectAutoregistration;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		86ABA83A28EC0E2500EC96D8 /* NotesApp.xcdatamodeld */ = {

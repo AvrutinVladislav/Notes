@@ -11,47 +11,28 @@ import FirebaseFirestore
 import FirebaseDatabase
 import Firebase
 
-final class FirebaseManager {
+protocol FirebaseManager {
+    func currentUser() -> String
+    func isSignIn() -> Bool
+    func registration(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> Void)
+    func autorization(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> Void)
+    func signOut() -> Result<Void,Error>
+    func addNote<T: Encodable>(entity: T, id: String) -> Result<Void, Error>
+    func deleteNote(id: String) -> Result<Void, Error>
+    func deleteAllNotes()
+    func updateNote<T: Encodable>(entity: T, id: String) -> Result<Void, Error>
+    func updateNotes<T: Encodable>(entities: [T]) -> Result<Void, Error>
+    func fetchDataFromFB(completion: @escaping (Result<[NotesCellData], Error>) -> Void)
+}
+
+final class FirebaseManagerImpl: FirebaseManager {
     
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
     
-    enum FBError: LocalizedError {
-        
-        case encodeError
-        case unauthorized
-        case deleteFromFB
-        case loadError
-        case decodeError
-        case createError
-        case autorization
-        case createAccount
-        
-        var errorDescription: String? {
-            switch self {
-            case .encodeError:
-                return "Failed to encode data".localized()
-            case .unauthorized:
-                return "User is not authorized".localized()
-            case .deleteFromFB:
-                return "Error removing from FireBase".localized()
-            case .loadError:
-                return "Error loading from FireBase".localized()
-            case .decodeError:
-                return "Failde to decode data".localized()
-            case .createError:
-                return "Failed to create data".localized()
-            case .autorization:
-                return "Failed to autorization user".localized()
-            case .createAccount:
-                return "Failed to create account"
-            }
-        }
-    }
-    
     private let ref = Database.database().reference()
     
-    static func currentUser() -> String {
+    func currentUser() -> String {
         
         if Auth.auth().currentUser != nil {
             return Auth.auth().currentUser?.email ?? ""
@@ -60,7 +41,7 @@ final class FirebaseManager {
         }
     }
     
-    static func isSignIn() -> Bool {
+    func isSignIn() -> Bool {
         
         if Auth.auth().currentUser != nil {
             return true
@@ -70,9 +51,7 @@ final class FirebaseManager {
     }
     
     func registration(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
-
-         Auth.auth().createUser(withEmail: email, password: password) { [weak self] (result, error) in
-
+         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             let db = Firestore.firestore()
             if let result = result {
                 db.collection("Users").addDocument(data: [
@@ -82,29 +61,23 @@ final class FirebaseManager {
                 completion(.success(result))
             }
             else if let error = error {
-
                 completion(.failure(error))
             }
         }
     }
     
     func autorization(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
-        
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (result, error) in
-            
+        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if let result = result {
-                
                 completion(.success(result))
             }
             else if let error = error {
-                
                 completion(.failure(error))
             }
         }
     }
     
     func signOut() -> Result<Void,Error> {
-        
         do {
             try Auth.auth().signOut()
             return .success(())
@@ -114,9 +87,7 @@ final class FirebaseManager {
     }
     
     func addNote<T: Encodable>(entity: T, id: String) -> Result<Void, Error> {
-        
         if let userID = Auth.auth().currentUser?.uid {
-            
             do {
                 let data = try encoder.encode(entity)
                 guard let dict = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
@@ -132,9 +103,7 @@ final class FirebaseManager {
     }
     
     func deleteNote(id: String) -> Result<Void, Error> {
-        
        if let userID = Auth.auth().currentUser?.uid {
-            
             ref.child(userID).child(id).removeValue()
            return .success(())
         }
@@ -142,16 +111,13 @@ final class FirebaseManager {
     }
     
     func deleteAllNotes() {
-        
         if let userID = Auth.auth().currentUser?.uid {
             ref.child(userID).removeValue()
         }
     }
     
     func updateNote<T: Encodable>(entity: T, id: String) -> Result<Void, Error> {
-
         if let userID = Auth.auth().currentUser?.uid {
-            
             do {
                 let data = try encoder.encode(entity)
                 guard let dict = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
@@ -166,8 +132,7 @@ final class FirebaseManager {
         return .failure(FBError.unauthorized)
     }
     
-    func updateNote<T: Encodable>(entities: [T]) -> Result<Void, Error> {
-
+    func updateNotes<T: Encodable>(entities: [T]) -> Result<Void, Error> {
         if let userID = Auth.auth().currentUser?.uid {
             do {
                 let dataEncode = try encoder.encode(entities)
@@ -192,11 +157,8 @@ final class FirebaseManager {
     }
     
     func fetchDataFromFB(completion: @escaping (Result<[NotesCellData], Error>) -> Void) {
-        
         if let userID = Auth.auth().currentUser?.uid {
-            
-            ref.child(userID).getData { error, snapshot in
-                
+            ref.child(userID).getData { error, snapshot in                
                 if let error = error {
                     completion(.failure(error))
                 } else {
@@ -227,3 +189,35 @@ final class FirebaseManager {
     
 }
 
+enum FBError: LocalizedError {
+    
+    case encodeError
+    case unauthorized
+    case deleteFromFB
+    case loadError
+    case decodeError
+    case createError
+    case autorization
+    case createAccount
+    
+    var errorDescription: String? {
+        switch self {
+        case .encodeError:
+            return "Failed to encode data".localized()
+        case .unauthorized:
+            return "User is not authorized".localized()
+        case .deleteFromFB:
+            return "Error removing from FireBase".localized()
+        case .loadError:
+            return "Error loading from FireBase".localized()
+        case .decodeError:
+            return "Failde to decode data".localized()
+        case .createError:
+            return "Failed to create data".localized()
+        case .autorization:
+            return "Failed to autorization user".localized()
+        case .createAccount:
+            return "Failed to create account"
+        }
+    }
+}

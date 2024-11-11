@@ -9,50 +9,48 @@ import Foundation
 
 class SignInPresenter {
     
-    weak var view: SignInViewInput?
-    
     private var email = ""
     private var password = ""
+    private let fbManager: FirebaseManager
+    private let view: SignInViewInput
+    
+    init(fbManager: FirebaseManager, view: SignInViewInput) {
+        self.fbManager = fbManager
+        self.view = view
+    }
     
 }
 
 extension SignInPresenter: SignInViewOutput {
-    
     func viewDidLoad() {
-        
         setupInitialState()
     }
     
     func emailTextFieldDidChange(_ text: String) {
-        
         email = text
         validate()
     }
     
     func passwordTextFieldDidChange(_ text: String) {
-        
         password = text
         validate()
     }
     
     func laterButtonDidTap() {
-        
-        view?.pushNotesViewController()
+        view.pushNotesViewController()
     }
     
     func signInButtonDidTap() {
-        
         guard validate() else { return }
-        view?.showIndicator(true)
-        FirebaseManager().autorization(email: email, password: password) { [weak self] result in
-            
+        view.showIndicator(true)
+        fbManager.autorization(email: email, password: password) { [weak self] result in
             guard let self = self else { return }
-            self.view?.showIndicator(false)
+            self.view.showIndicator(false)
             switch result {
             case .success(_):
-                self.view?.pushNotesViewController()
+                self.view.pushNotesViewController()
             case .failure(let error):
-                self.view?.showAlert("Error", "\(error.localizedDescription)")
+                self.view.showAlert("Error", "\(error.localizedDescription)")
             }
         }
     }
@@ -60,28 +58,23 @@ extension SignInPresenter: SignInViewOutput {
 }
 
 private extension SignInPresenter {
-    
     func setupInitialState() {
-        
         checkAuthUser()
         validate()
     }
     
     func checkAuthUser() {
-        
-        if FirebaseManager.isSignIn() {
-            
-            view?.pushNotesViewController()
+        if fbManager.isSignIn() {
+            view.pushNotesViewController()
         }
     }
     
     @discardableResult
-    func validate() -> Bool {
-        
+    func validate() -> Bool {        
         let validate = email.isEmail && password.isPassword
-        view?.setErrorEmail(email.isEmail || email.isEmpty)
-        view?.setErrorPassword(password.isPassword || password.isEmpty)
-        view?.enableButtonSignIn(validate)
+        view.setErrorEmail(email.isEmail || email.isEmpty)
+        view.setErrorPassword(password.isPassword || password.isEmpty)
+        view.enableButtonSignIn(validate)
         return validate
     }
     

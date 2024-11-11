@@ -8,14 +8,22 @@
 import Foundation
 import CoreData
 
-final class CoredataManager {
+protocol CoreDataManager {
+    func fetchData() -> Result<[NotesList], Error>
+    func fetchData(predicate: NSPredicate) -> Result<NotesList, Error>
+    func createNote(note: String) -> Result<NotesList, Error>
+    func deleteNote(predicate: NSPredicate) -> Result<Void, Error>
+    func deleteAllNotes(_ entity: String)
+    func addNoteFromFB(id: String, note: String, date: Date) -> Result<Void, Error>
+    func updateNote(id: String, note: String, date: Date) -> Result<Void, Error>
+}
+
+final class CoreDataManagerImpl: CoreDataManager {
     
     init(){}
     
     func fetchData() -> Result<[NotesList], Error> {
-        
         let context = persistentContainer.viewContext
-        
         do {
             let items = try context.fetch(NotesList.createFetchRequest())
             return .success(items)
@@ -25,7 +33,6 @@ final class CoredataManager {
     }
     
     func fetchData(predicate: NSPredicate) -> Result<NotesList, Error> {
-        
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<NotesList> = NotesList.createFetchRequest()
         fetchRequest.predicate = predicate
@@ -40,7 +47,6 @@ final class CoredataManager {
     }
     
     func createNote(note: String) -> Result<NotesList, Error>  {
-        
         let context = persistentContainer.viewContext
         let newNote = NotesList(context: context)
         newNote.noteText = note
@@ -55,8 +61,7 @@ final class CoredataManager {
         }
     }
     
-    func deleteNote(predicate: NSPredicate) -> Result<Void, Error>{
-        
+    func deleteNote(predicate: NSPredicate) -> Result<Void, Error> {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<NotesList> = NotesList.createFetchRequest()
         fetchRequest.predicate = predicate
@@ -74,7 +79,6 @@ final class CoredataManager {
     }
 
     func deleteAllNotes(_ entity: String) {
-        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         fetchRequest.returnsObjectsAsFaults = false
         do {
@@ -90,7 +94,6 @@ final class CoredataManager {
     }
     
     func addNoteFromFB(id: String, note: String, date: Date) -> Result<Void, Error> {
-        
         let context = persistentContainer.viewContext
         let newNote = NotesList(context: context)
         newNote.noteText = note
@@ -106,7 +109,6 @@ final class CoredataManager {
     }
     
     func updateNote(id: String, note: String, date: Date) -> Result<Void, Error> {
-        
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<NotesList> = NotesList.createFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %@", id)
@@ -126,11 +128,9 @@ final class CoredataManager {
     // MARK: - Core Data stack
     
     lazy var persistentContainer: NSPersistentContainer = {
-        
         let container = NSPersistentContainer(name: "NotesApp")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
@@ -145,7 +145,6 @@ final class CoredataManager {
             do {
                 try context.save()
             } catch {
-                
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
