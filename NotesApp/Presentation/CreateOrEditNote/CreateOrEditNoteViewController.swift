@@ -10,7 +10,7 @@ import FirebaseDatabase
 
 class CreateOrEditNoteViewController: BaseViewController {
     
-    var output: CreateOrEditNoteViewOutput!
+    var output: CreateOrEditNoteViewOutput?
     
     var state = CreateOrEditeNoteState.edit
     var noteID: String?
@@ -24,6 +24,7 @@ class CreateOrEditNoteViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         output?.viewDidLoad()
+        setupUI()
     }
     
 }
@@ -123,7 +124,7 @@ extension CreateOrEditNoteViewController {
     
     @objc func saveNoteButtonDidTap() {
         
-        output.saveNoteButtonDidTap(noteTextView.text)
+        output?.saveNoteButtonDidTap(noteTextView.text)
     }
     
 }

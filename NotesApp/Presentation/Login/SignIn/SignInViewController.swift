@@ -9,13 +9,13 @@ import UIKit
 
 class SignInViewController: BaseViewController {
     
-    var output: SignInViewOutput!
+    var output: SignInViewOutput?
     
     private let spinner = UIActivityIndicatorView(style: .large)
     private let emailTextField = CustomTextField()
     private let errorEmailLabel = UILabel()
     private let passwordTextField = CustomTextField()
-    private let errorPasswordLabel = UILabel()
+    private let errorPasswordTextView = UILabel()
     private let signInButton = UIButton()
     private let emailLabel = UILabel()
     private let passwordLabel = UILabel()
@@ -39,7 +39,7 @@ extension SignInViewController: SignInViewInput {
     }
     
     func setErrorPassword(_ isHidden: Bool) {
-        errorPasswordLabel.isHidden = isHidden
+        errorPasswordTextView.isHidden = isHidden
     }
     
     func enableButtonSignIn(_ isEnabled: Bool) {
@@ -70,7 +70,7 @@ extension SignInViewController: SignInViewInput {
 extension SignInViewController {
     override func setupUI() {
         for view in [spinner, errorEmailLabel, emailTextField, passwordTextField,
-                     errorPasswordLabel, signUpButton, emailLabel, passwordLabel,
+                     errorPasswordTextView, signUpButton, emailLabel, passwordLabel,
                      signInLabel, stackViewContainer, emailStackViewContainer,
                      passwordStackViewContainer, buttonsStackViewContainer] {
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -106,14 +106,16 @@ extension SignInViewController {
         passwordTextField.isSecureTextEntry = true
         passwordTextField.autocorrectionType = .no
         
-        for label in [errorEmailLabel, errorPasswordLabel] {
-            label.font = .systemFont(ofSize: 14)
-            label.textColor = .red
-            label.isHidden = true
-        }
+        errorEmailLabel.font = .systemFont(ofSize: 14)
+        errorEmailLabel.textColor = .red
+        errorEmailLabel.isHidden = true
+        
+        errorPasswordTextView.font = .systemFont(ofSize: 14)
+        errorPasswordTextView.textColor = .red
+        errorPasswordTextView.isHidden = true
 
         errorEmailLabel.text = "Enter a valid email, example: mike@gmail.com".localized()
-        errorPasswordLabel.text = "Password: 8 characters, 1 capital letter, 1 number".localized()
+        errorPasswordTextView.text = "Your password should be 8+ characters with a mix of uppercase letters, numbers, and special symbols like !@#$%^&* etc.".localized()
         
         emailLabel.text = "Email".localized()
         passwordLabel.text = "Password".localized()
@@ -156,7 +158,7 @@ extension SignInViewController {
         emailStackViewContainer.addArrangedSubview(errorEmailLabel)
         passwordStackViewContainer.addArrangedSubview(passwordLabel)
         passwordStackViewContainer.addArrangedSubview(passwordTextField)
-        passwordStackViewContainer.addArrangedSubview(errorPasswordLabel)
+        passwordStackViewContainer.addArrangedSubview(errorPasswordTextView)
         buttonsStackViewContainer.addArrangedSubview(signInButton)
         buttonsStackViewContainer.addArrangedSubview(laterButton)
     }
@@ -172,7 +174,9 @@ extension SignInViewController {
             stackViewContainer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -28),
             
             spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            errorPasswordTextView.heightAnchor.constraint(equalToConstant: 60),
         ])
     }
     

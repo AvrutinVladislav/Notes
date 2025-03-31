@@ -10,7 +10,7 @@ import CoreData
 
 class NotesViewController: BaseViewController {
     
-    var output: NotesViewOutput!
+    var output: NotesViewOutput?
     
     private let tableView = UITableView()
     private let separator = UIView()
@@ -78,10 +78,12 @@ extension NotesViewController: NotesViewInput {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func popViewController() {
-        self.navigationController?.popViewController(animated: true)
+    func popViewController() {        
+        if let loginView = navigationController?.viewControllers.first(where: {$0 is SignInViewController}) {
+            navigationController?.popToViewController(loginView, animated: true)
+        }
     }
-
+    
     func showAlert(_ title: String, _ message: String) {
         let alert = UIAlertController(title: "\(title)", message: "\(message)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel))

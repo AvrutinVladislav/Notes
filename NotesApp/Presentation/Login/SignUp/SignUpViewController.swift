@@ -9,13 +9,13 @@ import UIKit
 
 class SignUpViewController: BaseViewController {
     
-    var output: SignUpViewOutput!
+    var output: SignUpViewOutput?
     
     private let spinner = UIActivityIndicatorView()
     private let errorEmailLabel = UILabel()
     private let emailTextField = CustomTextField()
     private let passwordTextField = CustomTextField()
-    private let errorPasswordLabel = UILabel()
+    private let errorPasswordTextView = UITextView()
     private let signUpButton = UIButton()
     private let emailLabel = UILabel()
     private let passwordLabel = UILabel()
@@ -37,7 +37,7 @@ extension SignUpViewController: SignUpViewInput {
     }
     
     func setErrorPassword(_ isHidden: Bool) {
-        errorPasswordLabel.isHidden = isHidden
+        errorPasswordTextView.isHidden = isHidden
     }
     
     func enableButton(_ isEnabled: Bool) {
@@ -69,7 +69,7 @@ extension SignUpViewController {
     
     override func setupUI() {
         for view in [spinner, errorEmailLabel, emailTextField, passwordTextField,
-                     errorPasswordLabel, signUpButton, emailLabel, passwordLabel,
+                     errorPasswordTextView, signUpButton, emailLabel, passwordLabel,
                      signUpLabel, stackViewContainer, emailStackViewContainer,
                      passwordStackViewContainer] {
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -105,30 +105,31 @@ extension SignUpViewController {
             tf.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         }
         emailTextField.placeholder = "Enter your email".localized()
+        
         passwordTextField.placeholder = "Enter your password".localized()
         passwordTextField.isSecureTextEntry = true
         passwordTextField.autocorrectionType = .no
+                
+        errorEmailLabel.font = .systemFont(ofSize: 14)
+        errorEmailLabel.textColor = .red
+        errorEmailLabel.isHidden = true
         
-        for view in [errorEmailLabel, errorPasswordLabel] {
-            view.font = .systemFont(ofSize: 14)
-            view.textColor = .red
-            view.isHidden = true
-        }
-        
-        errorEmailLabel.text = "Enter a valid email, example: mike@gmail.com".localized()
-        errorPasswordLabel.text = "Password: 8 characters, 1 capital letter, 1 number".localized()
+        errorPasswordTextView.font = .systemFont(ofSize: 14)
+        errorPasswordTextView.textColor = .red
+        errorPasswordTextView.isHidden = true
         
         emailLabel.text = "Email".localized()
         passwordLabel.text = "password".localized()
 
         errorEmailLabel.text = "Enter a valid email, example: mike@gmail.com".localized()
-        errorPasswordLabel.text = "Password must contain 8 characters, 1 capital letter and 1 number".localized()
+        errorPasswordTextView.text = "Your password should be 8+ characters with a mix of uppercase letters, numbers, and special symbols like !@#$%^&* etc.".localized()
         
         emailLabel.text = "Email".localized()
         passwordLabel.text = "Password".localized()
         signUpButton.setTitle("Sign Up".localized(), for: .normal)
         signUpButton.setTitleColor(.white, for: .normal)
         signUpButton.layer.cornerRadius = 5
+        signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back".localized(),
                                                            style: .done,
@@ -148,7 +149,7 @@ extension SignUpViewController {
         emailStackViewContainer.addArrangedSubview(errorEmailLabel)
         passwordStackViewContainer.addArrangedSubview(passwordLabel)
         passwordStackViewContainer.addArrangedSubview(passwordTextField)
-        passwordStackViewContainer.addArrangedSubview(errorPasswordLabel)
+        passwordStackViewContainer.addArrangedSubview(errorPasswordTextView)
     }
     
     override func addConstraints() {
@@ -161,9 +162,12 @@ extension SignUpViewController {
             stackViewContainer.topAnchor.constraint(equalTo: signUpLabel.bottomAnchor, constant: -40),
             stackViewContainer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 28),
             stackViewContainer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -28),
+            stackViewContainer.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor),
             
             spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            errorPasswordTextView.heightAnchor.constraint(equalToConstant: 60),
         ])
     }
     
