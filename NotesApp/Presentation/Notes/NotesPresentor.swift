@@ -125,14 +125,14 @@ extension NotesPresentor: NotesViewOutput {
                         }
                         self.sortData()
                     case .failure:
-                        print("error fetch from fb")
+                        print(Errors.fetchFirebase.errorDescription)
                     }
                 }
             case .failure:
-                print("error update fb from coredata")
+                print(Errors.updateCoredata.errorDescription)
             }
         case .failure:
-            print(" error fetch from coredata")
+            print(Errors.fetchCoredata.errorDescription)
         }
         view.endRefresh()
     }
@@ -154,16 +154,13 @@ extension NotesPresentor: NotesViewOutput {
                 case .success():
                     break
                 case .failure:
-                    
-                    view.showAlert("Error", "Error update note in  Firebase")
+                    print("Error", Errors.updateFirebase.errorDescription)
                 }
             case .failure:
-                
-                view.showAlert("Error", "Error update note in Coredata")
+                print("Error", Errors.updateCoredata.errorDescription)
             }
-            
         case .failure(_):
-            view.showAlert("Error", "Error update note in Coredata")
+            print("Error", Errors.fetchCoredata.errorDescription)
         }
     }
     
@@ -183,7 +180,7 @@ extension NotesPresentor: NotesViewOutput {
                 view.reloadTableView(sections: sections)
             }
         case .failure(_):
-            view.showAlert("Error", "Error hide done notes")
+            print(Errors.fetchCoredata.errorDescription)
         }
     }
     
@@ -216,7 +213,7 @@ private extension NotesPresentor {
             sections = buildSections(cells: cells)
             view.reloadTableView(sections: sections)
         case .failure:
-            print("Error fetch from firebase when sortData()")
+            print(Errors.fetchFbWhenSortData.errorDescription)
             break
         }
         
@@ -277,16 +274,16 @@ private extension NotesPresentor {
                         self.view.showIndicator(false)
                     case .failure:
                         self.view.showIndicator(false)
-                        print("error fetch from fb")
+                        print(Errors.fetchFirebase.errorDescription)
                     }
                 }
             case .failure:
                 self.view.showIndicator(false)
-                print("error update fb from coredata")
+                print(Errors.updateFbFromCoredata.errorDescription)
             }
         case .failure:
             self.view.showIndicator(false)
-            print(" error fetch from coredata")
+            print(Errors.fetchCoredata.errorDescription)
         }
     }
     
@@ -342,11 +339,13 @@ extension NotesPresentor {
     enum Errors: LocalizedError {
         case updateFirebase
         case updateCoredata
+        case updateFbFromCoredata
         case addFirebase
         case addCoredataFromFB
         case signOut
         case fetchCoredata
         case fetchFirebase
+        case fetchFbWhenSortData
         case laterButtonEnter
         case deleteCoredata
         case deleteFirebase
@@ -358,6 +357,8 @@ extension NotesPresentor {
                 return "Error to update Firebase".localized()
             case .updateCoredata:
                 return "Error to update Coredata".localized()
+            case .updateFbFromCoredata:
+                return "Error update Firebase from Coredata".localized()
             case .addFirebase:
                 return "Error to add note in Firebase".localized()
             case .addCoredataFromFB:
@@ -368,6 +369,8 @@ extension NotesPresentor {
                 return "Error fetch data from Coredata".localized()
             case .fetchFirebase:
                 return "Error fetch data from Firebase".localized()
+            case .fetchFbWhenSortData:
+                return "Error fetch data from Firebase when sort data".localized()
             case .laterButtonEnter:
                 return "Logged in without authorization, cloud saving is not available".localized()
             case .deleteCoredata:
