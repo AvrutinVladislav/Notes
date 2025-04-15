@@ -27,6 +27,7 @@ class SignUpViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         output?.viewDidLoad()
+        setupUI()
     }
     
 }
@@ -68,6 +69,7 @@ extension SignUpViewController: SignUpViewInput {
 extension SignUpViewController {
     
     override func setupUI() {
+        view.backgroundColor = .white
         for view in [spinner, errorEmailLabel, emailTextField, passwordTextField,
                      errorPasswordTextView, signUpButton, emailLabel, passwordLabel,
                      signUpLabel, stackViewContainer, emailStackViewContainer,
@@ -75,7 +77,8 @@ extension SignUpViewController {
             view.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        spinner.color = .red
+        spinner.color = .black
+        spinner.style = .large
         
         signUpLabel.font = .systemFont(ofSize: 25, weight: .medium)
         signUpLabel.text = "Sign Up".localized()
@@ -131,10 +134,10 @@ extension SignUpViewController {
         signUpButton.layer.cornerRadius = 5
         signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
         
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back".localized(),
-                                                           style: .done,
-                                                           target: nil,
-                                                           action: nil)
+        setupNavigationBar(title: nil, rightButtonTitle: "Back", leftButtonTitle: nil)
+        leftButtonAction = { [weak self] in
+            self?.backButtonDidTap()
+        }
     }
     
     override func addSubview() {
@@ -185,6 +188,10 @@ extension SignUpViewController {
         default:
             break
         }
+    }
+    
+    @objc func backButtonDidTap() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

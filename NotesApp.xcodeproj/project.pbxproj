@@ -14,6 +14,7 @@
 		5726652F2CDF6D4800AF2393 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5726652E2CDF6D4800AF2393 /* CustomLabel.swift */; };
 		572665322CE21AAF00AF2393 /* SwinjectAutoregistration in Frameworks */ = {isa = PBXBuildFile; productRef = 572665312CE21AAF00AF2393 /* SwinjectAutoregistration */; };
 		572665342CE21AC600AF2393 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572665332CE21AC600AF2393 /* AppContainer.swift */; };
+		579D9F192DAE44FE00820060 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579D9F182DAE44FE00820060 /* UIColor+Hex.swift */; };
 		57F639102CDB7020000CACE8 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6390F2CDB7020000CACE8 /* BaseViewController.swift */; };
 		57F639122CDB71EA000CACE8 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F639112CDB71EA000CACE8 /* BaseView.swift */; };
 		57F639652CDBA9BD000CACE8 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F639642CDBA9BD000CACE8 /* CustomTextField.swift */; };
@@ -32,7 +33,6 @@
 		867D459728FE87A20030EE4E /* Date+Extantion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D459628FE87A20030EE4E /* Date+Extantion.swift */; };
 		868D0E19292B4C1200A66711 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 868D0E18292B4C1200A66711 /* GoogleService-Info.plist */; };
 		8697C7F228FD46CB006266E0 /* NotesList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697C7F028FD46CB006266E0 /* NotesList+CoreDataProperties.swift */; };
-		8697C7F328FD46CB006266E0 /* NotesList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697C7F128FD46CB006266E0 /* NotesList+CoreDataClass.swift */; };
 		8697C7F728FD6A6D006266E0 /* CreateOrEditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697C7F528FD6A6D006266E0 /* CreateOrEditNoteViewController.swift */; };
 		8697C7FA28FD6A84006266E0 /* CreateOrEditNotePresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697C7F928FD6A84006266E0 /* CreateOrEditNotePresentor.swift */; };
 		8697C7FC28FD6A96006266E0 /* CreateOrEditNoteViewInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697C7FB28FD6A96006266E0 /* CreateOrEditNoteViewInput.swift */; };
@@ -60,6 +60,7 @@
 		5726652C2CDF54D400AF2393 /* CreateOrEditNoteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditNoteBuilder.swift; sourceTree = "<group>"; };
 		5726652E2CDF6D4800AF2393 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		572665332CE21AC600AF2393 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		579D9F182DAE44FE00820060 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		57F6390F2CDB7020000CACE8 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		57F639112CDB71EA000CACE8 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		57F639642CDBA9BD000CACE8 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -79,7 +80,6 @@
 		867D459628FE87A20030EE4E /* Date+Extantion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extantion.swift"; sourceTree = "<group>"; };
 		868D0E18292B4C1200A66711 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		8697C7F028FD46CB006266E0 /* NotesList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotesList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		8697C7F128FD46CB006266E0 /* NotesList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotesList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		8697C7F528FD6A6D006266E0 /* CreateOrEditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditNoteViewController.swift; sourceTree = "<group>"; };
 		8697C7F928FD6A84006266E0 /* CreateOrEditNotePresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditNotePresentor.swift; sourceTree = "<group>"; };
 		8697C7FB28FD6A96006266E0 /* CreateOrEditNoteViewInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditNoteViewInput.swift; sourceTree = "<group>"; };
@@ -135,6 +135,15 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		578502D22DAD169C0066EB84 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				8697C7F028FD46CB006266E0 /* NotesList+CoreDataProperties.swift */,
+				86ABA83A28EC0E2500EC96D8 /* NotesApp.xcdatamodeld */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
 		57F6390E2CDB7004000CACE8 /* BaseViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,16 +196,6 @@
 				864495B62902B11E009E63E0 /* NotesTableViewCell.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		8697C7EF28FD46B3006266E0 /* NotesList */ = {
-			isa = PBXGroup;
-			children = (
-				8697C7F128FD46CB006266E0 /* NotesList+CoreDataClass.swift */,
-				8697C7F028FD46CB006266E0 /* NotesList+CoreDataProperties.swift */,
-			);
-			name = NotesList;
-			path = NoteList.swift;
 			sourceTree = "<group>";
 		};
 		8697C7F428FD6A06006266E0 /* CreateOrEditNote */ = {
@@ -266,9 +265,8 @@
 		86ABA84B28EC11A900EC96D8 /* Business Logic */ = {
 			isa = PBXGroup;
 			children = (
-				8697C7EF28FD46B3006266E0 /* NotesList */,
+				578502D22DAD169C0066EB84 /* Storage */,
 				868D0E18292B4C1200A66711 /* GoogleService-Info.plist */,
-				86ABA83A28EC0E2500EC96D8 /* NotesApp.xcdatamodeld */,
 				8626481128EF1BE1005231EC /* FirebaseManager.swift */,
 				864495B3290280AB009E63E0 /* CoreDataManager.swift */,
 			);
@@ -283,6 +281,7 @@
 				867D459628FE87A20030EE4E /* Date+Extantion.swift */,
 				57F639642CDBA9BD000CACE8 /* CustomTextField.swift */,
 				5726652E2CDF6D4800AF2393 /* CustomLabel.swift */,
+				579D9F182DAE44FE00820060 /* UIColor+Hex.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -394,9 +393,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-NotesApp/Pods-NotesApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-NotesApp/Pods-NotesApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -440,8 +443,8 @@
 				869AEE0628F8563F00A8F175 /* NotesSectionsData.swift in Sources */,
 				572665292CDF418800AF2393 /* SignUpBuilder.swift in Sources */,
 				861F519F28F045A200A12D0D /* SignUpViewInput.swift in Sources */,
-				8697C7F328FD46CB006266E0 /* NotesList+CoreDataClass.swift in Sources */,
 				86ABA85528EC12FB00EC96D8 /* SignInPresenter.swift in Sources */,
+				579D9F192DAE44FE00820060 /* UIColor+Hex.swift in Sources */,
 				861F51A128F045D700A12D0D /* SignUpViewOutput.swift in Sources */,
 				8617FB7A28F44DC000E36AF6 /* NotesViewOutput.swift in Sources */,
 				8697C7F728FD6A6D006266E0 /* CreateOrEditNoteViewController.swift in Sources */,

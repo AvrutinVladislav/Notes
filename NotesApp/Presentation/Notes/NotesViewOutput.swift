@@ -16,4 +16,6 @@ protocol NotesViewOutput: AnyObject {
     func addNoteButtonDidTap()
     func didAddCell(_ id: String, _ sectionType: NotesSectionsData.SectionsType)
     func refreshTableView()
+    func doneButtoTapped(_ id: String)
+    func clearDoneNotes(_ isHiddenNotes: Bool)
 }

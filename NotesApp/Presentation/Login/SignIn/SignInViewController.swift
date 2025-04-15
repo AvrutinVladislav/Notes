@@ -69,13 +69,15 @@ extension SignInViewController: SignInViewInput {
 
 extension SignInViewController {
     override func setupUI() {
+        view.backgroundColor = .white
         for view in [spinner, errorEmailLabel, emailTextField, passwordTextField,
                      errorPasswordTextView, signUpButton, emailLabel, passwordLabel,
                      signInLabel, stackViewContainer, emailStackViewContainer,
                      passwordStackViewContainer, buttonsStackViewContainer] {
             view.translatesAutoresizingMaskIntoConstraints = false
         }
-        spinner.color = .red
+        spinner.color = .black
+        spinner.style = .large
         
         signInLabel.font = .systemFont(ofSize: 25, weight: .medium)
         signInLabel.text = "Sign In".localized()
@@ -133,8 +135,9 @@ extension SignInViewController {
         signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
         
         signInButton.setTitle("Sign In".localized(), for: .normal)
-        signInButton.setTitleColor(.white, for: .normal)
-        signInButton.layer.cornerRadius = 5
+        signInButton.layer.borderColor = UIColor.black.cgColor
+        signInButton.layer.borderWidth = 1
+        signInButton.layer.cornerRadius = 8
         var config = UIButton.Configuration.filled()
         config.titlePadding = 5
         signInButton.configuration = config
