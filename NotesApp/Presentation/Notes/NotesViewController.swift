@@ -17,7 +17,7 @@ class NotesViewController: BaseViewController {
     private let clearButton = UIButton()
     private var sections = [NotesSectionsData]()
     private var refreshControl = UIRefreshControl()
-    private var isHiddenNotes = false {
+    private var isHiddenNotes = true {
         didSet {
             clearButton.setTitle(isHiddenNotes ? "Show all notes" : "Hide done notes", for: .normal)
         }
@@ -177,7 +177,7 @@ extension NotesViewController {
                             action: #selector(addNoteButtonDidTap),
                             for: .touchUpInside)
         
-        clearButton.setTitle("Hide done notes", for: .normal)
+        clearButton.setTitle("Show all notes", for: .normal)
         clearButton.setTitleColor(Colors.mainBackground, for: .normal)
         clearButton.layer.cornerRadius = 30
         clearButton.layer.borderWidth = 1

@@ -171,12 +171,12 @@ extension NotesPresentor: NotesViewOutput {
                 let data = notes.filter { $0.isDone == false}.map { note in
                     buildCell(noteText: note.noteText, date: note.date, id: note.id, isDone: note.isDone)
                 }
-                sections = buildSections(cells: data)
+                sections = sortSections(buildSections(cells: data))
                 view.reloadTableView(sections: sections)
             } else {
-                sections = buildSections(cells: notes.map({ note in
+                sections = sortSections(buildSections(cells: notes.map({ note in
                     buildCell(noteText: note.noteText, date: note.date, id: note.id, isDone: note.isDone)
-                }))
+                })))
                 view.reloadTableView(sections: sections)
             }
         case .failure(_):
@@ -271,6 +271,8 @@ private extension NotesPresentor {
                             }
                         }
                         self.sortData()
+                        self.clearDoneNotes(true)
+                        self.sections = self.sortSections(self.sections)
                         self.view.showIndicator(false)
                     case .failure:
                         self.view.showIndicator(false)
@@ -331,6 +333,25 @@ private extension NotesPresentor {
                 view.showAlert("Error", Errors.deleteFB.errorDescription)
             }
         }
+    }
+    
+    func sortSections(_ sections: [NotesSectionsData]) -> [NotesSectionsData] {
+        let orderedSections: [NotesSectionsData.SectionsType] = [
+            .yesterday,
+            .today,
+            .week,
+            .mounth,
+            .year
+        ]
+        return sections.sorted {
+                guard
+                    let firstIndex = orderedSections.firstIndex(of: $0.sectionType),
+                    let secondIndex = orderedSections.firstIndex(of: $1.sectionType)
+                else {
+                    return false
+                }
+                return firstIndex < secondIndex
+            }
     }
 }
   
