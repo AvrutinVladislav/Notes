@@ -14,6 +14,7 @@
 		5726652F2CDF6D4800AF2393 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5726652E2CDF6D4800AF2393 /* CustomLabel.swift */; };
 		572665322CE21AAF00AF2393 /* SwinjectAutoregistration in Frameworks */ = {isa = PBXBuildFile; productRef = 572665312CE21AAF00AF2393 /* SwinjectAutoregistration */; };
 		572665342CE21AC600AF2393 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572665332CE21AC600AF2393 /* AppContainer.swift */; };
+		5783ACF32E09997200C2BB87 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5783ACF22E09997200C2BB87 /* GoogleService-Info.plist */; };
 		579D9F192DAE44FE00820060 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579D9F182DAE44FE00820060 /* UIColor+Hex.swift */; };
 		57F639102CDB7020000CACE8 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6390F2CDB7020000CACE8 /* BaseViewController.swift */; };
 		57F639122CDB71EA000CACE8 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F639112CDB71EA000CACE8 /* BaseView.swift */; };
@@ -31,7 +32,6 @@
 		864495B4290280AB009E63E0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864495B3290280AB009E63E0 /* CoreDataManager.swift */; };
 		864495B72902B11E009E63E0 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864495B62902B11E009E63E0 /* NotesTableViewCell.swift */; };
 		867D459728FE87A20030EE4E /* Date+Extantion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D459628FE87A20030EE4E /* Date+Extantion.swift */; };
-		868D0E19292B4C1200A66711 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 868D0E18292B4C1200A66711 /* GoogleService-Info.plist */; };
 		8697C7F228FD46CB006266E0 /* NotesList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697C7F028FD46CB006266E0 /* NotesList+CoreDataProperties.swift */; };
 		8697C7F728FD6A6D006266E0 /* CreateOrEditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697C7F528FD6A6D006266E0 /* CreateOrEditNoteViewController.swift */; };
 		8697C7FA28FD6A84006266E0 /* CreateOrEditNotePresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697C7F928FD6A84006266E0 /* CreateOrEditNotePresentor.swift */; };
@@ -60,6 +60,7 @@
 		5726652C2CDF54D400AF2393 /* CreateOrEditNoteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditNoteBuilder.swift; sourceTree = "<group>"; };
 		5726652E2CDF6D4800AF2393 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		572665332CE21AC600AF2393 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		5783ACF22E09997200C2BB87 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		579D9F182DAE44FE00820060 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		57F6390F2CDB7020000CACE8 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		57F639112CDB71EA000CACE8 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -78,7 +79,6 @@
 		864495B3290280AB009E63E0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		864495B62902B11E009E63E0 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
 		867D459628FE87A20030EE4E /* Date+Extantion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extantion.swift"; sourceTree = "<group>"; };
-		868D0E18292B4C1200A66711 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		8697C7F028FD46CB006266E0 /* NotesList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotesList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8697C7F528FD6A6D006266E0 /* CreateOrEditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditNoteViewController.swift; sourceTree = "<group>"; };
 		8697C7F928FD6A84006266E0 /* CreateOrEditNotePresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditNotePresentor.swift; sourceTree = "<group>"; };
@@ -265,8 +265,8 @@
 		86ABA84B28EC11A900EC96D8 /* Business Logic */ = {
 			isa = PBXGroup;
 			children = (
+				5783ACF22E09997200C2BB87 /* GoogleService-Info.plist */,
 				578502D22DAD169C0066EB84 /* Storage */,
-				868D0E18292B4C1200A66711 /* GoogleService-Info.plist */,
 				8626481128EF1BE1005231EC /* FirebaseManager.swift */,
 				864495B3290280AB009E63E0 /* CoreDataManager.swift */,
 			);
@@ -378,7 +378,7 @@
 			files = (
 				86ABA84128EC0E2600EC96D8 /* LaunchScreen.storyboard in Resources */,
 				86ABA83E28EC0E2600EC96D8 /* Assets.xcassets in Resources */,
-				868D0E19292B4C1200A66711 /* GoogleService-Info.plist in Resources */,
+				5783ACF32E09997200C2BB87 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,9 +393,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-NotesApp/Pods-NotesApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-NotesApp/Pods-NotesApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
