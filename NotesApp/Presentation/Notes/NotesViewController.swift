@@ -30,61 +30,6 @@ class NotesViewController: BaseViewController {
     
 }
 
-//MARK: UITableViewDataSource and UITableViewDelegate
-extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
-        return self.sections[section].cells.count
-    }
-    
-    func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NotesTableViewCell.identifier,
-                                                       for: indexPath) as? NotesTableViewCell
-        else { return UITableViewCell() }
-        cell.configure(model: sections[indexPath.section].cells[indexPath.row])
-        cell.doneButtonTapped = { [weak self] in
-            guard let self else { return }
-            self.output?.doneButtoTapped(self.sections[indexPath.section].cells[indexPath.row].id)
-        }
-        return cell
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        sections.count
-    }
-    
-    
-    func tableView(_ tableView: UITableView,
-                   titleForHeaderInSection section: Int) -> String? {
-        let sectionHeader = sections[section].sectionType.localaizeHeader
-        return sectionHeader
-    }
-    
-    func tableView(_ tableView: UITableView,
-                   commit editingStyle: UITableViewCell.EditingStyle,
-                   forRowAt indexPath: IndexPath) {
-        output?.deleteNote(sections[indexPath.section].cells[indexPath.row])
-        
-    }
-    
-    func tableView(_ tableView: UITableView,
-                   didSelectRowAt indexPath: IndexPath) {
-        output?.didSelectCell(sections[indexPath.section].cells[indexPath.row])
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        10
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        (view as? UITableViewHeaderFooterView)?.textLabel?.textColor = .white
-        (view as? UITableViewHeaderFooterView)?.textLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
-    }
-    
-}
-
 //MARK: NotesViewInput
 extension NotesViewController: NotesViewInput {
     func reloadTableView(sections: [NotesSectionsData]) {
@@ -217,10 +162,8 @@ extension NotesViewController {
                          trailing: view.safeAreaLayoutGuide.trailingAnchor,
                          padding: .init(top: 10, left: 10, bottom: -10, right: -10))
         
-        refreshControl.anchor(top: refreshControl.safeAreaLayoutGuide.topAnchor,
-                         leading: refreshControl.safeAreaLayoutGuide.leadingAnchor,
-                         bottom: refreshControl.safeAreaLayoutGuide.bottomAnchor,
-                         trailing: refreshControl.safeAreaLayoutGuide.trailingAnchor)
+        refreshControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        refreshControl.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
     }
     
     @objc func addNoteButtonDidTap() {
@@ -237,6 +180,62 @@ extension NotesViewController {
     
     @objc func hideDoneNotes() {
         isHiddenNotes.toggle()
-        output?.clearDoneNotes(isHiddenNotes)
+        output?.doneNotesIsHidden(isHiddenNotes)
     }
 }
+
+//MARK: UITableViewDataSource and UITableViewDelegate
+extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView,
+                   numberOfRowsInSection section: Int) -> Int {
+        return self.sections[section].cells.count
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NotesTableViewCell.identifier,
+                                                       for: indexPath) as? NotesTableViewCell
+        else { return UITableViewCell() }
+        cell.configure(model: sections[indexPath.section].cells[indexPath.row])
+        cell.doneButtonTapped = { [weak self] in
+            guard let self else { return }
+            self.output?.doneButtonTapped(self.sections[indexPath.section].cells[indexPath.row].id)
+        }
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        sections.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView,
+                   titleForHeaderInSection section: Int) -> String? {
+        let sectionHeader = sections[section].sectionType.localaizeHeader
+        return sectionHeader
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        output?.deleteNote(sections[indexPath.section].cells[indexPath.row])
+        
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   didSelectRowAt indexPath: IndexPath) {
+        output?.didSelectCell(sections[indexPath.section].cells[indexPath.row])
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        10
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        (view as? UITableViewHeaderFooterView)?.textLabel?.textColor = .white
+        (view as? UITableViewHeaderFooterView)?.textLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
+    }
+    
+}
+

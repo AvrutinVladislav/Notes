@@ -31,20 +31,20 @@ extension NotesPresentor: NotesViewOutput {
         setupInitialState()
     }
     
-    func deleteNote(_ model: NotesCellData) {
+    func deleteNote(_ note: NotesCellData) {
         view.showIndicator(true)
-        switch coreDataManager.deleteNote(predicate: NSPredicate.init(format: "id = %@", model.id)) {
+        switch coreDataManager.deleteNote(predicate: NSPredicate.init(format: "id = %@", note.id)) {
         case .success:
-            switch fbManager.deleteNote(id: model.id) {
+            switch fbManager.deleteNote(id: note.id) {
             case .success:
-                if let sectionIndex = sections.firstIndex(where: { $0.sectionType == model.sectionType }),
-                   let cellIndex = sections[sectionIndex].cells.firstIndex(where: { $0.id == model.id }) {
+                if let sectionIndex = sections.firstIndex(where: { $0.sectionType == note.sectionType }),
+                   let cellIndex = sections[sectionIndex].cells.firstIndex(where: { $0.id == note.id }) {
                     sections[sectionIndex].cells.remove(at: cellIndex)
                     view.reloadTableView(sections: sections)
                     view.showIndicator(false)
                 }
             case .failure:
-                deleteNotes.append(model)
+                deleteNotes.append(note)
                 view.showIndicator(false)
                 view.showAlert("Error", Errors.deleteFirebase.errorDescription)
             }
@@ -54,9 +54,9 @@ extension NotesPresentor: NotesViewOutput {
         }
     }
     
-    func didSelectCell(_ model: NotesCellData) {
-        if let sectionType = model.sectionType {
-            view.pushCreateOrEditeViewController(noteID: model.id,
+    func didSelectCell(_ note: NotesCellData) {
+        if let sectionType = note.sectionType {
+            view.pushCreateOrEditeViewController(noteID: note.id,
                                                  sectionType: sectionType,
                                                  state: .edit)
         }
@@ -137,7 +137,7 @@ extension NotesPresentor: NotesViewOutput {
         view.endRefresh()
     }
     
-    func doneButtoTapped(_ id: String) {
+    func doneButtonTapped(_ id: String) {
         let result = coreDataManager.fetchData(predicate: NSPredicate(format: "id = %@", id))
         switch result {
         case .success(let note):
@@ -152,7 +152,7 @@ extension NotesPresentor: NotesViewOutput {
                                                                   isDone: false),
                                             id: id) {
                 case .success():
-                    break
+                    sortDoneNotes()
                 case .failure:
                     print("Error", Errors.updateFirebase.errorDescription)
                 }
@@ -164,7 +164,18 @@ extension NotesPresentor: NotesViewOutput {
         }
     }
     
-    func clearDoneNotes(_ isHiddenNotes: Bool) {
+    func sortDoneNotes() {
+        var result = [NotesSectionsData]()
+        sections.forEach { section in
+            var sortSection = section
+            sortSection.cells.sort { $0.isDone && !$1.isDone }
+            result.append(sortSection)
+        }
+        sections = result
+        view.reloadTableView(sections: sections)
+    }
+    
+    func doneNotesIsHidden(_ isHiddenNotes: Bool) {
         switch coreDataManager.fetchData() {
         case .success(let notes):
             if isHiddenNotes {
@@ -179,6 +190,7 @@ extension NotesPresentor: NotesViewOutput {
                 })))
                 view.reloadTableView(sections: sections)
             }
+            sortDoneNotes()
         case .failure(_):
             print(Errors.fetchCoredata.errorDescription)
         }
@@ -191,6 +203,7 @@ private extension NotesPresentor {
     func setupInitialState() {
         deleteNotesFromFBIfNeeded()
         checkChanges()
+        sortDoneNotes()
     }
     
     func buildCell(noteText: String,
@@ -271,8 +284,8 @@ private extension NotesPresentor {
                             }
                         }
                         self.sortData()
-                        self.clearDoneNotes(true)
                         self.sections = self.sortSections(self.sections)
+                        self.doneNotesIsHidden(true)
                         self.view.showIndicator(false)
                     case .failure:
                         self.view.showIndicator(false)

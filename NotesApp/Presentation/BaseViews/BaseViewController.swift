@@ -19,15 +19,15 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         addSubview()
         addConstraints()
-        setupUI()
     }
     
     func setupNavigationBar(title: String?, rightButtonTitle: String?, leftButtonTitle: String?) {
         navigationController?.navigationBar.backgroundColor = .clear
         let titleLabel = UILabel()
-        titleLabel.textColor = .white
+        titleLabel.textColor = .black
         titleLabel.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
         titleLabel.text = title
         navigationItem.titleView = titleLabel
@@ -38,7 +38,7 @@ class BaseViewController: UIViewController {
             target: self,
             action: #selector(leftButtonTapped)
         )
-        leftButton.tintColor = .white
+        leftButton.tintColor = .black
         
         let rightButton = UIBarButtonItem(
             title: rightButtonTitle,
@@ -46,7 +46,7 @@ class BaseViewController: UIViewController {
             target: self,
             action: #selector(rightButtonTapped)
         )
-        rightButton.tintColor = .white
+        rightButton.tintColor = .black
 
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton

@@ -15,7 +15,7 @@ class SignInViewController: BaseViewController {
     private let emailTextField = CustomTextField()
     private let errorEmailLabel = UILabel()
     private let passwordTextField = CustomTextField()
-    private let errorPasswordTextView = UILabel()
+    private let errorPasswordLabel = UILabel()
     private let signInButton = UIButton()
     private let emailLabel = UILabel()
     private let passwordLabel = UILabel()
@@ -39,7 +39,7 @@ extension SignInViewController: SignInViewInput {
     }
     
     func setErrorPassword(_ isHidden: Bool) {
-        errorPasswordTextView.isHidden = isHidden
+        errorPasswordLabel.isHidden = isHidden
     }
     
     func enableButtonSignIn(_ isEnabled: Bool) {
@@ -71,7 +71,7 @@ extension SignInViewController {
     override func setupUI() {
         view.backgroundColor = .white
         for view in [spinner, errorEmailLabel, emailTextField, passwordTextField,
-                     errorPasswordTextView, signUpButton, emailLabel, passwordLabel,
+                     errorPasswordLabel, signUpButton, emailLabel, passwordLabel,
                      signInLabel, stackViewContainer, emailStackViewContainer,
                      passwordStackViewContainer, buttonsStackViewContainer] {
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -112,12 +112,13 @@ extension SignInViewController {
         errorEmailLabel.textColor = .red
         errorEmailLabel.isHidden = true
         
-        errorPasswordTextView.font = .systemFont(ofSize: 14)
-        errorPasswordTextView.textColor = .red
-        errorPasswordTextView.isHidden = true
+        errorPasswordLabel.font = .systemFont(ofSize: 14)
+        errorPasswordLabel.textColor = .red
+        errorPasswordLabel.isHidden = true
+        errorPasswordLabel.numberOfLines = 3
 
         errorEmailLabel.text = "Enter a valid email, example: mike@gmail.com".localized()
-        errorPasswordTextView.text = "Your password should be 8+ characters with a mix of uppercase letters, numbers, and special symbols like !@#$%^&* etc.".localized()
+        errorPasswordLabel.text = "Your password should be 8+ characters with a mix of uppercase letters, numbers, and special symbols like !@#$%^&* etc.".localized()
         
         emailLabel.text = "Email".localized()
         passwordLabel.text = "Password".localized()
@@ -161,7 +162,7 @@ extension SignInViewController {
         emailStackViewContainer.addArrangedSubview(errorEmailLabel)
         passwordStackViewContainer.addArrangedSubview(passwordLabel)
         passwordStackViewContainer.addArrangedSubview(passwordTextField)
-        passwordStackViewContainer.addArrangedSubview(errorPasswordTextView)
+        passwordStackViewContainer.addArrangedSubview(errorPasswordLabel)
         buttonsStackViewContainer.addArrangedSubview(signInButton)
         buttonsStackViewContainer.addArrangedSubview(laterButton)
     }
@@ -177,9 +178,7 @@ extension SignInViewController {
             stackViewContainer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -28),
             
             spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            errorPasswordTextView.heightAnchor.constraint(equalToConstant: 60),
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
     
