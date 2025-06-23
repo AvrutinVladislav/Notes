@@ -10,4 +10,6 @@ target 'NotesApp' do
  pod 'Firebase/Firestore'
  pod 'Firebase/Core'
  pod 'FirebaseDatabase'
+ pod 'SwinjectAutoregistration'
+ pod 'Swinject'
 end
