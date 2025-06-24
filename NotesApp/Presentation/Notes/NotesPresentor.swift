@@ -350,8 +350,8 @@ private extension NotesPresentor {
     
     func sortSections(_ sections: [NotesSectionsData]) -> [NotesSectionsData] {
         let orderedSections: [NotesSectionsData.SectionsType] = [
-            .yesterday,
             .today,
+            .yesterday,
             .week,
             .mounth,
             .year
