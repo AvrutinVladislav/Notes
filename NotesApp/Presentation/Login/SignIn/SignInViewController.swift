@@ -44,7 +44,8 @@ extension SignInViewController: SignInViewInput {
     
     func enableButtonSignIn(_ isEnabled: Bool) {
         signInButton.isEnabled = isEnabled
-        signInButton.backgroundColor = isEnabled ? .systemBlue : .lightGray
+        signInButton.backgroundColor = isEnabled ? .white : .lightGray
+        signInButton.tintColor = isEnabled ? .white : .black
     }
     
     func pushNotesViewController() {
@@ -69,7 +70,6 @@ extension SignInViewController: SignInViewInput {
 
 extension SignInViewController {
     override func setupUI() {
-        view.backgroundColor = .white
         for view in [spinner, errorEmailLabel, emailTextField, passwordTextField,
                      errorPasswordLabel, signUpButton, emailLabel, passwordLabel,
                      signInLabel, stackViewContainer, emailStackViewContainer,
@@ -79,8 +79,7 @@ extension SignInViewController {
         spinner.color = .black
         spinner.style = .large
         
-        signInLabel.font = .systemFont(ofSize: 25, weight: .medium)
-        signInLabel.text = "Sign In".localized()
+        setupNavigationBar(title: "Sign In")
         
         stackViewContainer.axis = .vertical
         stackViewContainer.spacing = 20
@@ -92,12 +91,13 @@ extension SignInViewController {
         
         for label in [emailLabel, passwordLabel] {
             label.font = .systemFont(ofSize: 17)
+            label.textColor = .white
         }
         
         for tf in [emailTextField, passwordTextField] {
             tf.font = .systemFont(ofSize: 14)
-            tf.textColor = .black
-            tf.layer.cornerRadius = 5
+            tf.textColor = .white
+            tf.layer.cornerRadius = 10
             tf.layer.borderColor = UIColor.black.cgColor
             tf.layer.borderWidth = 1
             tf.translatesAutoresizingMaskIntoConstraints = false
@@ -130,7 +130,9 @@ extension SignInViewController {
         signUpButton.setTitleColor(.black, for: .normal)
         signUpButton.contentHorizontalAlignment = .leading
         let text = NSMutableAttributedString(string: "Don't have account? ")
-        let signUp = NSAttributedString(string: "Sign Up", attributes: [.foregroundColor: UIColor.blue, .font: UIFont.systemFont(ofSize: 14, weight: .medium)])
+        let signUp = NSAttributedString(string: "Sign Up",
+                                        attributes: [.foregroundColor: UIColor.white,
+                                                     .font: UIFont.systemFont(ofSize: 14, weight: .medium)])
         text.append(signUp)
         signUpButton.setAttributedTitle(text, for: .normal)
         signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
@@ -138,15 +140,16 @@ extension SignInViewController {
         signInButton.setTitle("Sign In".localized(), for: .normal)
         signInButton.layer.borderColor = UIColor.black.cgColor
         signInButton.layer.borderWidth = 1
-        signInButton.layer.cornerRadius = 8
+        signInButton.layer.cornerRadius = 10
         var config = UIButton.Configuration.filled()
         config.titlePadding = 5
         signInButton.configuration = config
+        signInButton.clipsToBounds = true
         signInButton.addTarget(self, action: #selector(signInButtonDidTap), for: .touchUpInside)
         
-        laterButton.setTitle("Later".localized(), for: .normal)
-        laterButton.setTitleColor(.black, for: .normal)
-        laterButton.addTarget(self, action: #selector(laterButtonDidTap), for: .touchUpInside)
+//        laterButton.setTitle("Later".localized(), for: .normal)
+//        laterButton.setTitleColor(.white, for: .normal)
+//        laterButton.addTarget(self, action: #selector(laterButtonDidTap), for: .touchUpInside)
     }
     
     override func addSubview() {
@@ -164,7 +167,7 @@ extension SignInViewController {
         passwordStackViewContainer.addArrangedSubview(passwordTextField)
         passwordStackViewContainer.addArrangedSubview(errorPasswordLabel)
         buttonsStackViewContainer.addArrangedSubview(signInButton)
-        buttonsStackViewContainer.addArrangedSubview(laterButton)
+//        buttonsStackViewContainer.addArrangedSubview(laterButton)
     }
     
     override func addConstraints() {

@@ -16,6 +16,8 @@ class NotesPresentor {
     private var sections: [NotesSectionsData] = []
     private var deleteNotes: [NotesCellData] = []
     
+    private var notesIsHidden = true
+    
     init(view: NotesViewInput,
          coreDataManager: CoreDataManager,
          fbManager: FirebaseManager) {
@@ -72,7 +74,7 @@ extension NotesPresentor: NotesViewOutput {
         switch FirebaseManagerImpl().signOut() {
         case .success():
             CoreDataManagerImpl().deleteAllNotes("NotesList")
-            view.popViewController()
+            view.popToSignIn()
         case .failure:
             view.showAlert("Error", Errors.signOut.errorDescription)
         }
@@ -149,9 +151,10 @@ extension NotesPresentor: NotesViewOutput {
                 switch fbManager.updateNote(entity: NotesCellData(id: id,
                                                                   noteText: note.noteText,
                                                                   date: note.date,
-                                                                  isDone: false),
+                                                                  isDone: !note.isDone),
                                             id: id) {
                 case .success():
+                    updateCell(id)
                     sortDoneNotes()
                 case .failure:
                     print("Error", Errors.updateFirebase.errorDescription)
@@ -162,16 +165,6 @@ extension NotesPresentor: NotesViewOutput {
         case .failure(_):
             print("Error", Errors.fetchCoredata.errorDescription)
         }
-    }
-    
-    func sortDoneNotes() {
-        var result = [NotesSectionsData]()
-        sections.forEach { section in
-            var sortSection = section
-            sortSection.cells.sort { $0.isDone && !$1.isDone }
-            result.append(sortSection)
-        }
-        sections = result
         view.reloadTableView(sections: sections)
     }
     
@@ -183,17 +176,21 @@ extension NotesPresentor: NotesViewOutput {
                     buildCell(noteText: note.noteText, date: note.date, id: note.id, isDone: note.isDone)
                 }
                 sections = sortSections(buildSections(cells: data))
-                view.reloadTableView(sections: sections)
             } else {
                 sections = sortSections(buildSections(cells: notes.map({ note in
                     buildCell(noteText: note.noteText, date: note.date, id: note.id, isDone: note.isDone)
                 })))
-                view.reloadTableView(sections: sections)
             }
+            notesIsHidden.toggle()
             sortDoneNotes()
+            view.reloadTableView(sections: sections)
         case .failure(_):
             print(Errors.fetchCoredata.errorDescription)
         }
+    }
+    
+    func settingsButtonDidTap() {
+        
     }
     
 }
@@ -203,7 +200,6 @@ private extension NotesPresentor {
     func setupInitialState() {
         deleteNotesFromFBIfNeeded()
         checkChanges()
-        sortDoneNotes()
     }
     
     func buildCell(noteText: String,
@@ -224,12 +220,35 @@ private extension NotesPresentor {
                                                                                  id: $0.id,
                                                                                  isDone: $0.isDone) }
             sections = buildSections(cells: cells)
+            sortDoneNotes()
+            doneNotesIsHidden(notesIsHidden)
             view.reloadTableView(sections: sections)
         case .failure:
             print(Errors.fetchFbWhenSortData.errorDescription)
             break
         }
-        
+    }
+    
+    func updateCell(_ id: String) {
+        sections = sections.map { section in
+            var updatedSection = section
+            if let cell = updatedSection.cells.first(where: {$0.id == id}) {
+                updatedSection.cells.removeAll(where: {$0.id == id})
+                updatedSection.cells.append(NotesCellData(id: id,
+                                                          noteText: cell.noteText,
+                                                          date: cell.date,
+                                                          isDone: !cell.isDone))
+            }
+            return updatedSection
+        }
+    }
+
+    func sortDoneNotes() {
+        sections = sections.map { section in
+            var sortSection = section
+            sortSection.cells.sort(by: {$0.isDone && !$1.isDone})
+            return sortSection
+        }
     }
     
     func buildSections(cells: [NotesCellData]) -> [NotesSectionsData] {

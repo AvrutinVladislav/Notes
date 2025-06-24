@@ -26,9 +26,6 @@ class NotesTableViewCell: UITableViewCell {
             updateLabel()
         }
     }
-    
-    var titleHeight: NSLayoutConstraint!
-    
     static let identifier = "noteCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -49,16 +46,9 @@ class NotesTableViewCell: UITableViewCell {
         dateLabel.text = ""
     }
     
-}
-
-//MARK: NotesTableViewCell
-extension NotesTableViewCell {
-    
-    func configure(model: NotesCellData) {
+    func configure(model: NotesCellData, sectionType: NotesSectionsData.SectionsType) {
         titleLabel.text = model.noteText
-        if let sectionType = model.sectionType {
-            dateLabel.text = dateToString(date: model.date, type: sectionType)
-        }
+        dateLabel.text = dateToString(date: model.date, type: sectionType)
         isDone = model.isDone
         selectionStyle = .none
     }
@@ -69,7 +59,8 @@ extension NotesTableViewCell {
 private extension NotesTableViewCell {
     
     func setupUI() {
-        contentView.backgroundColor = Colors.mainBackground
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
         
         containerView.layer.cornerRadius = 10
         containerView.layer.masksToBounds = true

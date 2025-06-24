@@ -16,7 +16,7 @@ class NotesViewController: BaseViewController {
     private let addButton = UIButton()
     private let clearButton = UIButton()
     private var sections = [NotesSectionsData]()
-    private var refreshControl = UIRefreshControl()
+    private lazy var refreshControl = UIRefreshControl()
     private var isHiddenNotes = true {
         didSet {
             clearButton.setTitle(isHiddenNotes ? "Show all notes" : "Hide done notes", for: .normal)
@@ -50,7 +50,7 @@ extension NotesViewController: NotesViewInput {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func popViewController() {        
+    func popToSignIn() {        
         if let loginView = navigationController?.viewControllers.first(where: {$0 is SignInViewController}) {
             navigationController?.popToViewController(loginView, animated: true)
         }
@@ -77,18 +77,24 @@ extension NotesViewController: NotesViewInput {
     func endRefresh() {
         refreshControl.endRefreshing()
     }
+    
+    func pushSettingsViewController() {
+        navigationController?.pushViewController(SettingsBuilder.build(), animated: true)
+    }
 }
 
 //MARK: NotesViewController
 extension NotesViewController {
     
     override func setupUI() {
-        view.backgroundColor = Colors.mainBackground
         setupNavigationBar(title: "Notes".localized(),
-                           rightButtonTitle: nil,
+                           rightImage: UIImage(systemName: "gearshape"),
                            leftButtonTitle: "Sign out".localized())
         leftButtonAction = { [weak self] in
             self?.signOutButtonDidTap()
+        }
+        rightButtonAction = { [weak self] in
+            self?.settingsButtonDidTap()
         }
         
         if #available(iOS 16.0, *) {
@@ -103,12 +109,13 @@ extension NotesViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
         tableView.backgroundColor = Colors.mainBackground
-        
-        tableView.sectionHeaderHeight = 20
+        tableView.tintColor = .clear
+        tableView.showsVerticalScrollIndicator = false
 
         refreshControl.addTarget(self,
                                  action: #selector(refreshTableView),
                                  for: .valueChanged)
+        refreshControl.translatesAutoresizingMaskIntoConstraints = false
         
         addButton.setImage(UIImage(systemName: "plus")?
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 30, weight: .medium)),
@@ -162,8 +169,8 @@ extension NotesViewController {
                          trailing: view.safeAreaLayoutGuide.trailingAnchor,
                          padding: .init(top: 10, left: 10, bottom: -10, right: -10))
         
-        refreshControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        refreshControl.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+        refreshControl.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        refreshControl.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
     }
     
     @objc func addNoteButtonDidTap() {
@@ -176,11 +183,16 @@ extension NotesViewController {
     
     @objc func refreshTableView() {
         output?.refreshTableView()
+        tableView.reloadData()
     }
     
     @objc func hideDoneNotes() {
         isHiddenNotes.toggle()
         output?.doneNotesIsHidden(isHiddenNotes)
+    }
+    
+    @objc func settingsButtonDidTap() {
+        navigationController?.pushViewController(SettingsBuilder.build(), animated: true)
     }
 }
 
@@ -197,7 +209,8 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NotesTableViewCell.identifier,
                                                        for: indexPath) as? NotesTableViewCell
         else { return UITableViewCell() }
-        cell.configure(model: sections[indexPath.section].cells[indexPath.row])
+        cell.configure(model: sections[indexPath.section].cells[indexPath.row],
+                       sectionType: sections[indexPath.section].sectionType)
         cell.doneButtonTapped = { [weak self] in
             guard let self else { return }
             self.output?.doneButtonTapped(self.sections[indexPath.section].cells[indexPath.row].id)
@@ -209,7 +222,6 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
         sections.count
     }
     
-    
     func tableView(_ tableView: UITableView,
                    titleForHeaderInSection section: Int) -> String? {
         let sectionHeader = sections[section].sectionType.localaizeHeader
@@ -220,7 +232,6 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
                    commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
         output?.deleteNote(sections[indexPath.section].cells[indexPath.row])
-        
     }
     
     func tableView(_ tableView: UITableView,
@@ -233,8 +244,16 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        (view as? UITableViewHeaderFooterView)?.textLabel?.textColor = .white
-        (view as? UITableViewHeaderFooterView)?.textLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.textColor = .black
+        header.textLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
+        
+        let visualEffectView = UIVisualEffectView()
+        visualEffectView.effect = UIBlurEffect(style: .extraLight)
+        visualEffectView.layer.cornerRadius = 10
+        visualEffectView.layer.masksToBounds = true
+        visualEffectView.backgroundColor = .clear
+        header.backgroundView = visualEffectView
     }
     
 }

@@ -176,9 +176,9 @@
 			isa = PBXGroup;
 			children = (
 				86ABA83528EC0E2500EC96D8 /* SignInViewController.swift */,
+				86ABA85428EC12FB00EC96D8 /* SignInPresenter.swift */,
 				8638372D28EED85E00DB0407 /* SignInViewInput.swift */,
 				8638372B28EED85000DB0407 /* SignInViewOutput.swift */,
-				86ABA85428EC12FB00EC96D8 /* SignInPresenter.swift */,
 				572665262CDF361600AF2393 /* SignInBuilder.swift */,
 			);
 			path = SignIn;
@@ -259,10 +259,9 @@
 		86ABA84A28EC119D00EC96D8 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				57F6390E2CDB7004000CACE8 /* BaseViews */,
+				86ABA84E28EC123500EC96D8 /* Login */,
 				8697C7F428FD6A06006266E0 /* CreateOrEditNote */,
 				8617FB7428F44D7100E36AF6 /* Notes */,
-				86ABA84E28EC123500EC96D8 /* Login */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -287,6 +286,7 @@
 				57F639642CDBA9BD000CACE8 /* CustomTextField.swift */,
 				5726652E2CDF6D4800AF2393 /* CustomLabel.swift */,
 				579D9F182DAE44FE00820060 /* UIColor+Hex.swift */,
+				57F6390E2CDB7004000CACE8 /* BaseViews */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
