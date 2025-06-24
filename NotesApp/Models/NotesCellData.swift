@@ -18,7 +18,7 @@ struct NotesCellData {
     var noteText: String
     var date: Date
     var sectionType: NotesSectionsData.SectionsType?
-    var isDone: Bool
+    
 }
 
 extension NotesCellData: Equatable {
@@ -26,8 +26,7 @@ extension NotesCellData: Equatable {
     static func == (lhs: NotesCellData, rhs: NotesCellData) -> Bool {
         return lhs.id == rhs.id &&
                lhs.noteText == rhs.noteText &&
-               lhs.date == rhs.date &&
-               lhs.isDone  == rhs.isDone
+               lhs.date == rhs.date 
     }
 }
 
@@ -39,7 +38,6 @@ extension NotesCellData: Codable {
         case date
         case id
         case sectionType
-        case isDone
     }
     
     func encode(to encoder: Encoder) throws {
@@ -49,7 +47,6 @@ extension NotesCellData: Codable {
         try container.encode(date, forKey: .date)
         try container.encode(id, forKey: .id)
         try container.encode(sectionType?.rawValue, forKey: .sectionType)
-        try container.encode(isDone, forKey: .isDone)
     }
     
     init(from decoder: Decoder) throws {
@@ -60,7 +57,6 @@ extension NotesCellData: Codable {
         if let sectionTypeString = try container.decodeIfPresent(String.self, forKey: .sectionType) {
             sectionType = NotesSectionsData.SectionsType(rawValue: sectionTypeString)
         }
-        isDone = try container.decode(Bool.self, forKey: .isDone)
     }
     
 }

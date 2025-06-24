@@ -46,11 +46,7 @@ extension CreateOrEditNotePresentor: CreateOrEditNoteViewOutput {
             switch coreDataManager.createNote(note: text) {
             case .success(let result):
                 view.updateID(result.id)
-                switch fbManager.addNote(entity: NotesCellData(id: result.id,
-                                                               noteText: result.noteText,
-                                                               date: result.date,
-                                                               isDone: false),
-                                         id: result.id) {
+                switch fbManager.addNote(entity: NotesCellData(id: result.id, noteText: result.noteText, date: result.date), id: result.id) {
                 case .success():
                     view.showIndicator(false)
                     view.onFinished()
@@ -69,13 +65,9 @@ extension CreateOrEditNotePresentor: CreateOrEditNoteViewOutput {
             
         case .edit:
             if let id = noteID {
-                switch coreDataManager.updateNote(id: id, note: text, date: Date(), isDone: false) {
+                switch coreDataManager.updateNote(id: id, note: text, date: Date()) {
                 case .success():
-                    switch fbManager.updateNote(entity: NotesCellData(id: id,
-                                                                      noteText: text,
-                                                                      date: Date(),
-                                                                      isDone: false),
-                                                id: id) {
+                    switch fbManager.updateNote(entity: NotesCellData(id: id, noteText: text, date: Date()), id: id) {
                     case .success():
                         view.onFinished()
                         view.showIndicator(false)

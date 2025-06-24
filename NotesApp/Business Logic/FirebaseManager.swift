@@ -33,6 +33,7 @@ final class FirebaseManagerImpl: FirebaseManager {
     private let ref = Database.database().reference()
     
     func currentUser() -> String {
+        
         if Auth.auth().currentUser != nil {
             return Auth.auth().currentUser?.email ?? ""
         } else {
@@ -41,6 +42,7 @@ final class FirebaseManagerImpl: FirebaseManager {
     }
     
     func isSignIn() -> Bool {
+        
         if Auth.auth().currentUser != nil {
             return true
         } else {
@@ -187,7 +189,8 @@ final class FirebaseManagerImpl: FirebaseManager {
     
 }
 
-enum FBError: LocalizedError {    
+enum FBError: LocalizedError {
+    
     case encodeError
     case unauthorized
     case deleteFromFB

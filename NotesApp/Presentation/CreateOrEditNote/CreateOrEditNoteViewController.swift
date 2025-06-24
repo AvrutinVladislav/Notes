@@ -73,7 +73,6 @@ extension CreateOrEditNoteViewController: CreateOrEditNoteViewInput {
 //MARK: Private CreateOrEditeNoteViewController
 extension CreateOrEditNoteViewController {
     override func setupUI() {
-        view.backgroundColor = Colors.mainBackground
         separator.backgroundColor = .black
         
         noteTextView.font = .systemFont(ofSize: 18)
@@ -85,19 +84,19 @@ extension CreateOrEditNoteViewController {
         noteTextView.textColor = .black
         noteTextView.backgroundColor = .white
         
-        spinner.color = .black
-        spinner.style = .large
+        spinner.color = .red
         spinner.translatesAutoresizingMaskIntoConstraints = false
         
-        setupNavigationBar(title: state == .create ? "Create a note".localized() : "Edit note".localized(),
-                           rightButtonTitle: "Save".localized(),
-                           leftButtonTitle: "Back".localized())
-        rightButtonAction = { [weak self] in
-            self?.saveNoteButtonDidTap()
-        }
-        leftButtonAction = { [weak self] in
-            self?.backButtonDidTap()
-        }
+        title = state == .create ? "Create a note".localized() : "Edit note".localized()
+        navigationItem.rightBarButtonItem = UIBarButtonItem (title: "Save".localized(),
+                                                            style: .done,
+                                                            target: nil,
+                                                            action: #selector(saveNoteButtonDidTap))
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back".localized(),
+                                                           style: .done,
+                                                           target: nil,
+                                                           action: nil)
         noteTextView.textContainer.maximumNumberOfLines = 0
     }
     
@@ -108,11 +107,17 @@ extension CreateOrEditNoteViewController {
     }
     
     override func addConstraints() {
-        noteTextView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                            leading: view.safeAreaLayoutGuide.leadingAnchor,
+        separator.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                         leading: view.leadingAnchor,
+                         bottom: nil,
+                         trailing: view.trailingAnchor,
+                         padding: .init(top: 10, left: 0, bottom: 10, right: 0),
+                         size: .init(width: view.frame.width, height: 2))
+        noteTextView.anchor(top: separator.bottomAnchor,
+                            leading: view.leadingAnchor,
                             bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                            trailing: view.safeAreaLayoutGuide.trailingAnchor,
-                            padding: .init(top: 10, left: 10, bottom: -10, right: -10))
+                            trailing: view.trailingAnchor,
+                            padding: .init(top: 10, left: 28, bottom: 10, right: -28))
         spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
@@ -120,10 +125,6 @@ extension CreateOrEditNoteViewController {
     @objc func saveNoteButtonDidTap() {
         
         output?.saveNoteButtonDidTap(noteTextView.text)
-    }
-    
-    @objc func backButtonDidTap() {
-        navigationController?.popViewController(animated: true)
     }
     
 }

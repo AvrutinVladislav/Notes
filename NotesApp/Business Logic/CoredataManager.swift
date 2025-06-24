@@ -14,8 +14,8 @@ protocol CoreDataManager {
     func createNote(note: String) -> Result<NotesList, Error>
     func deleteNote(predicate: NSPredicate) -> Result<Void, Error>
     func deleteAllNotes(_ entity: String)
-    func addNoteFromFB(id: String, note: String, date: Date, isDone: Bool) -> Result<Void, Error>
-    func updateNote(id: String, note: String, date: Date, isDone: Bool) -> Result<Void, Error>
+    func addNoteFromFB(id: String, note: String, date: Date) -> Result<Void, Error>
+    func updateNote(id: String, note: String, date: Date) -> Result<Void, Error>
 }
 
 final class CoreDataManagerImpl: CoreDataManager {
@@ -93,13 +93,12 @@ final class CoreDataManagerImpl: CoreDataManager {
         }
     }
     
-    func addNoteFromFB(id: String, note: String, date: Date, isDone: Bool) -> Result<Void, Error> {
+    func addNoteFromFB(id: String, note: String, date: Date) -> Result<Void, Error> {
         let context = persistentContainer.viewContext
         let newNote = NotesList(context: context)
         newNote.noteText = note
         newNote.date = date
         newNote.id = id
-        newNote.isDone = isDone
         saveContext()
         do {
             try context.save()
@@ -109,7 +108,7 @@ final class CoreDataManagerImpl: CoreDataManager {
         }
     }
     
-    func updateNote(id: String, note: String, date: Date, isDone: Bool) -> Result<Void, Error> {
+    func updateNote(id: String, note: String, date: Date) -> Result<Void, Error> {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<NotesList> = NotesList.createFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %@", id)
@@ -117,8 +116,7 @@ final class CoreDataManagerImpl: CoreDataManager {
         do {
             if let result = try context.fetch(fetchRequest).first {
                 result.noteText = note
-                result.date = date
-                result.isDone = isDone
+                result.date = date                
                 try context.save()
             }
             return .success(())

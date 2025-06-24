@@ -12,15 +12,18 @@ struct NotesSectionsData {
     let sectionType: SectionsType
     var cells = [NotesCellData]()
     
-    enum SectionsType: String {
-        case yesterday
+    enum SectionsType: String{
+        
         case today
+        case yesterday
         case week
         case mounth
         case year
         
         var localaizeHeader: String {
+            
             switch self {
+                
             case .today:
                 return "Today".localized()
             case .yesterday:
