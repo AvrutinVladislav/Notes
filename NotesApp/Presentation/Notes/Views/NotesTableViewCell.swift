@@ -9,9 +9,25 @@ import UIKit
 
 class NotesTableViewCell: UITableViewCell {
     
+    var doneButtonTapped: (() -> Void)?
+    
+    private let containerView = UIView()
     private let dateLabel = UILabel()
     private let titleLabel = UILabel()
-    private let separator = UIView()
+    private let doneButton = UIButton()
+    private var isDone = false {
+        didSet {
+            doneButton.setImage(isDone ? UIImage(systemName: "checkmark.circle.fill")?
+                .withConfiguration(UIImage.SymbolConfiguration(pointSize: 25, weight: .regular))
+                                       : UIImage(systemName: "circle")?
+                .withConfiguration(UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)),
+                                for: .normal)
+            doneButton.tintColor = isDone ? .blue : .lightGray
+            updateLabel()
+        }
+    }
+    
+    var titleHeight: NSLayoutConstraint!
     
     static let identifier = "noteCell"
     
@@ -26,19 +42,25 @@ class NotesTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isDone = false
+        titleLabel.text = ""
+        dateLabel.text = ""
+    }
+    
 }
 
 //MARK: NotesTableViewCell
 extension NotesTableViewCell {
     
-    func configure(model: NotesCellData, cellsCount: Int) {
+    func configure(model: NotesCellData) {
         titleLabel.text = model.noteText
         if let sectionType = model.sectionType {
             dateLabel.text = dateToString(date: model.date, type: sectionType)
         }
-        if cellsCount >= 2 {
-            separator.isHidden = false
-        }
+        isDone = model.isDone
+        selectionStyle = .none
     }
     
 }
@@ -47,37 +69,55 @@ extension NotesTableViewCell {
 private extension NotesTableViewCell {
     
     func setupUI() {
-        titleLabel.font = .boldSystemFont(ofSize: 14)
-        dateLabel.font = .italicSystemFont(ofSize: 12)        
-        separator.backgroundColor = .black
-        separator.isHidden = true
+        contentView.backgroundColor = Colors.mainBackground
+        
+        containerView.layer.cornerRadius = 10
+        containerView.layer.masksToBounds = true
+        containerView.layer.borderWidth = 1
+        containerView.layer.borderColor = Colors.cellBorderColor.cgColor
+        containerView.backgroundColor = .white
+        
+        titleLabel.font = .systemFont(ofSize: 16, weight: .medium)
+        titleLabel.numberOfLines = 0
+        
+        dateLabel.font = .systemFont(ofSize: 12)
+
+        doneButton.addTarget(self, action: #selector(doneButtonDidTap), for: .touchUpInside)
+        doneButton.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func addSubview() {
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(dateLabel)
-        contentView.addSubview(separator)
+        contentView.addSubview(containerView)
+        containerView.addSubview(titleLabel)
+        containerView.addSubview(dateLabel)
+        containerView.addSubview(doneButton)
     }
     
     func addConstraints() {
-        titleLabel.anchor(top: safeAreaLayoutGuide.topAnchor,
-                          leading: safeAreaLayoutGuide.leadingAnchor,
-                          bottom: nil,
-                          trailing: safeAreaLayoutGuide.trailingAnchor ,
-                          padding: .init(top: 5, left: 30, bottom: 0, right: -30))
+        containerView.anchor(top: contentView.topAnchor,
+                             leading: contentView.leadingAnchor,
+                             bottom: contentView.bottomAnchor,
+                             trailing: contentView.trailingAnchor,
+                             padding: .init(top: 5, left: 10, bottom: -5, right: -10))
+        
+        titleLabel.anchor(top: containerView.topAnchor,
+                          leading: containerView.leadingAnchor,
+                          bottom: dateLabel.topAnchor,
+                          trailing: containerView.trailingAnchor,
+                          padding: .init(top: 5, left: 10, bottom: -5, right: -60))
         
         dateLabel.anchor(top: nil,
-                         leading: safeAreaLayoutGuide.leadingAnchor,
-                         bottom: safeAreaLayoutGuide.bottomAnchor,
-                         trailing: nil,
-                         padding: .init(top: 0, left: 30, bottom: -5, right: 0))
+                         leading: containerView.leadingAnchor,
+                         bottom: containerView.bottomAnchor,
+                         trailing: containerView.trailingAnchor,
+                         padding: .init(top: 0, left: 10, bottom: -5, right: -60))
         
-        separator.anchor(top: nil,
-                         leading: safeAreaLayoutGuide.leadingAnchor,
-                         bottom: safeAreaLayoutGuide.bottomAnchor,
-                         trailing: safeAreaLayoutGuide.trailingAnchor,
-                         padding: .init(top: 0, left: 30, bottom: 0, right: -30),
-                         size: .init(width: 0.0, height: 1.0))
+        doneButton.anchor(top: containerView.topAnchor,
+                          leading: nil,
+                          bottom: containerView.bottomAnchor,
+                          trailing: containerView.trailingAnchor,
+                          padding: .init(top: 0, left: 0, bottom: 0, right: -10))
+        
     }
     
     func dateToString(date: Date, type: NotesSectionsData.SectionsType) -> String {
@@ -97,14 +137,30 @@ private extension NotesTableViewCell {
             dateString = formatter.string(from: date)
             return dateString
         case .mounth:
-            formatter.dateFormat = "d M y"
+            formatter.dateFormat = "d MMM y"
             dateString = formatter.string(from: date)
             return dateString
         case .year:
-            formatter.dateFormat = "d M y"
+            formatter.dateFormat = "d MMM y"
             dateString = formatter.string(from: date)
             return dateString
         }
+    }
+    
+    func updateLabel() {
+        let strikeAttr: [NSAttributedString.Key: Any] = [
+            .strikethroughStyle: NSUnderlineStyle.single.rawValue
+        ]
+        let defaultAttr: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 16, weight: .medium)
+        ]
+        titleLabel.attributedText = NSAttributedString(string: titleLabel.text ?? "",
+                                                       attributes: isDone ? strikeAttr : defaultAttr)
+    }
+    
+    @objc func doneButtonDidTap() {
+        isDone.toggle()
+        doneButtonTapped?()
     }
     
 }

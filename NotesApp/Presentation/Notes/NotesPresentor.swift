@@ -31,32 +31,32 @@ extension NotesPresentor: NotesViewOutput {
         setupInitialState()
     }
     
-    func deleteNote(_ model: NotesCellData) {
+    func deleteNote(_ note: NotesCellData) {
         view.showIndicator(true)
-        switch coreDataManager.deleteNote(predicate: NSPredicate.init(format: "id = %@", model.id)) {
+        switch coreDataManager.deleteNote(predicate: NSPredicate.init(format: "id = %@", note.id)) {
         case .success:
-            switch fbManager.deleteNote(id: model.id) {
+            switch fbManager.deleteNote(id: note.id) {
             case .success:
-                if let sectionIndex = sections.firstIndex(where: { $0.sectionType == model.sectionType }),
-                   let cellIndex = sections[sectionIndex].cells.firstIndex(where: { $0.id == model.id }) {
+                if let sectionIndex = sections.firstIndex(where: { $0.sectionType == note.sectionType }),
+                   let cellIndex = sections[sectionIndex].cells.firstIndex(where: { $0.id == note.id }) {
                     sections[sectionIndex].cells.remove(at: cellIndex)
                     view.reloadTableView(sections: sections)
                     view.showIndicator(false)
                 }
             case .failure:
-                deleteNotes.append(model)
+                deleteNotes.append(note)
                 view.showIndicator(false)
                 view.showAlert("Error", Errors.deleteFirebase.errorDescription)
             }
         case .failure:
             view.showIndicator(false)
             view.showAlert("Error", Errors.deleteCoredata.errorDescription)
-        }        
+        }
     }
     
-    func didSelectCell(_ model: NotesCellData) {
-        if let sectionType = model.sectionType {
-            view.pushCreateOrEditeViewController(noteID: model.id,
+    func didSelectCell(_ note: NotesCellData) {
+        if let sectionType = note.sectionType {
+            view.pushCreateOrEditeViewController(noteID: note.id,
                                                  sectionType: sectionType,
                                                  state: .edit)
         }
@@ -86,7 +86,8 @@ extension NotesPresentor: NotesViewOutput {
             let cell = NotesCellData(id: note.id,
                                      noteText: note.noteText,
                                      date: note.date,
-                                     sectionType: .today)
+                                     sectionType: .today,
+                                     isDone: note.isDone)
             if let sectionIndex = sections.firstIndex(where: { $0.sectionType == sectionType }) {
                 if let index = sections[sectionIndex].cells.firstIndex(where: { $0.id == cell.id }) {
                     sections[sectionIndex].cells.remove(at: index)
@@ -108,7 +109,10 @@ extension NotesPresentor: NotesViewOutput {
     func refreshTableView() {
         switch coreDataManager.fetchData() {
         case .success(let cdFetchResult):
-            let data = cdFetchResult.map { buildCell(noteText: $0.noteText, date: $0.date, id: $0.id) }
+            let data = cdFetchResult.map { buildCell(noteText: $0.noteText,
+                                                     date: $0.date,
+                                                     id: $0.id,
+                                                     isDone: $0.isDone) }
             switch fbManager.updateNotes(entities: data) {
             case .success:
                 fbManager.fetchDataFromFB { result in
@@ -121,18 +125,77 @@ extension NotesPresentor: NotesViewOutput {
                         }
                         self.sortData()
                     case .failure:
-                        print("error fetch from fb")
+                        print(Errors.fetchFirebase.errorDescription)
                     }
                 }
             case .failure:
-                print("error update fb from coredata")
+                print(Errors.updateCoredata.errorDescription)
             }
         case .failure:
-            print(" error fetch from coredata")
+            print(Errors.fetchCoredata.errorDescription)
         }
         view.endRefresh()
     }
-   
+    
+    func doneButtonTapped(_ id: String) {
+        let result = coreDataManager.fetchData(predicate: NSPredicate(format: "id = %@", id))
+        switch result {
+        case .success(let note):
+            switch coreDataManager.updateNote(id: note.id,
+                                              note: note.noteText,
+                                              date: note.date,
+                                              isDone: !note.isDone) {
+            case .success():
+                switch fbManager.updateNote(entity: NotesCellData(id: id,
+                                                                  noteText: note.noteText,
+                                                                  date: note.date,
+                                                                  isDone: false),
+                                            id: id) {
+                case .success():
+                    sortDoneNotes()
+                case .failure:
+                    print("Error", Errors.updateFirebase.errorDescription)
+                }
+            case .failure:
+                print("Error", Errors.updateCoredata.errorDescription)
+            }
+        case .failure(_):
+            print("Error", Errors.fetchCoredata.errorDescription)
+        }
+    }
+    
+    func sortDoneNotes() {
+        var result = [NotesSectionsData]()
+        sections.forEach { section in
+            var sortSection = section
+            sortSection.cells.sort { $0.isDone && !$1.isDone }
+            result.append(sortSection)
+        }
+        sections = result
+        view.reloadTableView(sections: sections)
+    }
+    
+    func doneNotesIsHidden(_ isHiddenNotes: Bool) {
+        switch coreDataManager.fetchData() {
+        case .success(let notes):
+            if isHiddenNotes {
+                let data = notes.filter { $0.isDone == false}.map { note in
+                    buildCell(noteText: note.noteText, date: note.date, id: note.id, isDone: note.isDone)
+                }
+                sections = sortSections(buildSections(cells: data))
+                view.reloadTableView(sections: sections)
+            } else {
+                sections = sortSections(buildSections(cells: notes.map({ note in
+                    buildCell(noteText: note.noteText, date: note.date, id: note.id, isDone: note.isDone)
+                })))
+                view.reloadTableView(sections: sections)
+            }
+            sortDoneNotes()
+        case .failure(_):
+            print(Errors.fetchCoredata.errorDescription)
+        }
+    }
+    
 }
 
 //MARK: - Private
@@ -140,64 +203,74 @@ private extension NotesPresentor {
     func setupInitialState() {
         deleteNotesFromFBIfNeeded()
         checkChanges()
+        sortDoneNotes()
     }
     
     func buildCell(noteText: String,
                    date: Date,
-                   id: String) -> NotesCellData {
+                   id: String,
+                   isDone: Bool) -> NotesCellData {
         return NotesCellData(id: id,
                              noteText: noteText,
-                             date: date)
+                             date: date,
+                             isDone: isDone)
     }
     
     func sortData() {
         switch coreDataManager.fetchData() {
         case .success(let result):
-            let cells = result.sorted(by: { $0.date > $1.date }).map { buildCell(noteText: $0.noteText, date: $0.date, id: $0.id) }
+            let cells = result.sorted(by: { $0.date > $1.date }).map { buildCell(noteText: $0.noteText,
+                                                                                 date: $0.date,
+                                                                                 id: $0.id,
+                                                                                 isDone: $0.isDone) }
             sections = buildSections(cells: cells)
             view.reloadTableView(sections: sections)
         case .failure:
-            print("Error fetch from firebase when sortData()")
+            print(Errors.fetchFbWhenSortData.errorDescription)
             break
         }
         
-        func buildSections(cells: [NotesCellData]) -> [NotesSectionsData] {
-            var buildSections: [NotesSectionsData] = []
-            func sortDataForSections(by key: NotesSectionsData.SectionsType, item: NotesCellData) {
-                if let index = buildSections.firstIndex(where: { $0.sectionType == key }) {
-                    buildSections[index].cells.append(item)
-                } else {
-                    let section = NotesSectionsData(sectionType: key, cells: [item])
-                    buildSections.append(section)
-                }
+    }
+    
+    func buildSections(cells: [NotesCellData]) -> [NotesSectionsData] {
+        var buildSections: [NotesSectionsData] = []
+        func sortDataForSections(by key: NotesSectionsData.SectionsType, item: NotesCellData) {
+            if let index = buildSections.firstIndex(where: { $0.sectionType == key }) {
+                buildSections[index].cells.append(item)
+            } else {
+                let section = NotesSectionsData(sectionType: key, cells: [item])
+                buildSections.append(section)
             }
-            for var cell in cells {
-                if cell.date.isToday {
-                    cell.sectionType = .today
-                    sortDataForSections(by: .today, item: cell)
-                } else if cell.date.isYesterday {
-                    cell.sectionType = .yesterday
-                    sortDataForSections(by: .yesterday, item: cell)
-                } else if cell.date.isWeek {
-                    cell.sectionType = .week
-                    sortDataForSections(by: .week, item: cell)
-                } else if cell.date.isMounth {
-                    cell.sectionType = .mounth
-                    sortDataForSections(by: .mounth, item: cell)
-                } else if cell.date.isYear {
-                    cell.sectionType = .year
-                    sortDataForSections(by: .year, item: cell)
-                }
-            }
-            return buildSections
         }
+        for var cell in cells {
+            if cell.date.isToday {
+                cell.sectionType = .today
+                sortDataForSections(by: .today, item: cell)
+            } else if cell.date.isYesterday {
+                cell.sectionType = .yesterday
+                sortDataForSections(by: .yesterday, item: cell)
+            } else if cell.date.isWeek {
+                cell.sectionType = .week
+                sortDataForSections(by: .week, item: cell)
+            } else if cell.date.isMounth {
+                cell.sectionType = .mounth
+                sortDataForSections(by: .mounth, item: cell)
+            } else if cell.date.isYear {
+                cell.sectionType = .year
+                sortDataForSections(by: .year, item: cell)
+            }
+        }
+        return buildSections
     }
     
     func checkChanges() {
         self.view.showIndicator(true)
-        switch CoreDataManagerImpl().fetchData() {
+        switch coreDataManager.fetchData() {
         case .success(let cdFetchResult):
-            let data = cdFetchResult.map { buildCell(noteText: $0.noteText, date: $0.date, id: $0.id) }
+            let data = cdFetchResult.map { buildCell(noteText: $0.noteText,
+                                                     date: $0.date,
+                                                     id: $0.id,
+                                                     isDone: $0.isDone) }
             switch fbManager.updateNotes(entities: data) {
             case .success:
                 fbManager.fetchDataFromFB { result in
@@ -211,24 +284,29 @@ private extension NotesPresentor {
                             }
                         }
                         self.sortData()
+                        self.sections = self.sortSections(self.sections)
+                        self.doneNotesIsHidden(true)
                         self.view.showIndicator(false)
                     case .failure:
                         self.view.showIndicator(false)
-                        print("error fetch from fb")
+                        print(Errors.fetchFirebase.errorDescription)
                     }
                 }
             case .failure:
                 self.view.showIndicator(false)
-                print("error update fb from coredata")
+                print(Errors.updateFbFromCoredata.errorDescription)
             }
         case .failure:
             self.view.showIndicator(false)
-            print(" error fetch from coredata")
+            print(Errors.fetchCoredata.errorDescription)
         }
     }
     
     func updateCoreData(remoteNote: NotesCellData) {
-        switch coreDataManager.updateNote(id: remoteNote.id, note: remoteNote.noteText, date: remoteNote.date) {
+        switch coreDataManager.updateNote(id: remoteNote.id,
+                                          note: remoteNote.noteText,
+                                          date: remoteNote.date,
+                                          isDone: remoteNote.isDone) {
         case .success():
             break
         case .failure:
@@ -237,7 +315,8 @@ private extension NotesPresentor {
     }
     
     func addToFireBase(localNote: NotesCellData) {
-        switch fbManager.addNote(entity: localNote, id: localNote.id) {
+        switch fbManager.addNote(entity: localNote,
+                                 id: localNote.id) {
         case .success():
             break
         case .failure:
@@ -246,7 +325,10 @@ private extension NotesPresentor {
     }
     
     func addToCoreDateFromFB(remoteNote: NotesCellData) {
-        switch coreDataManager.addNoteFromFB(id: remoteNote.id, note: remoteNote.noteText, date: remoteNote.date) {
+        switch coreDataManager.addNoteFromFB(id: remoteNote.id,
+                                             note: remoteNote.noteText,
+                                             date: remoteNote.date,
+                                             isDone: remoteNote.isDone) {
         case .success:
             break
         case .failure:
@@ -265,6 +347,25 @@ private extension NotesPresentor {
             }
         }
     }
+    
+    func sortSections(_ sections: [NotesSectionsData]) -> [NotesSectionsData] {
+        let orderedSections: [NotesSectionsData.SectionsType] = [
+            .today,
+            .yesterday,
+            .week,
+            .mounth,
+            .year
+        ]
+        return sections.sorted {
+                guard
+                    let firstIndex = orderedSections.firstIndex(of: $0.sectionType),
+                    let secondIndex = orderedSections.firstIndex(of: $1.sectionType)
+                else {
+                    return false
+                }
+                return firstIndex < secondIndex
+            }
+    }
 }
   
 //MARK: Errors
@@ -272,11 +373,13 @@ extension NotesPresentor {
     enum Errors: LocalizedError {
         case updateFirebase
         case updateCoredata
+        case updateFbFromCoredata
         case addFirebase
         case addCoredataFromFB
         case signOut
         case fetchCoredata
         case fetchFirebase
+        case fetchFbWhenSortData
         case laterButtonEnter
         case deleteCoredata
         case deleteFirebase
@@ -288,6 +391,8 @@ extension NotesPresentor {
                 return "Error to update Firebase".localized()
             case .updateCoredata:
                 return "Error to update Coredata".localized()
+            case .updateFbFromCoredata:
+                return "Error update Firebase from Coredata".localized()
             case .addFirebase:
                 return "Error to add note in Firebase".localized()
             case .addCoredataFromFB:
@@ -298,6 +403,8 @@ extension NotesPresentor {
                 return "Error fetch data from Coredata".localized()
             case .fetchFirebase:
                 return "Error fetch data from Firebase".localized()
+            case .fetchFbWhenSortData:
+                return "Error fetch data from Firebase when sort data".localized()
             case .laterButtonEnter:
                 return "Logged in without authorization, cloud saving is not available".localized()
             case .deleteCoredata:
