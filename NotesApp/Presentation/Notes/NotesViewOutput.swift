@@ -18,4 +18,5 @@ protocol NotesViewOutput: AnyObject {
     func refreshTableView()
     func doneButtonTapped(_ id: String)
     func doneNotesIsHidden(_ isHiddenNotes: Bool)
+    func settingsButtonDidTap()
 }

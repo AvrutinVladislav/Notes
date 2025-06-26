@@ -73,7 +73,6 @@ extension CreateOrEditNoteViewController: CreateOrEditNoteViewInput {
 //MARK: Private CreateOrEditeNoteViewController
 extension CreateOrEditNoteViewController {
     override func setupUI() {
-        view.backgroundColor = Colors.mainBackground
         separator.backgroundColor = .black
         
         noteTextView.font = .systemFont(ofSize: 18)

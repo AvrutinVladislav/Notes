@@ -43,7 +43,8 @@ extension SignUpViewController: SignUpViewInput {
     
     func enableButton(_ isEnabled: Bool) {
         signUpButton.isEnabled = isEnabled
-        signUpButton.backgroundColor = isEnabled ? .blue : .lightGray
+        signUpButton.backgroundColor = isEnabled ? .white : .lightGray
+        signUpButton.tintColor = isEnabled ? .white : .black
     }
     
     func pushNotesViewController() {
@@ -69,7 +70,6 @@ extension SignUpViewController: SignUpViewInput {
 extension SignUpViewController {
     
     override func setupUI() {
-        view.backgroundColor = .white
         for view in [spinner, errorEmailLabel, emailTextField, passwordTextField,
                      errorPasswordLabel, signUpButton, emailLabel, passwordLabel,
                      signUpLabel, stackViewContainer, emailStackViewContainer,
@@ -79,9 +79,6 @@ extension SignUpViewController {
         
         spinner.color = .black
         spinner.style = .large
-        
-        signUpLabel.font = .systemFont(ofSize: 25, weight: .medium)
-        signUpLabel.text = "Sign Up".localized()
         
         stackViewContainer.axis = .vertical
         stackViewContainer.spacing = 20
@@ -93,16 +90,18 @@ extension SignUpViewController {
         
         for label in [emailLabel, passwordLabel] {
             label.font = .systemFont(ofSize: 17)
+            label.textColor = .white
         }
         
         for label in [emailTextField, passwordTextField] {
             label.font = .systemFont(ofSize: 14)
+            label.textColor = .white
         }
         
         for tf in [emailTextField, passwordTextField] {
             tf.font = .systemFont(ofSize: 14)
             tf.textColor = .black
-            tf.layer.cornerRadius = 5
+            tf.layer.cornerRadius = 10
             tf.layer.borderColor = UIColor.black.cgColor
             tf.layer.borderWidth = 1
             tf.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
@@ -130,12 +129,16 @@ extension SignUpViewController {
         
         emailLabel.text = "Email".localized()
         passwordLabel.text = "Password".localized()
+        
         signUpButton.setTitle("Sign Up".localized(), for: .normal)
         signUpButton.setTitleColor(.white, for: .normal)
-        signUpButton.layer.cornerRadius = 5
+        signUpButton.layer.cornerRadius = 10
+        signUpButton.layer.borderWidth = 1
+        signUpButton.layer.borderColor = UIColor.black.cgColor
         signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
+        signUpButton.clipsToBounds = true
         
-        setupNavigationBar(title: nil, rightButtonTitle: nil, leftButtonTitle: "Back")
+        setupNavigationBar(title: "Sign Up", rightButtonTitle: nil, leftButtonTitle: "Back")
         leftButtonAction = { [weak self] in
             self?.backButtonDidTap()
         }

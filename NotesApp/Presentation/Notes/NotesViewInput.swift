@@ -13,7 +13,7 @@ protocol NotesViewInput: AnyObject {
     func pushCreateOrEditeViewController(noteID: String?,
                                          sectionType: NotesSectionsData.SectionsType,
                                          state: CreateOrEditeNoteState)
-    func popViewController()
+    func popToSignIn()
     func showAlert(_ title: String,
                    _ message: String)
     func showIndicator(_ isActive: Bool)
