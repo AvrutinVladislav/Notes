@@ -19,17 +19,21 @@ class SignInViewController: BaseViewController {
     private let signInButton = UIButton()
     private let emailLabel = UILabel()
     private let passwordLabel = UILabel()
+    private let resetPasswordButton = UIButton()
     private let signUpButton = UIButton()
-    private let laterButton = UIButton()
     private let signInLabel = UILabel()
     private let stackViewContainer = UIStackView()
     private let emailStackViewContainer = UIStackView()
     private let passwordStackViewContainer = UIStackView()
     private let buttonsStackViewContainer = UIStackView()
+    private let resetPasswordStackContainer = UIStackView()
+    private let resetViewContainer = UIView()
+    let resetView = ResetPasswordView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         output?.viewDidLoad()
+        resetView.delegate = self
     }
 }
 
@@ -73,7 +77,8 @@ extension SignInViewController {
         for view in [spinner, errorEmailLabel, emailTextField, passwordTextField,
                      errorPasswordLabel, signUpButton, emailLabel, passwordLabel,
                      signInLabel, stackViewContainer, emailStackViewContainer,
-                     passwordStackViewContainer, buttonsStackViewContainer] {
+                     passwordStackViewContainer, buttonsStackViewContainer,
+                     resetPasswordStackContainer, resetView, resetViewContainer] {
             view.translatesAutoresizingMaskIntoConstraints = false
         }
         spinner.color = .black
@@ -83,6 +88,9 @@ extension SignInViewController {
         
         stackViewContainer.axis = .vertical
         stackViewContainer.spacing = 20
+        
+        resetPasswordStackContainer.axis = .horizontal
+        resetPasswordStackContainer.spacing = 10
         
         for stack in [emailStackViewContainer, passwordStackViewContainer, buttonsStackViewContainer] {
             stack.axis = .vertical
@@ -96,12 +104,13 @@ extension SignInViewController {
         
         for tf in [emailTextField, passwordTextField] {
             tf.font = .systemFont(ofSize: 14)
-            tf.textColor = .white
+            tf.textColor = .black
             tf.layer.cornerRadius = 10
             tf.layer.borderColor = UIColor.black.cgColor
             tf.layer.borderWidth = 1
             tf.translatesAutoresizingMaskIntoConstraints = false
             tf.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+            tf.backgroundColor = .white
         }
         emailTextField.placeholder = "Enter your email".localized()
         passwordTextField.placeholder = "Enter your password".localized()
@@ -123,9 +132,14 @@ extension SignInViewController {
         emailLabel.text = "Email".localized()
         passwordLabel.text = "Password".localized()
         
-        for button in [signUpButton, signInButton, laterButton] {
+        for button in [signUpButton, signInButton, resetPasswordButton] {
             button.titleLabel?.font = .systemFont(ofSize: 14)
         }
+        
+        resetPasswordButton.setTitle("Reset password", for: .normal)
+        resetPasswordButton.setTitleColor(.white.withAlphaComponent(0.6), for: .normal)
+        resetPasswordButton.addTarget(self, action: #selector(forgotPasswordButtonDidTap), for: .touchUpInside)
+        resetPasswordButton.contentHorizontalAlignment = .trailing
         
         signUpButton.setTitleColor(.black, for: .normal)
         signUpButton.contentHorizontalAlignment = .leading
@@ -147,17 +161,21 @@ extension SignInViewController {
         signInButton.clipsToBounds = true
         signInButton.addTarget(self, action: #selector(signInButtonDidTap), for: .touchUpInside)
         
-//        laterButton.setTitle("Later".localized(), for: .normal)
-//        laterButton.setTitleColor(.white, for: .normal)
-//        laterButton.addTarget(self, action: #selector(laterButtonDidTap), for: .touchUpInside)
+        resetView.isHidden = true
+        resetViewContainer.isHidden = true
+        
+        addBlurBackgroundToResetContainer()
+        
     }
     
     override func addSubview() {
         view.addSubview(signInLabel)
         view.addSubview(stackViewContainer)
         view.addSubview(spinner)
+        view.addSubview(resetViewContainer)
         stackViewContainer.addArrangedSubview(emailStackViewContainer)
         stackViewContainer.addArrangedSubview(passwordStackViewContainer)
+        stackViewContainer.addArrangedSubview(resetPasswordStackContainer)
         stackViewContainer.addArrangedSubview(signUpButton)
         stackViewContainer.addArrangedSubview(buttonsStackViewContainer)
         emailStackViewContainer.addArrangedSubview(emailLabel)
@@ -167,7 +185,9 @@ extension SignInViewController {
         passwordStackViewContainer.addArrangedSubview(passwordTextField)
         passwordStackViewContainer.addArrangedSubview(errorPasswordLabel)
         buttonsStackViewContainer.addArrangedSubview(signInButton)
-//        buttonsStackViewContainer.addArrangedSubview(laterButton)
+        resetPasswordStackContainer.addArrangedSubview(signUpButton)
+        resetPasswordStackContainer.addArrangedSubview(resetPasswordButton)
+        resetViewContainer.addSubview(resetView)
     }
     
     override func addConstraints() {
@@ -181,19 +201,44 @@ extension SignInViewController {
             stackViewContainer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -28),
             
             spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            resetViewContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            resetViewContainer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            resetViewContainer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            resetViewContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            resetView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            resetView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            resetView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
+            resetView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
         ])
     }
     
-    @objc func signUpButtonDidTap(_ sender: UIButton) {
+    func addBlurBackgroundToResetContainer() {
+        let blurEffect = UIBlurEffect(style: .systemMaterial)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = view.bounds
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        resetViewContainer.addSubview(blurView)
+        resetViewContainer.sendSubviewToBack(blurView)
+    }
+    
+    @objc func forgotPasswordButtonDidTap() {
+        resetView.isHidden = false
+        resetViewContainer.isHidden = false
+        print("~~~~~~ reset button hidden ~~~~~~")
+    }
+    
+    @objc func signUpButtonDidTap() {
         navigationController?.pushViewController(SignUpBuilder.build(), animated: true)
     }
     
-    @objc func signInButtonDidTap(_ sender: UIButton) {
+    @objc func signInButtonDidTap() {
         output?.signInButtonDidTap()
     }
     
-    @objc func laterButtonDidTap(_ sender: UIButton) {
+    @objc func laterButtonDidTap() {
         output?.laterButtonDidTap()
     }
     
@@ -208,4 +253,20 @@ extension SignInViewController {
         }
     }
     
+}
+
+extension SignInViewController: ResetPasswordViewDelegate {
+    func emailTextFieldDidChange(_ text: String) {
+        output?.resetPasswordEmailDidChange(text)
+    }
+    
+    func resetPassword() {
+        output?.resetPassword()
+        resetViewContainer.isHidden = true
+    }
+    
+    func closeButton() {
+        output?.closeResetView()
+        resetViewContainer.isHidden = true
+    }
 }

@@ -22,6 +22,8 @@
 		5783AD242E0A7E7900C2BB87 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 5783AD232E0A7E7900C2BB87 /* FirebaseStorage */; };
 		5783AD272E0A7E8700C2BB87 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 5783AD262E0A7E8700C2BB87 /* Swinject */; };
 		579D9F192DAE44FE00820060 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579D9F182DAE44FE00820060 /* UIColor+Hex.swift */; };
+		57DF3B252E65FC5800D7DB34 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DF3B242E65FC5800D7DB34 /* ResetPasswordView.swift */; };
+		57DF3B272E66C6B800D7DB34 /* ResetPasswordViewInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DF3B262E66C6B800D7DB34 /* ResetPasswordViewInput.swift */; };
 		57F639102CDB7020000CACE8 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6390F2CDB7020000CACE8 /* BaseViewController.swift */; };
 		57F639122CDB71EA000CACE8 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F639112CDB71EA000CACE8 /* BaseView.swift */; };
 		57F639652CDBA9BD000CACE8 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F639642CDBA9BD000CACE8 /* CustomTextField.swift */; };
@@ -67,6 +69,8 @@
 		572665332CE21AC600AF2393 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		5783ACF22E09997200C2BB87 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		579D9F182DAE44FE00820060 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
+		57DF3B242E65FC5800D7DB34 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
+		57DF3B262E66C6B800D7DB34 /* ResetPasswordViewInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewInput.swift; sourceTree = "<group>"; };
 		57F6390F2CDB7020000CACE8 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		57F639112CDB71EA000CACE8 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		57F639642CDBA9BD000CACE8 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -150,6 +154,15 @@
 			path = Storage;
 			sourceTree = "<group>";
 		};
+		57DF3B232E65FC4D00D7DB34 /* ResetPassword */ = {
+			isa = PBXGroup;
+			children = (
+				57DF3B242E65FC5800D7DB34 /* ResetPasswordView.swift */,
+				57DF3B262E66C6B800D7DB34 /* ResetPasswordViewInput.swift */,
+			);
+			path = ResetPassword;
+			sourceTree = "<group>";
+		};
 		57F6390E2CDB7004000CACE8 /* BaseViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +188,7 @@
 		861F519D28F0374200A12D0D /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
+				57DF3B232E65FC4D00D7DB34 /* ResetPassword */,
 				86ABA83528EC0E2500EC96D8 /* SignInViewController.swift */,
 				86ABA85428EC12FB00EC96D8 /* SignInPresenter.swift */,
 				8638372D28EED85E00DB0407 /* SignInViewInput.swift */,
@@ -409,9 +423,11 @@
 				5726652F2CDF6D4800AF2393 /* CustomLabel.swift in Sources */,
 				869AEE0828F8567A00A8F175 /* NotesCellData.swift in Sources */,
 				86ABA85028EC126100EC96D8 /* Login.swift in Sources */,
+				57DF3B272E66C6B800D7DB34 /* ResetPasswordViewInput.swift in Sources */,
 				86ABA83228EC0E2500EC96D8 /* AppDelegate.swift in Sources */,
 				867D459728FE87A20030EE4E /* Date+Extantion.swift in Sources */,
 				572665342CE21AC600AF2393 /* AppContainer.swift in Sources */,
+				57DF3B252E65FC5800D7DB34 /* ResetPasswordView.swift in Sources */,
 				57F639652CDBA9BD000CACE8 /* CustomTextField.swift in Sources */,
 				8697C80028FD7033006266E0 /* UIView+Extention.swift in Sources */,
 				572665272CDF361600AF2393 /* SignInBuilder.swift in Sources */,

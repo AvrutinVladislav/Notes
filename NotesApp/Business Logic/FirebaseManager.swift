@@ -23,6 +23,7 @@ protocol FirebaseManager {
     func updateNote<T: Encodable>(entity: T, id: String) -> Result<Void, Error>
     func updateNotes<T: Encodable>(entities: [T]) -> Result<Void, Error>
     func fetchDataFromFB(completion: @escaping (Result<[NotesCellData], Error>) -> Void)
+    func sendPasswordResetEmail(to email: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 final class FirebaseManagerImpl: FirebaseManager {
@@ -185,6 +186,23 @@ final class FirebaseManagerImpl: FirebaseManager {
         }
     }
     
+    func sendPasswordResetEmail(to email: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard email.isEmail else {
+            print("~~~~~~~ \(FBError.invalideEmail.errorDescription ?? "") ~~~~~~~")
+            completion(.failure(FBError.invalideEmail))
+                return
+            }            
+            Auth.auth().sendPasswordReset(withEmail: email) { error in
+                if let error {
+                    print("~~~~~~ Error sending password reset email: \(error.localizedDescription) ~~~~~~")
+                    completion(.failure(error))
+                } else {
+                    print("~~~~~~~ Password reset email sent successfully ~~~~~~~")
+                    completion(.success(()))
+                }
+            }
+        }
+    
 }
 
 enum FBError: LocalizedError {    
@@ -196,6 +214,7 @@ enum FBError: LocalizedError {
     case createError
     case autorization
     case createAccount
+    case invalideEmail
     
     var errorDescription: String? {
         switch self {
@@ -214,7 +233,9 @@ enum FBError: LocalizedError {
         case .autorization:
             return "Failed to autorization user".localized()
         case .createAccount:
-            return "Failed to create account"
+            return "Failed to create account".localized()
+        case .invalideEmail:
+            return "Invalide email".localized()
         }
     }
 }

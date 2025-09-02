@@ -13,10 +13,12 @@ class SignInPresenter {
     private var password = ""
     private let fbManager: FirebaseManager
     private let view: SignInViewInput
+    private let resetView: ResetPasswordViewInput
     
-    init(fbManager: FirebaseManager, view: SignInViewInput) {
+    init(fbManager: FirebaseManager, view: SignInViewInput, resetView: ResetPasswordViewInput) {
         self.fbManager = fbManager
         self.view = view
+        self.resetView = resetView
     }
     
 }
@@ -55,6 +57,22 @@ extension SignInPresenter: SignInViewOutput {
         }
     }
     
+    func resetPasswordEmailDidChange(_ text: String) {
+        email = text
+        validateResetEmail()
+    }
+    
+    func resetPassword() {
+        guard validateResetEmail() else { return }
+        fbManager.sendPasswordResetEmail(to: email) { [weak self] _ in
+            self?.resetView.clearEmailTextField()
+        }
+    }
+    
+    func closeResetView() {
+        resetView.clearEmailTextField()
+    }
+    
 }
 
 private extension SignInPresenter {
@@ -78,4 +96,11 @@ private extension SignInPresenter {
         return validate
     }
     
+    @discardableResult
+    func validateResetEmail() -> Bool {
+        let validate = email.isEmail && !email.isEmpty
+        resetView.setErrorEmail(email.isEmail || email.isEmpty)
+        resetView.enableButtonSignIn(validate)
+        return validate
+    }
 }

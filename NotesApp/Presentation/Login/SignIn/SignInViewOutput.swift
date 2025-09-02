@@ -14,5 +14,7 @@ protocol SignInViewOutput: AnyObject {
     func passwordTextFieldDidChange(_ text: String)
     func laterButtonDidTap()
     func signInButtonDidTap()
-   
+    func resetPassword()
+    func resetPasswordEmailDidChange(_ text: String)
+    func closeResetView()
 }

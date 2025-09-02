@@ -244,10 +244,13 @@ private extension NotesPresentor {
     }
 
     func sortDoneNotes() {
-        sections = sections.map { section in
-            var sortSection = section
-            sortSection.cells.sort(by: {$0.isDone && !$1.isDone})
-            return sortSection
+        for i in sections.indices {
+            sections[i].cells.sort {
+                if $0.isDone != $1.isDone {
+                    return $0.isDone
+                }
+                return $0.date < $1.date
+            }
         }
     }
     

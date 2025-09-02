@@ -105,6 +105,7 @@ extension SignUpViewController {
             tf.layer.borderColor = UIColor.black.cgColor
             tf.layer.borderWidth = 1
             tf.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+            tf.backgroundColor = .white
         }
         emailTextField.placeholder = "Enter your email".localized()
         

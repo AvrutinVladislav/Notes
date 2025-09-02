@@ -78,9 +78,9 @@ extension NotesViewController: NotesViewInput {
         refreshControl.endRefreshing()
     }
     
-    func pushSettingsViewController() {
-        navigationController?.pushViewController(SettingsBuilder.build(), animated: true)
-    }
+//    func pushSettingsViewController() {
+//        navigationController?.pushViewController(SettingsBuilder.build(), animated: true)
+//    }
 }
 
 //MARK: NotesViewController
@@ -93,9 +93,9 @@ extension NotesViewController {
         leftButtonAction = { [weak self] in
             self?.signOutButtonDidTap()
         }
-        rightButtonAction = { [weak self] in
-            self?.settingsButtonDidTap()
-        }
+//        rightButtonAction = { [weak self] in
+//            self?.settingsButtonDidTap()
+//        }
         
         if #available(iOS 16.0, *) {
             navigationController?.navigationBar.setNeedsLayout()
@@ -191,9 +191,9 @@ extension NotesViewController {
         output?.doneNotesIsHidden(isHiddenNotes)
     }
     
-    @objc func settingsButtonDidTap() {
-        navigationController?.pushViewController(SettingsBuilder.build(), animated: true)
-    }
+//    @objc func settingsButtonDidTap() {
+//        navigationController?.pushViewController(SettingsBuilder.build(), animated: true)
+//    }
 }
 
 //MARK: UITableViewDataSource and UITableViewDelegate
