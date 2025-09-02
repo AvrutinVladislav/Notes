@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class SignInPresenter {
     
@@ -71,6 +72,18 @@ extension SignInPresenter: SignInViewOutput {
     
     func closeResetView() {
         resetView.clearEmailTextField()
+    }
+    
+    func googleAuthButtonDidTap(_ vc: UIViewController) {
+        fbManager.signInWithGoogle(presentingVC: vc) { [weak self] result in
+            switch result {
+            case .success(_):
+                print("~~~~~~~ ✅ Google SignIn success ~~~~~~")
+                self?.view.pushNotesViewController()
+            case .failure(let error):
+                print("❌ Google SignIn failed: \(error.localizedDescription)")
+            }
+        }
     }
     
 }

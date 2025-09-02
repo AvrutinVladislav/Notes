@@ -5,10 +5,9 @@
 //  Created by Vladislav on 06.10.2022.
 //
 
-import Foundation
+import UIKit
 
-protocol SignInViewOutput: AnyObject {
-    
+protocol SignInViewOutput: AnyObject {    
     func viewDidLoad()
     func emailTextFieldDidChange(_ text: String)
     func passwordTextFieldDidChange(_ text: String)
@@ -17,4 +16,5 @@ protocol SignInViewOutput: AnyObject {
     func resetPassword()
     func resetPasswordEmailDidChange(_ text: String)
     func closeResetView()
+    func googleAuthButtonDidTap(_ vc: UIViewController)
 }

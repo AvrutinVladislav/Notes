@@ -10,6 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import FirebaseDatabase
 import Firebase
+import GoogleSignIn
 
 protocol FirebaseManager {
     func currentUser() -> String
@@ -24,6 +25,7 @@ protocol FirebaseManager {
     func updateNotes<T: Encodable>(entities: [T]) -> Result<Void, Error>
     func fetchDataFromFB(completion: @escaping (Result<[NotesCellData], Error>) -> Void)
     func sendPasswordResetEmail(to email: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func signInWithGoogle(presentingVC: UIViewController, completion: @escaping (Result<AuthDataResult, Error>) -> Void)
 }
 
 final class FirebaseManagerImpl: FirebaseManager {
@@ -102,9 +104,9 @@ final class FirebaseManagerImpl: FirebaseManager {
     }
     
     func deleteNote(id: String) -> Result<Void, Error> {
-       if let userID = Auth.auth().currentUser?.uid {
+        if let userID = Auth.auth().currentUser?.uid {
             ref.child(userID).child(id).removeValue()
-           return .success(())
+            return .success(())
         }
         return .failure(FBError.unauthorized)
     }
@@ -157,7 +159,7 @@ final class FirebaseManagerImpl: FirebaseManager {
     
     func fetchDataFromFB(completion: @escaping (Result<[NotesCellData], Error>) -> Void) {
         if let userID = Auth.auth().currentUser?.uid {
-            ref.child(userID).getData { error, snapshot in                
+            ref.child(userID).getData { error, snapshot in
                 if let error = error {
                     completion(.failure(error))
                 } else {
@@ -190,18 +192,52 @@ final class FirebaseManagerImpl: FirebaseManager {
         guard email.isEmail else {
             print("~~~~~~~ \(FBError.invalideEmail.errorDescription ?? "") ~~~~~~~")
             completion(.failure(FBError.invalideEmail))
+            return
+        }
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error {
+                print("~~~~~~ Error sending password reset email: \(error.localizedDescription) ~~~~~~")
+                completion(.failure(error))
+            } else {
+                print("~~~~~~~ Password reset email sent successfully ~~~~~~~")
+                completion(.success(()))
+            }
+        }
+    }
+    
+    func signInWithGoogle(presentingVC: UIViewController, completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
+        GIDSignIn.sharedInstance.signIn(withPresenting: presentingVC) { signInResult, error in
+            if let error = error {
+                print("❌ Ошибка: \(error.localizedDescription)")
+                completion(.failure(error))  // <-- вызываем блок с ошибкой
                 return
-            }            
-            Auth.auth().sendPasswordReset(withEmail: email) { error in
+            }
+            
+            guard let user = signInResult?.user else {
+                let err = NSError(domain: "GoogleSignIn", code: -1, userInfo: [NSLocalizedDescriptionKey: "No user returned"])
+                completion(.failure(err))
+                return
+            }
+            let accessToken = user.accessToken.tokenString
+            guard let idToken = user.idToken?.tokenString else {
+                let err = NSError(domain: "GoogleSignIn", code: -2, userInfo: [NSLocalizedDescriptionKey: "No tokens"])
+                completion(.failure(err))
+                return
+            }
+            
+            print("~~~~~~ID Token: \(idToken)")
+            print("~~~~~~Access Token: \(accessToken)")
+            
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
+            Auth.auth().signIn(with: credential) { authResult, error in
                 if let error {
-                    print("~~~~~~ Error sending password reset email: \(error.localizedDescription) ~~~~~~")
                     completion(.failure(error))
-                } else {
-                    print("~~~~~~~ Password reset email sent successfully ~~~~~~~")
-                    completion(.success(()))
+                } else if let authResult {
+                    completion(.success(authResult))
                 }
             }
         }
+    }
     
 }
 

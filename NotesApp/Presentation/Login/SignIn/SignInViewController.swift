@@ -28,6 +28,8 @@ class SignInViewController: BaseViewController {
     private let buttonsStackViewContainer = UIStackView()
     private let resetPasswordStackContainer = UIStackView()
     private let resetViewContainer = UIView()
+    private let googleAuthButton = UIButton()
+    
     let resetView = ResetPasswordView()
 
     override func viewDidLoad() {
@@ -78,7 +80,8 @@ extension SignInViewController {
                      errorPasswordLabel, signUpButton, emailLabel, passwordLabel,
                      signInLabel, stackViewContainer, emailStackViewContainer,
                      passwordStackViewContainer, buttonsStackViewContainer,
-                     resetPasswordStackContainer, resetView, resetViewContainer] {
+                     resetPasswordStackContainer, resetView, resetViewContainer,
+                     googleAuthButton] {
             view.translatesAutoresizingMaskIntoConstraints = false
         }
         spinner.color = .black
@@ -163,8 +166,20 @@ extension SignInViewController {
         
         resetView.isHidden = true
         resetViewContainer.isHidden = true
-        
         addBlurBackgroundToResetContainer()
+        
+        var configGoogle = UIButton.Configuration.plain()
+        configGoogle.image = UIImage(resource: .googleAuth).resize(targetSize: CGSize(width: 30, height: 30))
+        configGoogle.title = "Continue with Google"
+        configGoogle.imagePadding = 10
+        configGoogle.baseForegroundColor = .black
+        configGoogle.background.backgroundColor = .white
+        googleAuthButton.configuration = configGoogle
+        googleAuthButton.layer.borderColor = UIColor.black.cgColor
+        googleAuthButton.layer.borderWidth = 1
+        googleAuthButton.layer.cornerRadius = 10
+        googleAuthButton.clipsToBounds = true
+        googleAuthButton.addTarget(self, action: #selector(googleAuthButtonDidTap), for: .touchUpInside)
         
     }
     
@@ -185,6 +200,7 @@ extension SignInViewController {
         passwordStackViewContainer.addArrangedSubview(passwordTextField)
         passwordStackViewContainer.addArrangedSubview(errorPasswordLabel)
         buttonsStackViewContainer.addArrangedSubview(signInButton)
+        buttonsStackViewContainer.addArrangedSubview(googleAuthButton)
         resetPasswordStackContainer.addArrangedSubview(signUpButton)
         resetPasswordStackContainer.addArrangedSubview(resetPasswordButton)
         resetViewContainer.addSubview(resetView)
@@ -212,6 +228,8 @@ extension SignInViewController {
             resetView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             resetView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
             resetView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
+            
+            googleAuthButton.heightAnchor.constraint(equalToConstant: 35),
         ])
     }
     
@@ -251,6 +269,10 @@ extension SignInViewController {
         default:
             break
         }
+    }
+    
+    @objc func googleAuthButtonDidTap() {
+        output?.googleAuthButtonDidTap(self)
     }
     
 }
